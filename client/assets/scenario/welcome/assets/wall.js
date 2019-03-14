@@ -22,6 +22,7 @@
 				this.imgWall.src = './assets/scenario/welcome/img/wall.jpg';
 				
 				this.wall = this.ctx.createPattern(this.imgWall, 'repeat');
+				this.wall = "gray"; // TEMPORARIO
 				
 		// - - - Sets - - -
 		

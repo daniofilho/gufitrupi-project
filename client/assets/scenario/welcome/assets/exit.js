@@ -87,8 +87,8 @@
 						objeto.setColor("#333");
 						objeto.resetPosition();
 						
-						$('canvas').fadeOut(1000);
-						$('.win').fadeIn();
+						alert('Win!');
+						setTimeout(location.reload(), 2000);
 						break;
 				}
 				

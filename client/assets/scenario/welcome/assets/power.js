@@ -54,7 +54,7 @@
 			};
 			
 			this.collision = function(object) {
-				object.setSpeed(400);
+				object.setSpeed(0.2);
 				object.setColor("#D6142F");
 				return false;
 			};

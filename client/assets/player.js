@@ -14,7 +14,7 @@
 			// # Properties
 				this.width = 25; //px
 				this.height = 25; //px
-				this.speed0 = 200; // pixels per frame
+				this.speed0 = 0.1; // pixels per frame
 				this.speed = this.speed0;
 				
 				this.color0 = '#FFF';

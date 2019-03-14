@@ -55,6 +55,7 @@
 					this.bgImage.src = './assets/scenario/welcome/img/background.jpg';
 					
 					this.background = this.ctx.createPattern(this.bgImage, 'repeat');
+					this.background = "#333";
 					
 
 				// # Obstacles

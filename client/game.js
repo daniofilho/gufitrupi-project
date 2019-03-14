@@ -1,6 +1,9 @@
 
 	
 	// # Init
+
+		var FPS = 30;
+		var deltaTime = 1000/FPS;
 	
 		var canvas_static = document.getElementById('canvas_static');
 		var contexto_estatico = canvas_static.getContext('2d');
@@ -120,22 +123,20 @@
 
 		function runGame() {
 
-			updateGame( (Date.now() - time) / 1000 ); // Delta time, controls de FPS
+			//updateGame( (Date.now() - time) ); // Delta time, controls de FPS
+			updateGame( deltaTime ); // Delta time, controls de FPS
 		    
-		    render_animated.start( Date.now() - time ); 
+		    render_animated.start( deltaTime ); 
 			//render_shadow.start( Date.now() - time ); 
-			
-		    time = Date.now();
-		
+
 			// Runs only when the browser is in focus
 			requestAnimationFrame(runGame); 	
-			
-			console.log('running');
+		
 		};
 	
 	// # Starts the game
 		
-		render_static.start( Date.now() - time );  // Render the static layers only once
+		render_static.start( deltaTime );  // Render the static layers only once
 		
 		runGame();	// GO GO GO
 	

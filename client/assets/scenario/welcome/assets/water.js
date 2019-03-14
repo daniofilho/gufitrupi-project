@@ -22,6 +22,7 @@
 				this.imgWater.src = './assets/scenario/welcome/img/water.jpg';
 				
 				this.water = this.ctx.createPattern(this.imgWater, 'repeat');
+				this.water = "blue";
 				
 		// - - - Sets - - -
 		
@@ -55,7 +56,7 @@
 			this.collision = function(object) {
 				
 				// If collides, what will happen? 
-				object.setSpeed(100);
+				object.setSpeed(0.05);
 				object.setColor("#86C0F8");
 				
 				// If the item will trigger a collision action. Walls will make the player stop, but water will only make the player slow
