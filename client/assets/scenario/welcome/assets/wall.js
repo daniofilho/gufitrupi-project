@@ -1,30 +1,29 @@
-//Classe de obstaculos
+// Obstacle class
 
-
-	function Agua(ctx, name, x0, y0, w, h) {
+	function Wall(ctx, name, x0, y0, w, h) {
 		
-		//Setup das Variáveis
+		// - - - Init - - -
 		
-			//Posição
+			// # Position
 				this.x = x0;
 				this.y = y0;
 				
-			//Caracteiristicas
+			// # Properties
 				this.width = w; //px
 				this.height = h;
 				
 				this.color = "#3F5"; 
 				this.name = name;
 
-			//Declaraçõa das texturas
+			// # Texture
 				this.ctx = ctx;
 				
-				this.imgAgua = new Image();
-				this.imgAgua.src = './assets/cenario/welcome/img/agua.jpg';
+				this.imgWall = new Image();
+				this.imgWall.src = './assets/scenario/welcome/img/wall.jpg';
 				
-				this.agua = this.ctx.createPattern(this.imgAgua, 'repeat');
+				this.wall = this.ctx.createPattern(this.imgWall, 'repeat');
 				
-		//Sets
+		// - - - Sets - - -
 		
 			this.setX =  function (x) { this.x = x; }
 			this.setY =  function (y) { this.y = y; }
@@ -35,7 +34,7 @@
 			this.setColor =  function (color) { this.color = color; }
 			this.setName =  function (name) { this.name = name; }
 
-		//Gets
+		// - - - Gets - - -
 			
 			this.getX =  function () { return this.x; }
 			this.getY =  function () { return this.y; }
@@ -46,22 +45,17 @@
 			this.getColor = function() { return this.color; }
 		
 		
-		//Função de renderização do player
+		// - - - Render - - -
 		
-			this.render = function(contexto) { //Contexto é o context do Canvas
+			this.render = function(context) { 
 				
-				contexto.fillStyle = this.agua;
-				contexto.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
+				context.fillStyle = this.wall;
+				context.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
 				
 			};
 			
-			this.colisao = function(objeto) {
-				
-				//Caso há colisão, executa uma função e retorna true (ou false dependendo do objeto)
-				objeto.setSpeed(100);
-				objeto.setColor("#86C0F8");
-				return false;
-				
+			this.collision = function(object) {
+				return true;
 			};
 
 	}//obstaculo
