@@ -1,30 +1,30 @@
-//Classe de obstaculos
+// Obstacle class
 
-
-	function Parede(ctx, name, x0, y0, w, h) {
+	function Water(ctx, name, x0, y0, w, h) {
 		
-		//Setup das Variáveis
+		// - - - Init - - -
 		
-			//Posição
+			// # Position
 				this.x = x0;
 				this.y = y0;
 				
-			//Caracteiristicas
+			// # Properties
 				this.width = w; //px
 				this.height = h;
 				
 				this.color = "#3F5"; 
 				this.name = name;
 
-			//Declaraçõa das texturas
+			// # Texture
 				this.ctx = ctx;
 				
-				this.imgParede = new Image();
-				this.imgParede.src = './assets/cenario/welcome/img/parede.jpg';
+				this.imgWater = new Image();
+				this.imgWater.src = './assets/scenario/welcome/img/water.jpg';
 				
-				this.parede = this.ctx.createPattern(this.imgParede, 'repeat');
+				this.water = this.ctx.createPattern(this.imgWater, 'repeat');
+				this.water = "blue";
 				
-		//Sets
+		// - - - Sets - - -
 		
 			this.setX =  function (x) { this.x = x; }
 			this.setY =  function (y) { this.y = y; }
@@ -35,7 +35,7 @@
 			this.setColor =  function (color) { this.color = color; }
 			this.setName =  function (name) { this.name = name; }
 
-		//Gets
+		// - - - Gets - - -
 			
 			this.getX =  function () { return this.x; }
 			this.getY =  function () { return this.y; }
@@ -46,21 +46,22 @@
 			this.getColor = function() { return this.color; }
 		
 		
-		//Função de renderização do player
+		// - - - Render - - -
 		
-			this.render = function(contexto) { //Contexto é o context do Canvas
-				
-				contexto.fillStyle = this.parede;
+			this.render = function(contexto) { 
+				contexto.fillStyle = this.water;
 				contexto.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
-				
 			};
 			
-			this.colisao = function(objeto) {
+			this.collision = function(object) {
 				
-				//Caso há colisão, executa uma função e retorna true (ou false dependendo do objeto)
-
-				return true;
+				// If collides, what will happen? 
+				object.setSpeed(0.05);
+				object.setColor("#86C0F8");
+				
+				// If the item will trigger a collision action. Walls will make the player stop, but water will only make the player slow
+				return false; 
 				
 			};
 
-	}//obstaculo
+	}//class

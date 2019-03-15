@@ -1,0 +1,31 @@
+body {
+    background: url('./img/noisy_net.png');
+    font-family: Arial;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+canvas { position: absolute; width: 100%; height: 100%; }
+#canvas_animado { z-index: 10; }
+#canvas_sombra { z-index: 20; }
+
+.hide { display: none; }
+
+.objetivos {
+    background: none repeat scroll 0 0 #FFFFFF;
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+    display: none;
+}
+
+.game {
+    background: url('./img/noisy_net.png');
+    width: 100%;
+    height: 100%;
+    margin: 0px auto;
+    display: block;
+}

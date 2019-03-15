@@ -1,22 +1,21 @@
-//Classe de obstaculos
+// Obstacle class
 
-
-	function Saida(ctx, name, x0, y0, w, h) {
+	function Exit(ctx, name, x0, y0, w, h) {
 		
-		//Setup das Variáveis
+		// - - - Init - - -
 		
-			//Posição
+			// # Position
 				this.x = x0;
 				this.y = y0;
 				
-			//Caracteiristicas
+			// # Properties
 				this.width = w; //px
 				this.height = h;
 				
 				this.color = "#3F5"; 
 				this.name = name;
 			
-			//Sets
+			// - - - Sets - - -
 		
 				this.setX =  function (x) { this.x = x; }
 				this.setY =  function (y) { this.y = y; }
@@ -27,7 +26,7 @@
 				this.setColor =  function (color) { this.color = color; }
 				this.setName =  function (name) { this.name = name; }
 	
-			//Gets
+			// - - - Gets - - -
 				
 				this.getX =  function () { return this.x; }
 				this.getY =  function () { return this.y; }
@@ -39,23 +38,19 @@
 
 				this.exit = 0;
 
-			//Declaraçõa das texturas
+			// Texture
 				this.ctx = ctx;
 	
 
 		
-		//Função de renderização do player
+		// - - - Render - - -
 		
-			this.render = function(contexto) { //Contexto é o context do Canvas
-				
+			this.render = function(contexto) { 
 				contexto.fillStyle = this.color;
 				contexto.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
-				
 			};
 			
-			this.colisao = function(objeto) {
-				
-				//Caso há colisão, executa uma função e retorna true (ou false dependendo do objeto)
+			this.collision = function(objeto) {
 				
 				switch (this.exit) {
 					
@@ -92,8 +87,8 @@
 						objeto.setColor("#333");
 						objeto.resetPosition();
 						
-						$('canvas').fadeOut(1000);
-						$('.win').fadeIn();
+						alert('Win!');
+						setTimeout(location.reload(), 2000);
 						break;
 				}
 				
@@ -102,4 +97,4 @@
 				
 			};
 
-	}//obstaculo
+	}//class

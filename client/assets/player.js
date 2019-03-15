@@ -1,26 +1,26 @@
-// Classe do jogador
+// Player
 
 	function Player(x0, y0) {
 		
-		//Setup das "Variáveis"
+		// - - - Init - - -
 		
-			//Posição
+			// # Position
 				this.x = x0;
 				this.y = y0;
 				
-				this.x0 = x0;
+				this.x0 = x0; // initial position
 				this.y0 = y0;
 		
-			//Caracteiristicas
+			// # Properties
 				this.width = 25; //px
 				this.height = 25; //px
-				this.speed0 = 200; // movemento em pixels por segundo
+				this.speed0 = 0.1; // pixels per frame
 				this.speed = this.speed0;
 				
 				this.color0 = '#FFF';
 				this.color = this.color0; 
 			
-		//Movimentos do Player
+		// - - - Player Movement - - -
 		
 			this.movLeft = function(mod) { 
 				this.setX( this.getX() - this.getSpeed() * mod); 
@@ -38,7 +38,7 @@
 				this.setY( this.getY() + this.getSpeed() * mod); 
 			};
 		
-		//Sets
+		// - - - Sets - - -
 		
 			this.setX =  function (x) { this.x = x; }
 			this.setY =  function (y) { this.y = y; }
@@ -48,8 +48,18 @@
 			
 			this.setColor = function (color) { this.color = color; }
 			this.setSpeed = function (speed) { this.speed = speed; }
+
+			
+			// Reset player position - !!! Provavelmente não usarei dessa forma mais, a posição inicial vai depender do cenário
+			
+				this.resetPosition = function() {
+					
+					this.setX( this.x0 );
+					this.setY( this.y0 );
+
+				}
 		
-		//Gets
+		// - - - Gets - - -
 			
 			this.getX =  function () { return this.x; }
 			this.getY =  function () { return this.y; }
@@ -60,31 +70,25 @@
 			this.getColor = function() { return this.color; }
 			this.getSpeed = function() { return this.speed; }
 			
-		//Reinicia a posição do personagem
-			
-			this.resetPosition = function() {
-				
-				this.setX( this.x0 );
-				this.setY( this.y0 );
-
-			}
-			
-		//Função de renderização do player
 		
-			this.render = function(contexto) { //Contexto é o context do Canvas
-
-				contexto.fillStyle = this.getColor();
-				contexto.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+			
+		// - - - Player Render - - - 
 				
+			this.render = function(context) {
+				
+				// What to do every frame in terms of render? Draw the player
+				
+				context.fillStyle = this.getColor();
+				context.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 			};
 			
-			this.noColisao = function() {
+			this.noCollision = function() {
 				
-				//O que acontece quando o player não colide com nada?
+				// What happens if the player is not colliding?
 				
-				this.setSpeed(this.speed0); //Reseta a velocidade
+				this.setSpeed(this.speed0); // Reset speed
 				this.setColor(this.color0);
 			}
 		
-	}//player
+	}//class
 	

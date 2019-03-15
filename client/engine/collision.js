@@ -1,30 +1,33 @@
-	// Classe que detecta colisões
+// Class that detects collision between player and other objects
+
+
+	// AINDA PRECISO REVISAR ESTA CLASSE E RELEMBRAR MELHOR COMO FUNCIONA
 	
-	function Colisao(cenarioWidth, cenarioHeight, player) {
+	function Collision(scenarioWidth, scenarioHeight, player) {
 			
-		//Declarações iniciais
+		// # Init
 		
-			this.colItens = new Array(); //Vetor de itens para verificar colisão
-			this.cenarioWidth = cenarioWidth;
-			this.cenarioHeight = cenarioHeight;
+			this.colItens = new Array(); // Items to check for collision
+			this.scenarioWidth = scenarioWidth;
+			this.scenarioHeight = scenarioHeight;
 			
 			this.player = player;
 			
-		//Função que verifica se há a colisão do objeto passado com algum objeto do vetor
+		// # Check if the object collides with any object in vector
 			
-			this.verifica = function(objeto) {
+			this.check = function(object) {
 
 					// !!! Algoritmo de detecção de colisão chamado “Bounding Box 2D”  - 
 					// !!! (A.x + A.Largura) > B.x E A.x < (B.x + B.Largura) E (A.y + A.Altura) > B.y E A.y < (B.y + B.Altura)
 				
 
-				//if ( !this.foraCenario(objeto) ) { //Se não estiver fora do cenário
+				//if ( !this.foraCenario(object) ) { //Se não estiver fora do cenário
 				
-					// caracteiristicas do objeto passado
-						var aLarg = objeto.getX() + objeto.getWidth();
-						var aAlt = objeto.getY() + objeto.getHeight();
-						var aX = objeto.getX();
-						var aY = objeto.getY()
+					// caracteiristicas do object passado
+						var aLarg = object.getX() + object.getWidth();
+						var aAlt = object.getY() + object.getHeight();
+						var aX = object.getX();
+						var aY = object.getY()
 						
 					//Percorre o vetor
 						for (i in this.colItens) {
@@ -79,10 +82,10 @@
 									console.log("--------");
 									*/
 									
-								return this.colItens[i].colisao(objeto);
+								return this.colItens[i].collision(object);
 								
 							} else {
-								objeto.noColisao();
+								object.noCollision();
 							}
 													
 						}
@@ -93,12 +96,12 @@
 	
 			};
 			
-			this.foraCenario = function(objeto) {
+			this.foraCenario = function(object) {
 				
-				var aLarg = objeto.getX() + objeto.getWidth();
-				var aAlt = objeto.getY() + objeto.getHeight();
+				var aLarg = object.getX() + object.getWidth();
+				var aAlt = object.getY() + object.getHeight();
 				
-				if ( objeto.getX() < 0 || aLarg >= this.cenarioWidth || objeto.getY() < 0 || aAlt >= this.cenarioHeight ) {
+				if ( object.getX() < 0 || aLarg >= this.scenarioWidth || object.getY() < 0 || aAlt >= this.scenarioHeight ) {
 				
 					return true;
 				
@@ -106,11 +109,11 @@
 				
 			}
 			
-			this.verificaColisaoComPlayer = function(B) { 
+			this.checkPlayerCollision = function(B) { 
 				
 				//player é uma variável global definida no main.js
 					
-				// caracteiristicas do objeto passado
+				// caracteiristicas do object passado
 					var aLarg = this.player.getX() + this.player.getWidth();
 					var aAlt = this.player.getY() + this.player.getHeight();
 					var aX = this.player.getX();
@@ -131,16 +134,16 @@
 				
 		//Adiciona itens para verificar colisão	
 			
-			this.addItem = function (objeto) {
+			this.addItem = function (object) {
 				
-				this.colItens.push(objeto);
+				this.colItens.push(object);
 
 			};
 			
-			this.addArrayItem = function(objeto){
+			this.addArrayItem = function(object){
 				
-				for (i in objeto){
-					this.colItens.push(objeto[i]);
+				for (i in object){
+					this.colItens.push(object[i]);
 				}
 				
 			}

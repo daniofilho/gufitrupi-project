@@ -1,81 +1,51 @@
-//Clase de Renderização
+// Rendes class
 
 	function Render(ctx, canvas, dificuldade, player) {
 		
-		//Declarações iniciais
+		// - - - Init - - -
 			
-			this.ctx = ctx; //Contexto do Canvas
-			this.cenario = "";
+			this.ctx = ctx; 
+			this.scenario = "";
 			this.canvas = canvas;
 			this.player = player;
-			this.renderItens = new Array(); //Vetor de itens para renderização
-			this.dificuldade = "";
-
-		
-		
-		//Adiciona um item no vetor de itens para renderização
-			this.addItem = function(objeto){
-				this.renderItens.push(objeto);
-			}
+			this.renderItems = new Array(); 
 			
-			this.addArrayItem = function(objeto){
-				
-				for (i in objeto){
-					this.renderItens.push(objeto[i]);
+		
+        // - - - Functions - - -
+        
+            // Add items to the vector
+			this.addItem = function(object){
+				this.renderItems.push(object);
+			}
+			this.addArrayItem = function(object){
+				for (i in object){
+					this.renderItems.push(object[i]);
 				}
-				
+			}
+			this.setScenario = function(scenario){
+				this.scenario = scenario;
 			}
 			
-			this.setCenario = function(cenario){
-				this.cenario = cenario;
-			}
-			
-			this.setDificuldade = function(dificuldade){
-				
-				switch (dificuldade) {
-				
-					case "easy":
-						this.dificuldade = 150;
-						break;
-						
-					case "normal":
-						this.dificuldade = 100;
-						break;
-					
-					case "hard":
-						this.dificuldade = 50;
-						break;
-					
-					default:
-						this.dificuldade = "";
-						break;
-				
-				}
-				
 		
-			}
-		
-		//Função que será chamada constamente para renderizar tudo
+        // This functions will be called constantly to render items
 			this.start = function (mod) {		
 				
-				//Limpa o canvas antes de renderizar novamente
+                // Clear canvas before render again
 					this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-					
 					this.ctx.shadowBlur = 0;
 
-				//Cenário
-					if ( this.cenario != "") 
-				    	this.cenario.render(this.ctx);
+				// Scenario
+					if ( this.scenario != "") 
+				    	this.scenario.render(this.ctx);
 						
-				//Itens normais de renderização
-					for (i in this.renderItens) {
-				
-						// !! Função render() necessariamente deve ser criada em cada objeto que for renderizado !!
-						this.renderItens[i].render(this.ctx, mod);
-						
+                // Render items
+					for (i in this.renderItems) {
+                        // Execute the render function - Include this function on every class!
+						this.renderItems[i].render(this.ctx, mod);
 					}
 				    
-				//Caso o render seja o render da sombra...
+                // If it's the Shadow render - DEACTIVATED
+                /*
 					if ( this.dificuldade != "" ) {    
 					    
 					    //Caso seja o quadro de animação, cria o efeito de sombra e luz
@@ -100,11 +70,10 @@
 			      		
 							this.ctx.restore();//Restaura o contexto
 					    
-				    }
+				    }*/
 				
 
-		     };
+		    };
 	
-			 this.setDificuldade(dificuldade);
 	
 	}//render

@@ -1,126 +1,32 @@
 <html>
     <head>
-        <title>Teste de "Engine"</title>
+        <title>Gufitrupi - Project</title>
         <meta charset="utf-8">
-        <style>
-        	
-        	body {
-	        	background: url('./img/noisy_net.png');
-				font-family: Arial;
-				margin: 0px;
-				padding: 0px;
-				border: 0px;
-        	}
-        
-        	canvas { position: absolute; display: none; width: 100%; height: 100%; }
-        	#canvas_animado { z-index: 10; }
-        	#canvas_sombra { z-index: 20; }
-        	
-        	.hide { display: none; }
-        	
-        	.objetivos {
-			    background: none repeat scroll 0 0 #FFFFFF;
-			    display: block;
-			    margin: 0 auto;
-			    padding: 20px;
-			    text-align: center;
-			    width: 300px;
-			    display: none;
-			}
-
-        	.game {
-        		background: url('./img/noisy_net.png');
-	        	width: 100%;
-	        	height: 100%;
-	        	margin: 0px auto;
-	        	display: block;
-	        	
-        	}
-        	
-        	.start {
-	        	position: relative;
-	        	width: 160px;
-	        	height: 230px;
-	        	margin:50px auto;
-	        	background: #FFF;
-	        	z-index: 100;
-	        	text-align: center;
-	        	display: none;
-	        	padding-top: 10px;
-        	}
-        	
-        	.start a {
-	        	background: none repeat scroll 0 0 #DDDDDD;
-			    color: #333333;
-			    display: block;
-			    font-size: 16px;
-			    text-transform: uppercase;
-			    height: 40px;
-			    line-height: 40px;
-			    margin: 10px auto;
-			    text-align: center;
-			    text-decoration: none;
-			    width: 90px;
-        	}
-        	
-        	.win {
-			    background: none repeat scroll 0 0 #EFEFEF;
-			    color: #333333;
-			    font-size: 80px;
-			    height: 100px;
-			    margin: 0 auto;
-			    padding: 20px;
-			    width: 500px;
-			    display: none;
-			}
-        </style>
+        <link rel="stylesheet" href="main.css">
         
     </head>
     <body>
        
        	<div class="game">
        		
-       		<div class="start">
-       			<p>Selecione a dificuldade:</p>
-	       		<a href="#" data-game="easy">Easy</a>
-	       		<a href="#" data-game="normal">Normal</a>
-	       		<a href="#" data-game="hard">Hard</a>
-       		</div>
-       		
-       		<div class="objetivos">
-       		
-       			<strong>Objetivo:</strong>
-       			Pegue todos os itens verdes até aparecer a saída que é azul.
-       			
-       		</div>
-       		
-       		<div class="win">
-       			Você venceu!
-       		</div>
+       		<canvas id="canvas_static"></canvas>
+	        <canvas id="canvas_animated"></canvas>
+	        <canvas id="canvas_shadow" style="display: none;"></canvas><!-- deixando "guardado" aqui por enquanto -->
        	
-       		<canvas id="canvas_estatico"></canvas>
-	        <canvas id="canvas_animado"></canvas>
-	        <canvas id="canvas_sombra"></canvas>
-       	
-       	
-			<img src="./assets/cenario/welcome/img/agua.jpg" class="hide">
-			<img src="./assets/cenario/welcome/img/fundo.jpg" class="hide">
-			<img src="./assets/cenario/welcome/img/parede.jpg" class="hide">
        	</div>
        
 
         <!-- Lib -->
- 			<script type="text/javascript" src="lib/jquery.js"></script>
-        	<script type="text/javascript" src="lib/mousePosition.js"></script>
+ 			<script type="text/javascript" src="lib/mousePosition.js"></script>
         
         <!-- Cenário -->
         	
-        	<script type="text/javascript" src="assets/cenario/welcome/cenarioWelcome.js"></script>
-        		<script type="text/javascript" src="assets/cenario/welcome/assets/parede.js"></script>
-        		<script type="text/javascript" src="assets/cenario/welcome/assets/power.js"></script>
-        		<script type="text/javascript" src="assets/cenario/welcome/assets/agua.js"></script>
-        		<script type="text/javascript" src="assets/cenario/welcome/assets/saida.js"></script>
-        		<script type="text/javascript" src="assets/cenario/welcome/assets/inimigo.js"></script>
+        	<script type="text/javascript" src="assets/scenario/welcome/scenarioWelcome.js"></script>
+        		<script type="text/javascript" src="assets/scenario/welcome/assets/wall.js"></script>
+        		<script type="text/javascript" src="assets/scenario/welcome/assets/power.js"></script>
+        		<script type="text/javascript" src="assets/scenario/welcome/assets/water.js"></script>
+        		<script type="text/javascript" src="assets/scenario/welcome/assets/exit.js"></script>
+        		<script type="text/javascript" src="assets/scenario/welcome/assets/enemy.js"></script>
         		
         <!-- Assets -->
         	
@@ -130,11 +36,15 @@
         <!-- Engine -->
         	
         	<script type="text/javascript" src="engine/render.js"></script>
-        	<script type="text/javascript" src="engine/colisao.js"></script>
+        	<script type="text/javascript" src="engine/collision.js"></script>
         
         <!-- Main -->
-        	<script type="text/javascript" src="game.js"></script>
-       
+			<script type="text/javascript" src="game.js"></script>
+			
+		<!-- Pre Load Images - PENSAR EM UMA FORMA MELHOR DE FAZER ISSO -->
+			<img src="./assets/scenario/welcome/img/water.jpg" class="hide">
+			<img src="./assets/scenario/welcome/img/background.jpg" class="hide">
+			<img src="./assets/scenario/welcome/img/wall.jpg" class="hide">
                
     </body>
 </html>
