@@ -1,66 +1,66 @@
 
 	
-	//Declarações iniciais
+	// # Init
+
+		var FPS = 30;
+		var deltaTime = 1000/FPS;
 	
-		var canvas_estatico = document.getElementById('canvas_estatico');
-		var contexto_estatico = canvas_estatico.getContext('2d');
+		var canvas_static = document.getElementById('canvas_static');
+		var contexto_estatico = canvas_static.getContext('2d');
 		
-		var canvas_animado = document.getElementById('canvas_animado');
-		var contexto_animado = canvas_animado.getContext('2d');
+		var canvas_animated = document.getElementById('canvas_animated');
+		var contexto_animado = canvas_animated.getContext('2d');
 		
-		var canvas_sombra = document.getElementById('canvas_sombra');
-		var contexto_sombra = canvas_sombra.getContext('2d');
+		var canvas_shadow = document.getElementById('canvas_shadow');
+		var contexto_sombra = canvas_shadow.getContext('2d');
 		
-		canvas_animado.width = canvas_estatico.width = canvas_sombra.width = 800;
-		canvas_animado.height = canvas_estatico.height = canvas_sombra.height = 600;
+		canvas_animated.width = canvas_static.width = canvas_shadow.width = 800;
+		canvas_animated.height = canvas_static.height = canvas_shadow.height = 600;
 	
 		var time = Date.now();
 		
 
+		// # Get mouse X, Y position - DEBUG ONLY
+			var mousePosition = new MousePosition(canvas_shadow, false); //canvas, debug?
+				mousePosition.init();
+
+	// # Players
+
+		var player = new Player(300, 420); //posição x e y
+
+	// # Scenario
+		
+		// Como podemos mudar o cenário posteriormente?
+		var scenario = new scenarioWelcome(contexto_estatico, canvas_static, player );
+			
+
+	// # Collision detection class
 	
-		//Lib que pega a posição X e Y do mouse...
-		var mousePosition = new MousePosition(canvas_sombra, false); //canvas, debug?
-			mousePosition.init();
-
-		//Jogadores
-
-			var player = new Player(300, 420); //posição x e y
-
-		//Cenário
+		var collision = new Collision(canvas_animated.width, canvas_animated.height );
 		
-			var cenario = new cenarioWelcome(contexto_estatico, canvas_estatico, player );
+		// Add the objects to the collision vector
+		collision.addArrayItem( scenario.getRenderItems() );
+		collision.addArrayItem( scenario.getRenderItemsAnimated() );
+
+		
+	// # Render
+		
+		var render_static = new Render(contexto_estatico, canvas_static); // Render executed only once
+		var render_animated = new Render(contexto_animado, canvas_animated); //Render with animated objects only
+		//var render_shadow = new Render(contexto_sombra, canvas_shadow, "easy", player); //Render with shadow effect - DEACTIVATED
+			
+		// Add items to be rendered
+		
+		render_static.setScenario(scenario); // set the scenario
+		render_static.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
+
+		render_animated.addArrayItem( scenario.getRenderItemsAnimated() ); // Get all animated items from the scenario that needs to be rendered
+		render_animated.addItem( player ); // Adds the player to the animation render
+
 			
 
-		//Clase de detecção de colisão
+	// # Keyboard Events
 	
-			var colisao = new Colisao(canvas_animado.width, canvas_animado.height );
-			
-			//Adiciona os objetos criados ao vetor de objetos de colisão
-				colisao.addArrayItem( cenario.getRenderItens() );
-				colisao.addArrayItem( cenario.getRenderItensAnimados() );
-
-		
-		//Render
-		
-			var render_estatico = new Render(contexto_estatico, canvas_estatico); //Render que será executado apenas uma vez
-			var render_animado = new Render(contexto_animado, canvas_animado); //Render que conterá os objetos que sofrem movimento apenas
-			var render_sombra = new Render(contexto_sombra, canvas_sombra, "easy", player); //render do efeito de sombra
-			
-		
-			
-			//Adiciona itens para serem renderizados
-			
-				render_estatico.setCenario(cenario); //Define o cenário 
-				render_estatico.addArrayItem(cenario.getRenderItens()); //Pega o itens do cenário em forma de array para renderizar
-
-				render_animado.addArrayItem( cenario.getRenderItensAnimados() ); //Adiciona itens do cenário que serão animados
-				render_animado.addItem( player ); //Adiciona o player
-
-			
-		
-	//Eventos de Teclado (movimento)	
-	
-		
 		var keysDown = {};
 		window.addEventListener('keydown', function(e) {
 		    keysDown[e.keyCode] = true;
@@ -71,91 +71,72 @@
 
 
 	
-	//Funcão de atualização constante (gameLoop)
+	// # The Game Loop
 			
 		function updateGame(mod) {
+			
+
+			// # Movements - - - - - - - 
+			
+				var tempX = player.getX();
+				var tempY = player.getY();
 				
+				if (37 in keysDown) { //left
+					
+					player.movLeft(mod);// Walk - PRECISO REFAZER ESSE MOVIMENTO
 				
-			var tempX = player.getX();
-			var tempY = player.getY();
-		    
-		    if (37 in keysDown) { //left
+					if ( collision.check(player) == true ) // If collide,  walk back
+						player.setX(tempX);
+			
+				}
 				
-		    	player.movLeft(mod); //Anda
-		    
-		    	if ( colisao.verifica(player) == true ) //Se houver colisão, volta...
-		        	player.setX(tempX);
-    	
-		    }
-		    
-		    if (38 in keysDown) { //Up  
-		    	
-		    	player.movUp(mod);
-		    	
-		    	if ( colisao.verifica(player) == true ) 	
-		        	player.setY(tempY);
-		      
-		    }
-		    
-		    if (39 in keysDown) { //right
-		    	
-		    	player.movRight(mod);
-		    	
-		    	if ( colisao.verifica(player) == true )  
-		        	player.setX(tempX);
-		       
-		    }
-		    
-		    if (40 in keysDown) { // down
-		    	
-		    	player.movDown(mod);
-		    	
-		    	if ( colisao.verifica(player) == true ) 
-		        	player.setY(tempY);
-		        
-		    }
+				if (38 in keysDown) { //Up  
+					
+					player.movUp(mod);
+					
+					if ( collision.check(player) == true ) 	
+						player.setY(tempY);
+				
+				}
+				
+				if (39 in keysDown) { //right
+					
+					player.movRight(mod);
+					
+					if ( collision.check(player) == true )  
+						player.setX(tempX);
+				
+				}
+				
+				if (40 in keysDown) { // down
+					
+					player.movDown(mod);
+					
+					if ( collision.check(player) == true ) 
+						player.setY(tempY);
+					
+				}
 		    
 		};
 
-	// "Thread" que roda o jogo	
+	// # "Thread" tha runs the game
 
 		function runGame() {
 
-			updateGame( (Date.now() - time) / 1000 );
+			//updateGame( (Date.now() - time) ); // Delta time, controls de FPS
+			updateGame( deltaTime ); // Delta time, controls de FPS
 		    
-		    render_animado.start( Date.now() - time ); //renderização apenas de objetos animados
-			render_sombra.start( Date.now() - time ); //renderiza apenas o efeito de sombra
-			
-		    time = Date.now();
-		
-			//Faz com que a função run seja realmente executada apenas quando houver foco no navegador
-			//o jogo ainda roda em plano de fundo, mas pelo menos a função de renderização não é chamada sempre...
+		    render_animated.start( deltaTime ); 
+			//render_shadow.start( Date.now() - time ); 
+
+			// Runs only when the browser is in focus
 			requestAnimationFrame(runGame); 	
 		
 		};
 	
-	//Inicialização do game
+	// # Starts the game
 		
-		render_estatico.start( Date.now() - time );  //renderiza apenas uma vez
-
+		render_static.start( deltaTime );  // Render the static layers only once
 		
-		$(document).ready(function() {
-			
-			$('.start, .objetivos').fadeIn(1000);
-			
-			
-			$('.start a').click(function(event){
-				event.preventDefault();
-				
-				render_sombra.setDificuldade( $(this).data('game') );
-				
-				$('.start, .objetivos').fadeOut();
-				$('canvas').fadeIn();
-				
-				runGame();
-				
-			});
-	
-			
-		});			
+		runGame();	// GO GO GO
 	
