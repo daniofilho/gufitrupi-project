@@ -18,12 +18,10 @@
 			// # Texture
 				this.ctx = ctx;
 				
-				this.imgWall = new Image();
-				this.imgWall.src = './assets/scenario/welcome/img/wall.jpg';
-				
-				this.wall = this.ctx.createPattern(this.imgWall, 'repeat');
-				this.wall = "gray"; // TEMPORARIO
-				
+				let imgSprite = new Image();
+				imgSprite.src = './assets/scenario/welcome/img/wall.jpg';
+
+
 		// - - - Sets - - -
 		
 			this.setX =  function (x) { this.x = x; }
@@ -48,10 +46,25 @@
 		
 		// - - - Render - - -
 		
-			this.render = function(context) { 
+			this.render = function(ctx) { 
 				
-				context.fillStyle = this.wall;
-				context.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
+				let x0 = this.getX();
+				let y0 = this.getY();
+				let w  = this.getWidth();
+				let h  = this.getHeight();
+				
+				imgSprite.onload = function(x0, y0, w, h) {
+					let sprite = ctx.createPattern(imgSprite, "repeat");
+					ctx.rect( x0, y0, w, h );
+					ctx.fillStyle = sprite;
+					ctx.fill();
+				}
+				 
+
+				//ctx.fillStyle = 'red';
+				//ctx.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
+
+				console.log( x0, y0, w, h);
 				
 			};
 			

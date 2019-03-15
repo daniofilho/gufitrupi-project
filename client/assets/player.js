@@ -1,8 +1,33 @@
 // Player
 
-	function Player(x0, y0) {
+	function Player(x0, y0, gameProps, ctx) {
 		
 		// - - - Init - - -
+
+			this.ctx = ctx;
+
+			// # Sprites state for player direction
+
+				this.lookDown = function(){
+					let spriteImg = new Image();
+					spriteImg.src = './assets/scenario/welcome/img/water.jpg';
+					return this.ctx.drawImage(spriteImg,  this.width, this.height);
+				}
+				this.lookUp = function(){
+					let spriteImg = new Image();
+					spriteImg.src = '/assets/scenario/welcome/img/water.jpg';
+					return this.ctx.drawImage(spriteImg, this.width, this.height);
+				}
+				this.lookRight = function(){
+					let spriteImg = new Image();
+					spriteImg.src = './assets/scenario/welcome/img/water.jpg';
+					return this.ctx.drawImage(spriteImg, this.width, this.height);
+				}
+				this.lookLeft = function(){
+					let spriteImg = new Image();
+					spriteImg.src = './assets/scenario/welcome/img/water.jpg';
+					return this.ctx.drawImage(spriteImg, this.width, this.height);
+				}
 		
 			// # Position
 				this.x = x0;
@@ -10,32 +35,37 @@
 				
 				this.x0 = x0; // initial position
 				this.y0 = y0;
+
+				this.chunkSize = gameProps.getProp('chunkSize');
+
+				this.lookDirection = this.lookDown();
 		
 			// # Properties
-				this.width = 25; //px
-				this.height = 25; //px
-				this.speed0 = 0.1; // pixels per frame
-				this.speed = this.speed0;
-				
-				this.color0 = '#FFF';
-				this.color = this.color0; 
+				this.width = this.chunkSize; //px
+				this.height = this.chunkSize * 2; //px
+				this.speed0 = 10;
+				this.speed = this.chunkSize / this.speed0;
 			
 		// - - - Player Movement - - -
 		
 			this.movLeft = function(mod) { 
-				this.setX( this.getX() - this.getSpeed() * mod); 
+				this.setLookDirection( this.lookLeft() );
+				this.setX( this.getX() - this.getSpeed()); 
 			};
 			
 			this.movRight = function(mod) { 
-				this.setX( this.getX() + this.getSpeed() * mod); 
+				this.setLookDirection( this.lookRight() );
+				this.setX( this.getX() + this.getSpeed() ); 
 			};
 			
 			this.movUp = function(mod) { 
-				this.setY( this.getY() - this.getSpeed() * mod); 
+				this.setLookDirection( this.lookUp() );
+				this.setY( this.getY() - this.getSpeed() ); 
 			};
 			
 			this.movDown = function(mod) {  
-				this.setY( this.getY() + this.getSpeed() * mod); 
+				this.setLookDirection( this.lookDown() );
+				this.setY( this.getY() + this.getSpeed() ); 
 			};
 		
 		// - - - Sets - - -
@@ -46,8 +76,9 @@
 			this.setHeight = function (height) { this.height = height; }
 			this.setWidth = function (width) { this.width = width; }
 			
-			this.setColor = function (color) { this.color = color; }
-			this.setSpeed = function (speed) { this.speed = speed; }
+			this.setSpeed = function (speed) { this.speed = this.chunkSize / speed; }
+
+			this.setLookDirection = function(lookDirection) { this.lookDirection = lookDirection; }
 
 			
 			// Reset player position - !!! Provavelmente não usarei dessa forma mais, a posição inicial vai depender do cenário
@@ -77,17 +108,14 @@
 			this.render = function(context) {
 				
 				// What to do every frame in terms of render? Draw the player
-				
-				context.fillStyle = this.getColor();
+				context.fillStyle = this.lookDirection;
 				context.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 			};
 			
 			this.noCollision = function() {
 				
 				// What happens if the player is not colliding?
-				
 				this.setSpeed(this.speed0); // Reset speed
-				this.setColor(this.color0);
 			}
 		
 	}//class

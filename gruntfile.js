@@ -29,8 +29,8 @@ module.exports = function(grunt) {
                 livereload: true
             },
             includes: {
-                files: ['*.html', 'client/*/*.html', 'client/*.html'],
-                files: ['*.js', 'client/*/*.js', 'client/*.js'],
+                files: ['*.html', 'client/**/*.html', 'client/*.html'],
+                files: ['*.js', 'client/**/*.js', 'client/*.js'],
             }
         },
 
