@@ -1,12 +1,12 @@
 // Game Properties class to define configurations
 function gameProperties() {
   
-  this.fps = 30;
+  this.fps = 24;
 
   // Canvas size based on "chunks" 
   this.chunkSize = 100; //px - resolution
-	this.screenHorizontalChunks = 15;
-	this.screenVerticalChunks = 15;
+	this.screenHorizontalChunks = 11;
+	this.screenVerticalChunks = 11;
   this.canvasWidth = (this.chunkSize * this.screenHorizontalChunks);
   this.canvasHeight = (this.chunkSize * this.screenVerticalChunks);
 

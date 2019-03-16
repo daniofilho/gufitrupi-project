@@ -11,36 +11,28 @@
         
         // http://getspritexy.com/ <= Para mapear os sprites!
         let spriteProps = {
-          sprite_width: 16, // Player size inside sprite
-          sprite_height: 37
+          sprite_width: 20, // Player size inside sprite
+          sprite_height: 40
         }
         let step = [];
         let defaultStep = 1;
         let initialStep = 1;
         let stepCount = initialStep;
-        let maxSteps = 9;
+        let maxSteps = 8;
         
-
         // Sprites state for player direction
 				this.lookDown = function(){
           spriteProps.direction = 'down';
           
-          // Making repeated steps to smooth movement
-
-          // Step 1
-          for( j=1; j<=3; j++) {
-            step[j] = { x: 7, y: 7 };
-          }
-
-          // Step 2
-          for( j=4; j<=6; j++) {
-            step[j] = { x: 39, y: 7 };
-          }
-
-          // Step 3
-          for( j=7; j<=9; j++) {
-            step[j] = { x: 87, y: 7 };
-          }
+          // Steps
+          step[1] = { x: 0, y: 0 };
+          step[2] = { x: 20, y: 0 };
+          step[3] = { x: 40, y: 0 };
+          step[4] = { x: 60, y: 0 };
+          step[5] = { x: 80, y: 0 };
+          step[6] = { x: 100, y: 0 };
+          step[7] = { x: 120, y: 0 };
+          step[8] = { x: 140, y: 0 };
           
           spriteProps.clip_x = step[stepCount].x;
           spriteProps.clip_y = step[stepCount].y;
@@ -49,20 +41,15 @@
 				this.lookUp = function(){
           spriteProps.direction = 'up';
           
-          // Step 1
-          for( j=1; j<=3; j++) {
-            step[j] = { x: 8, y: 49 };
-          }
-
-          // Step 2
-          for( j=4; j<=6; j++) {
-            step[j] = { x: 44, y: 50 };
-          }
-
-          // Step 3
-          for( j=7; j<=9; j++) {
-            step[j] = { x: 81, y: 50 };
-          }
+          // Steps
+          step[1] = { x: 0, y: 40 };
+          step[2] = { x: 0, y: 40 };
+          step[3] = { x: 40, y: 40 };
+          step[4] = { x: 60, y: 40 };
+          step[5] = { x: 80, y: 40 };
+          step[6] = { x: 100, y: 40 };
+          step[7] = { x: 120, y: 40 };
+          step[8] = { x: 140, y: 40 };
           
           spriteProps.clip_x = step[stepCount].x;
           spriteProps.clip_y = step[stepCount].y;
@@ -70,10 +57,15 @@
 				this.lookRight = function(){
           spriteProps.direction = 'right';
           
-          // Step 1
-          for( j=1; j<=9; j++) {
-            step[j] = { x: 9, y: 88 };
-          }
+          // Steps
+          step[1] = { x: 0, y: 80 };
+          step[2] = { x: 20, y: 80 };
+          step[3] = { x: 40, y: 80 };
+          step[4] = { x: 60, y: 80 };
+          step[5] = { x: 80, y: 80 };
+          step[6] = { x: 100, y: 80 };
+          step[7] = { x: 120, y: 80 };
+          step[8] = { x: 140, y: 80 };
           
           spriteProps.clip_x = step[stepCount].x;
           spriteProps.clip_y = step[stepCount].y;
@@ -82,9 +74,14 @@
           spriteProps.direction = 'left';
           
           // Step 1
-          for( j=1; j<=9; j++) {
-            step[j] = { x: 147, y: 128 };
-          }
+          step[1] = { x: 0, y: 120 };
+          step[2] = { x: 20, y: 120 };
+          step[3] = { x: 40, y: 120 };
+          step[4] = { x: 60, y: 120 };
+          step[5] = { x: 80, y: 120 };
+          step[6] = { x: 100, y: 120 };
+          step[7] = { x: 120, y: 120 };
+          step[8] = { x: 140, y: 120 };
           
           spriteProps.clip_x = step[stepCount].x;
           spriteProps.clip_y = step[stepCount].y;
@@ -106,7 +103,7 @@
 			// # Properties
 				this.width = this.chunkSize; //px
 				this.height = this.chunkSize * 3; //px
-				this.speed0 = 5;
+				this.speed0 = 3;
 				this.speed = this.chunkSize / this.speed0;
 
 			
@@ -193,7 +190,7 @@
           case 'up': 
             this.setLookDirection( this.lookUp() );
             break;
-          case 'dpwn': 
+          case 'down': 
             this.setLookDirection( this.lookDown() );
             break;
         }
