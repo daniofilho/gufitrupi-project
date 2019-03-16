@@ -1,6 +1,7 @@
 window.onload = function() {
 	
 	// # Init
+		var fps, fpsInterval, startTime, now, deltaTime, elapsed;
     var gameProps = new gameProperties();
     
 		var canvasStatic = document.getElementById('canvas_static');
@@ -60,7 +61,8 @@ window.onload = function() {
 		  keysDown[e.keyCode] = true;
 		});
 		window.addEventListener('keyup', function(e) {
-		  delete keysDown[e.keyCode];
+			delete keysDown[e.keyCode];
+			player.resetStep();
 		});
 
 
@@ -74,63 +76,70 @@ window.onload = function() {
 				var tempY = player.getY();
 				
 				if (37 in keysDown) { //left
-					
-					player.movLeft(mod);// Walk - PRECISO REFAZER ESSE MOVIMENTO
-				
+					player.movLeft();
 					if ( collision.check(player) == true ) // If collide,  walk back
 						player.setX(tempX);
-			
 				}
 				
 				if (38 in keysDown) { //Up  
-					
-					player.movUp(mod);
-					
+					player.movUp();
 					if ( collision.check(player) == true ) 	
 						player.setY(tempY);
-				
 				}
 				
 				if (39 in keysDown) { //right
-					
-					player.movRight(mod);
-					
+					player.movRight();
 					if ( collision.check(player) == true )  
 						player.setX(tempX);
-				
 				}
 				
 				if (40 in keysDown) { // down
-					
-					player.movDown(mod);
-					
+					player.movDown();
 					if ( collision.check(player) == true ) 
 						player.setY(tempY);
-					
 				}
 		    
 		};
 
 
 	// # "Thread" tha runs the game
-
-		function runGame() {
-
-			updateGame( gameProps.getProp('deltaTime') ); // Delta time, controls de FPS
-		    
-		  renderAnimated.start( gameProps.getProp('deltaTime') ); 
-			//render_shadow.start( Date.now() - time ); 
+		function runGame(fps) {
+			fpsInterval = 1000 / fps;
+			deltaTime = Date.now();
+			startTime = deltaTime;
+			gameLoop();
+		}
+		
+		function gameLoop() {
 
 			// Runs only when the browser is in focus
-			requestAnimationFrame(runGame); 	
-		
+			// Request another frame
+			requestAnimationFrame(gameLoop);
+
+			// calc elapsed time since last loop
+			now = Date.now();
+			elapsed = now - deltaTime;
+	
+			// if enough time has elapsed, draw the next frame
+			if (elapsed > fpsInterval) {
+	
+					// Get ready for next frame by setting then=now, but also adjust for your
+					// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+					deltaTime = now - (elapsed % fpsInterval);
+	
+					updateGame( deltaTime );
+		    
+					renderAnimated.start( deltaTime ); 
+					//render_shadow.start( Date.now() - time );
+	
+			}
+			
 		};
 	
-
 	// # Starts the game
 		
-		renderStatic.start( gameProps.getProp('deltaTime') );  // Render the static layers only once
+		renderStatic.start( deltaTime );  // Render the static layers only once
 		
-		runGame();	// GO GO GO
+		runGame( gameProps.getProp('fps') );	// GO GO GO
 	
 }

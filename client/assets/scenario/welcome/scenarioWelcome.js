@@ -70,10 +70,10 @@
 				// # Obstacles
 					
 					// Scenario Borders
-					this.addRenderItem( new Wall(ctx, "wallTop", 0, 0, this.width, this.chunkSize) ); //context, name, x0, y0, w, h,
-					//this.addRenderItem( new Wall(ctx, "wallBottom", 0, this.height - this.chunkSize, this.width, this.chunkSize) );
-					//this.addRenderItem( new Wall(ctx, "wallLeft", 0, 0, this.chunkSize, this.height) );
-					//this.addRenderItem( new Wall(ctx, "wallRight", this.width-this.chunkSize, 0, this.chunkSize, this.height) );
+					this.addRenderItem( new Wall(ctx, "wallTop", 0, 0, this.width, this.chunkSize*2) ); //context, name, x0, y0, w, h,
+					this.addRenderItem( new Wall(ctx, "wallBottom", 0, this.height - this.chunkSize*2, this.width, this.chunkSize*2) );
+					this.addRenderItem( new Wall(ctx, "wallLeft", 0, 0, this.chunkSize, this.height) );
+					this.addRenderItem( new Wall(ctx, "wallRight", this.width-this.chunkSize*2, 0, this.chunkSize*2, this.height) );
 						
 					// Walls
 					/*

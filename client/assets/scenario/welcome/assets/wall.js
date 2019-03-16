@@ -40,32 +40,25 @@
 			
 			this.getWidth = function() { return this.width; }
 			this.getHeight = function() { return this.height; }
+
+			this.getCollisionHeight = function() { return this.height; }
+			this.getCollisionY = function() { return this.y; }
 			
 			this.getColor = function() { return this.color; }
 		
 		
 		// - - - Render - - -
 		
-			this.render = function(ctx) { 
-				
-				let x0 = this.getX();
-				let y0 = this.getY();
-				let w  = this.getWidth();
-				let h  = this.getHeight();
-				
-				imgSprite.onload = function(x0, y0, w, h) {
-					let sprite = ctx.createPattern(imgSprite, "repeat");
-					ctx.rect( x0, y0, w, h );
-					ctx.fillStyle = sprite;
-					ctx.fill();
-				}
-				 
-
-				//ctx.fillStyle = 'red';
-				//ctx.fillRect( this.getX(), this.getY(), this.getWidth(), this.getHeight() );
-
-				console.log( x0, y0, w, h);
-				
+			this.render = function(ctx) {
+				let props = {
+					x: this.getX(),
+					y: this.getY(),
+					w: this.getWidth(),
+					h: this.getHeight()
+				} 
+				imgSprite.onload = function() {
+					ctx.drawImage(imgSprite, props.x, props.y, props.w, props.h);	
+        }		
 			};
 			
 			this.collision = function(object) {
