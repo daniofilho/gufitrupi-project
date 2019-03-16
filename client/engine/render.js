@@ -3,7 +3,7 @@
 	function Render(ctx, canvas, dificuldade, player) {
 		
 		// - - - Init - - -
-			
+	
 			this.ctx = ctx; 
 			this.scenario = "";
 			this.canvas = canvas;
@@ -11,9 +11,9 @@
 			this.renderItems = new Array(); 
 			
 		
-        // - - - Functions - - -
+    // - - - Functions - - -
         
-            // Add items to the vector
+      // Add items to the vector
 			this.addItem = function(object){
 				this.renderItems.push(object);
 			}
@@ -30,7 +30,7 @@
         // This functions will be called constantly to render items
 			this.start = function (mod) {		
 				
-                // Clear canvas before render again
+          // Clear canvas before render again
 					this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 					this.ctx.shadowBlur = 0;
 
@@ -38,14 +38,14 @@
 					if ( this.scenario != "") 
 				    	this.scenario.render(this.ctx);
 						
-                // Render items
+          // Render items
 					for (i in this.renderItems) {
-                        // Execute the render function - Include this function on every class!
+            // Execute the render function - Include this function on every class!
 						this.renderItems[i].render(this.ctx, mod);
 					}
 				    
-                // If it's the Shadow render - DEACTIVATED
-                /*
+          // If it's the Shadow render - DEACTIVATED
+          /*
 					if ( this.dificuldade != "" ) {    
 					    
 					    //Caso seja o quadro de animação, cria o efeito de sombra e luz

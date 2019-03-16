@@ -1,42 +1,38 @@
-
+window.onload = function() {
 	
 	// # Init
+		var fps, fpsInterval, startTime, now, deltaTime, elapsed;
+    var gameProps = new gameProperties();
+    
+		var canvasStatic = document.getElementById('canvas_static');
+		var contextStatic = canvasStatic.getContext('2d');
+		
+		var canvasAnimated = document.getElementById('canvas_animated');
+		var contextAnimated = canvasAnimated.getContext('2d');
 
-		var FPS = 30;
-		var deltaTime = 1000/FPS;
+		//var canvas_shadow = document.getElementById('canvas_shadow');
+		//var context_shadow = canvas_shadow.getContext('2d');
+    
+		canvasAnimated.width = canvasStatic.width = gameProps.getProp('canvasWidth');
+		canvasAnimated.height = canvasStatic.height = gameProps.getProp('canvasHeight');
 	
-		var canvas_static = document.getElementById('canvas_static');
-		var contexto_estatico = canvas_static.getContext('2d');
-		
-		var canvas_animated = document.getElementById('canvas_animated');
-		var contexto_animado = canvas_animated.getContext('2d');
-		
-		var canvas_shadow = document.getElementById('canvas_shadow');
-		var contexto_sombra = canvas_shadow.getContext('2d');
-		
-		canvas_animated.width = canvas_static.width = canvas_shadow.width = 800;
-		canvas_animated.height = canvas_static.height = canvas_shadow.height = 600;
-	
-		var time = Date.now();
-		
-
 		// # Get mouse X, Y position - DEBUG ONLY
-			var mousePosition = new MousePosition(canvas_shadow, false); //canvas, debug?
-				mousePosition.init();
+			/*var mousePosition = new MousePosition(canvas_shadow, false); //canvas, debug?
+				mousePosition.init();*/
 
-	// # Players
-
-		var player = new Player(300, 420); //posição x e y
 
 	// # Scenario
 		
-		// Como podemos mudar o cenário posteriormente?
-		var scenario = new scenarioWelcome(contexto_estatico, canvas_static, player );
-			
+		var scenario = new scenarioWelcome(contextStatic, canvasStatic, gameProps );
+
+	// # Players
+
+		var player = new Player( scenario.getPlayerStartX(), scenario.getPlayerStartY(), gameProps, contextAnimated ); //posição x e y
+
 
 	// # Collision detection class
 	
-		var collision = new Collision(canvas_animated.width, canvas_animated.height );
+		var collision = new Collision(canvasAnimated.width, canvasAnimated.height );
 		
 		// Add the objects to the collision vector
 		collision.addArrayItem( scenario.getRenderItems() );
@@ -45,98 +41,105 @@
 		
 	// # Render
 		
-		var render_static = new Render(contexto_estatico, canvas_static); // Render executed only once
-		var render_animated = new Render(contexto_animado, canvas_animated); //Render with animated objects only
-		//var render_shadow = new Render(contexto_sombra, canvas_shadow, "easy", player); //Render with shadow effect - DEACTIVATED
+		var renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
+		var renderAnimated = new Render(contextAnimated, canvasAnimated); //Render with animated objects only
+		//var render_shadow = new Render(context_shadow, canvas_shadow, "easy", player); //Render with shadow effect - DEACTIVATED
 			
 		// Add items to be rendered
 		
-		render_static.setScenario(scenario); // set the scenario
-		render_static.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
+		renderStatic.setScenario(scenario); // set the scenario
+		renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
 
-		render_animated.addArrayItem( scenario.getRenderItemsAnimated() ); // Get all animated items from the scenario that needs to be rendered
-		render_animated.addItem( player ); // Adds the player to the animation render
+		renderAnimated.addArrayItem( scenario.getRenderItemsAnimated() ); // Get all animated items from the scenario that needs to be rendered
+		renderAnimated.addItem( player ); // Adds the player to the animation render
 
-			
 
 	// # Keyboard Events
 	
 		var keysDown = {};
 		window.addEventListener('keydown', function(e) {
-		    keysDown[e.keyCode] = true;
+		  keysDown[e.keyCode] = true;
 		});
 		window.addEventListener('keyup', function(e) {
-		    delete keysDown[e.keyCode];
+			delete keysDown[e.keyCode];
+			player.resetStep();
 		});
 
 
-	
 	// # The Game Loop
 			
 		function updateGame(mod) {
-			
 
-			// # Movements - - - - - - - 
+			// # Movements 
 			
 				var tempX = player.getX();
 				var tempY = player.getY();
 				
 				if (37 in keysDown) { //left
-					
-					player.movLeft(mod);// Walk - PRECISO REFAZER ESSE MOVIMENTO
-				
+					player.movLeft();
 					if ( collision.check(player) == true ) // If collide,  walk back
 						player.setX(tempX);
-			
 				}
 				
 				if (38 in keysDown) { //Up  
-					
-					player.movUp(mod);
-					
+					player.movUp();
 					if ( collision.check(player) == true ) 	
 						player.setY(tempY);
-				
 				}
 				
 				if (39 in keysDown) { //right
-					
-					player.movRight(mod);
-					
+					player.movRight();
 					if ( collision.check(player) == true )  
 						player.setX(tempX);
-				
 				}
 				
 				if (40 in keysDown) { // down
-					
-					player.movDown(mod);
-					
+					player.movDown();
 					if ( collision.check(player) == true ) 
 						player.setY(tempY);
-					
 				}
 		    
 		};
 
+
 	// # "Thread" tha runs the game
-
-		function runGame() {
-
-			//updateGame( (Date.now() - time) ); // Delta time, controls de FPS
-			updateGame( deltaTime ); // Delta time, controls de FPS
-		    
-		    render_animated.start( deltaTime ); 
-			//render_shadow.start( Date.now() - time ); 
+		function runGame(fps) {
+			fpsInterval = 1000 / fps;
+			deltaTime = Date.now();
+			startTime = deltaTime;
+			gameLoop();
+		}
+		
+		function gameLoop() {
 
 			// Runs only when the browser is in focus
-			requestAnimationFrame(runGame); 	
-		
+			// Request another frame
+			requestAnimationFrame(gameLoop);
+
+			// calc elapsed time since last loop
+			now = Date.now();
+			elapsed = now - deltaTime;
+	
+			// if enough time has elapsed, draw the next frame
+			if (elapsed > fpsInterval) {
+	
+					// Get ready for next frame by setting then=now, but also adjust for your
+					// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+					deltaTime = now - (elapsed % fpsInterval);
+	
+					updateGame( deltaTime );
+		    
+					renderAnimated.start( deltaTime ); 
+					//render_shadow.start( Date.now() - time );
+	
+			}
+			
 		};
 	
 	// # Starts the game
 		
-		render_static.start( deltaTime );  // Render the static layers only once
+		renderStatic.start( deltaTime );  // Render the static layers only once
 		
-		runGame();	// GO GO GO
+		runGame( gameProps.getProp('fps') );	// GO GO GO
 	
+}

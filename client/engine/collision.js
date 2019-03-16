@@ -1,6 +1,5 @@
 // Class that detects collision between player and other objects
 
-
 	// AINDA PRECISO REVISAR ESTA CLASSE E RELEMBRAR MELHOR COMO FUNCIONA
 	
 	function Collision(scenarioWidth, scenarioHeight, player) {
@@ -17,26 +16,25 @@
 			
 			this.check = function(object) {
 
-					// !!! Algoritmo de detecção de colisão chamado “Bounding Box 2D”  - 
-					// !!! (A.x + A.Largura) > B.x E A.x < (B.x + B.Largura) E (A.y + A.Altura) > B.y E A.y < (B.y + B.Altura)
+        // !!! Algoritmo de detecção de colisão chamado “Bounding Box 2D”  - 
+        // !!! (A.x + A.Largura) > B.x E A.x < (B.x + B.Largura) E (A.y + A.Altura) > B.y E A.y < (B.y + B.Altura)
 				
-
 				//if ( !this.foraCenario(object) ) { //Se não estiver fora do cenário
 				
 					// caracteiristicas do object passado
 						var aLarg = object.getX() + object.getWidth();
-						var aAlt = object.getY() + object.getHeight();
+						var aAlt = object.getCollisionY() + object.getCollisionHeight();
 						var aX = object.getX();
-						var aY = object.getY()
+						var aY = object.getCollisionY()
 						
 					//Percorre o vetor
 						for (i in this.colItens) {
 							
 							// caracteiristicas do obstáculo atual
 							var bLarg = this.colItens[i].getX() + this.colItens[i].getWidth();
-							var bAlt = this.colItens[i].getY() + this.colItens[i].getHeight();
+							var bAlt = this.colItens[i].getCollisionY() + this.colItens[i].getCollisionHeight();
 							var bX = this.colItens[i].getX();
-							var bY = this.colItens[i].getY();
+							var bY = this.colItens[i].getCollisionY();
 							
 							//console.clear();
 							//console.log("atual "  + this.colItens[i].name );
@@ -99,9 +97,9 @@
 			this.foraCenario = function(object) {
 				
 				var aLarg = object.getX() + object.getWidth();
-				var aAlt = object.getY() + object.getHeight();
+				var aAlt = object.getCollisionY() + object.getCollisionHeight();
 				
-				if ( object.getX() < 0 || aLarg >= this.scenarioWidth || object.getY() < 0 || aAlt >= this.scenarioHeight ) {
+				if ( object.getX() < 0 || aLarg >= this.scenarioWidth || object.getCollisionY() < 0 || aAlt >= this.scenarioHeight ) {
 				
 					return true;
 				
@@ -115,16 +113,16 @@
 					
 				// caracteiristicas do object passado
 					var aLarg = this.player.getX() + this.player.getWidth();
-					var aAlt = this.player.getY() + this.player.getHeight();
+					var aAlt = this.player.getCollisionY() + this.player.getCollisionHeight();
 					var aX = this.player.getX();
-					var aY = this.player.getY()
-
+          var aY = this.player.getCollisionY()
+          
 				// caracteiristicas do obstáculo atual
 					var bLarg = B.x + B.width;
 					var bAlt = B.y + B.height;
 					var bX = B.x;
 					var bY = B.y;
-						
+          
 					if ( aLarg > bX && aX < bLarg && aAlt > bY && aY < bAlt ) {
 					 	return true;
 					}
