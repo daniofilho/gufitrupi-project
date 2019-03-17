@@ -15,3 +15,5 @@ function gameProperties() {
   }
 
 }
+
+window.debug = true;

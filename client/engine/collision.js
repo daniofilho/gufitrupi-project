@@ -1,7 +1,5 @@
 // Class that detects collision between player and other objects
 
-	// AINDA PRECISO REVISAR ESTA CLASSE E RELEMBRAR MELHOR COMO FUNCIONA
-	
 	function Collision(scenarioWidth, scenarioHeight, player) {
 			
 		// # Init
@@ -15,11 +13,12 @@
 		// # Check if the object collides with any object in vector
 			
 			this.check = function(object) {
+        console.clear();
+        console.log('checking');
+        console.log(object);
 
         // !!! Algoritmo de detecção de colisão chamado “Bounding Box 2D”  - 
         // !!! (A.x + A.Largura) > B.x E A.x < (B.x + B.Largura) E (A.y + A.Altura) > B.y E A.y < (B.y + B.Altura)
-				
-				//if ( !this.foraCenario(object) ) { //Se não estiver fora do cenário
 				
 					// caracteiristicas do object passado
 						var aLarg = object.getX() + object.getWidth();
@@ -36,49 +35,49 @@
 							var bX = this.colItens[i].getX();
 							var bY = this.colItens[i].getCollisionY();
 							
-							//console.clear();
-							//console.log("atual "  + this.colItens[i].name );
-
 							if ( aLarg > bX && aX < bLarg && aAlt > bY && aY < bAlt ) {
 								
 								//DEBUG
-									/*
-									console.log("--------");
-									console.log('colidiu com:');
-									console.debug(this.colItens[i].name);
-									console.log("--");
-									console.log("A.larg: " + aLarg + " / B.larg: " + bLarg);
-									console.log("A.alt: " + aAlt + " / B.alt: " + bAlt);
-									console.log("A.x: " + aX + " / B.x: " + bX );
-									console.log("A.y: " + aY + " / B.y: " + bY );
-									console.log("--");
+									if( window.debug ) {
+
+										console.clear();
+										console.log("--------");
+										console.log('colidiu com:');
+										console.debug(this.colItens[i]);
+										console.log("--");
+										console.log("A.larg: " + aLarg + " / B.larg: " + bLarg);
+										console.log("A.alt: " + aAlt + " / B.alt: " + bAlt);
+										console.log("A.x: " + aX + " / B.x: " + bX );
+										console.log("A.y: " + aY + " / B.y: " + bY );
+										console.log("--");
+										
+										if ( aLarg > bX ) {
+											console.log('caso01 - true');
+										} else {
+											console.log('caso01 - false');
+										}
+										
+										if ( aX < bLarg ) {
+											console.log('caso02 - true');
+										} else {
+											console.log('caso02 - false');
+										}
+										
+										if ( aAlt > bY ) {
+											console.log('caso03 - true');
+										} else {
+											console.log('caso03 - false');
+										}
+										
+										if ( aY < bAlt ) {
+											console.log('caso04 - true');
+										} else {
+											console.log('caso04 - false');
+										}
+										
+										console.log("--------");
 									
-									if ( aLarg > bX ) {
-										console.log('caso01 - true');
-									} else {
-										console.log('caso01 - false');
 									}
-									
-									if ( aX < bLarg ) {
-										console.log('caso02 - true');
-									} else {
-										console.log('caso02 - false');
-									}
-									
-									if ( aAlt > bY ) {
-										console.log('caso03 - true');
-									} else {
-										console.log('caso03 - false');
-									}
-									
-									if ( aY < bAlt ) {
-										console.log('caso04 - true');
-									} else {
-										console.log('caso04 - false');
-									}
-									
-									console.log("--------");
-									*/
 									
 								return this.colItens[i].collision(object);
 								
@@ -87,25 +86,8 @@
 							}
 													
 						}
-						
-				//} else {
-				//	return true;
-				//}//if foraCenario
 	
 			};
-			
-			this.foraCenario = function(object) {
-				
-				var aLarg = object.getX() + object.getWidth();
-				var aAlt = object.getCollisionY() + object.getCollisionHeight();
-				
-				if ( object.getX() < 0 || aLarg >= this.scenarioWidth || object.getCollisionY() < 0 || aAlt >= this.scenarioHeight ) {
-				
-					return true;
-				
-				}
-				
-			}
 			
 			this.checkPlayerCollision = function(B) { 
 				

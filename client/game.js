@@ -23,7 +23,7 @@ window.onload = function() {
 
 	// # Scenario
 		
-		var scenario = new scenarioWelcome(contextStatic, canvasStatic, gameProps );
+		var scenario = new scenario_Prototype(contextStatic, canvasStatic, gameProps );
 
 	// # Players
 
@@ -49,7 +49,7 @@ window.onload = function() {
 		
 		renderStatic.setScenario(scenario); // set the scenario
 		renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
-
+		
 		renderAnimated.addArrayItem( scenario.getRenderItemsAnimated() ); // Get all animated items from the scenario that needs to be rendered
 		renderAnimated.addItem( player ); // Adds the player to the animation render
 
