@@ -16,7 +16,7 @@
         }
         let step = [];
         let defaultStep = 1;
-        let initialStep = 1;
+        let initialStep = 2;
         let stepCount = initialStep;
         let maxSteps = 8;
         
@@ -106,7 +106,7 @@
 				this.speed0 = 6;
 				this.speed = this.chunkSize / this.speed0;
 
-			
+        this.isCollidable = true;
 			
 		// - - - Player Movement - - -
 		
@@ -165,7 +165,12 @@
       
       //The collision will be just half of the player height
       this.getCollisionHeight = function() { return this.height / 2; }
+      this.getCollisionWidth = function() { return this.width; }
+      this.getCollisionX = function() {  return this.x; }
       this.getCollisionY = function() {  return this.y + this.getCollisionHeight(); }
+
+      this.getCenterX = function() { return this.getCollisionX() + this.getCollisionWidth(); }
+      this.getCenterY = function() { return this.getCollisionY() + this.getCollisionHeight(); }
 			
 			this.getColor = function() { return this.color; }
 			this.getSpeed = function() { return this.speed; }
@@ -230,7 +235,11 @@
 			this.noCollision = function() {
 				// What happens if the player is not colliding?
 				this.setSpeed(this.speed0); // Reset speed
-			}
+      }
+      
+      this.collision = function(object) {
+        return this.isCollidable;
+      };
 		
 	}//class
 	

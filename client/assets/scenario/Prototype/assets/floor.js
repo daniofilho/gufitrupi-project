@@ -13,7 +13,9 @@ function Floor(type, x0, y0, chunkSize) {
 			// # Properties
 				this.width = chunkSize; //px
 				this.height = chunkSize;
-				
+        
+        this.isCollidable = false;
+
 			// # Sprite
         let stageSprite = document.getElementById('sprite_prototype'); // TEMPORARY
         
@@ -58,7 +60,12 @@ function Floor(type, x0, y0, chunkSize) {
 			this.getHeight = function() { return this.height; }
 
 			this.getCollisionHeight = function() { return this.height; }
-			this.getCollisionY = function() { return this.y; }
+      this.getCollisionWidth = function() { return this.width; }
+      this.getCollisionX = function() {  return this.x; }
+      this.getCollisionY = function() {  return this.y; }
+
+      this.getCenterX = function() { return this.getCollisionX() + this.getCollisionWidth(); }
+      this.getCenterY = function() { return this.getCollisionY() + this.getCollisionHeight(); }
 		
 		// - - - Render - - -
 		
@@ -84,12 +91,15 @@ function Floor(type, x0, y0, chunkSize) {
         if( window.debug ) {
           ctx.fillStyle = "rgba(0,255,0,0.4)";
           ctx.fillRect(props.x, props.y, props.w, props.h);
+
+          ctx.rect(props.x, props.y, props.w, props.h);
+          ctx.stroke();
         }
 
 			};
 			
 			this.collision = function(object) {
-        return false; // Don't collide
+        return this.isCollidable; // Don't collide
       };
       
     // - - - Sprite Type - - -

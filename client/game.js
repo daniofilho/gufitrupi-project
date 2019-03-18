@@ -72,32 +72,20 @@ window.onload = function() {
 
 			// # Movements 
 			
-				var tempX = player.getX();
-				var tempY = player.getY();
-				
-				if (37 in keysDown) { //left
+				if (37 in keysDown) //left
 					player.movLeft();
-					if ( collision.check(player) == true ) // If collide,  walk back
-						player.setX(tempX);
-				}
-				
-				if (38 in keysDown) { //Up  
+					
+				if (38 in keysDown) //Up  
 					player.movUp();
-					if ( collision.check(player) == true ) 	
-						player.setY(tempY);
-				}
-				
-				if (39 in keysDown) { //right
+					
+				if (39 in keysDown) //right
 					player.movRight();
-					if ( collision.check(player) == true )  
-						player.setX(tempX);
-				}
-				
-				if (40 in keysDown) { // down
+
+				if (40 in keysDown) // down
 					player.movDown();
-					if ( collision.check(player) == true ) 
-						player.setY(tempY);
-				}
+      
+      // # Check if player is colliding
+				collision.check(player);
 		    
 		};
 

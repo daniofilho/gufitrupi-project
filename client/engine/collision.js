@@ -11,105 +11,63 @@
 			this.player = player;
 			
 		// # Check if the object collides with any object in vector
-			
+			// Algorithm reference: Gustavo Silveira - https://www.youtube.com/watch?v=s7qiWLBBpJw
 			this.check = function(object) {
-        console.clear();
-        console.log('checking');
-        console.log(object);
+        
+        for (i in this.colItens) {
 
-        // !!! Algoritmo de detecção de colisão chamado “Bounding Box 2D”  - 
-        // !!! (A.x + A.Largura) > B.x E A.x < (B.x + B.Largura) E (A.y + A.Altura) > B.y E A.y < (B.y + B.Altura)
-				
-					// caracteiristicas do object passado
-						var aLarg = object.getX() + object.getWidth();
-						var aAlt = object.getCollisionY() + object.getCollisionHeight();
-						var aX = object.getX();
-						var aY = object.getCollisionY()
-						
-					//Percorre o vetor
-						for (i in this.colItens) {
-							
-							// caracteiristicas do obstáculo atual
-							var bLarg = this.colItens[i].getX() + this.colItens[i].getWidth();
-							var bAlt = this.colItens[i].getCollisionY() + this.colItens[i].getCollisionHeight();
-							var bX = this.colItens[i].getX();
-							var bY = this.colItens[i].getCollisionY();
-							
-							if ( aLarg > bX && aX < bLarg && aAlt > bY && aY < bAlt ) {
-								
-								//DEBUG
-									if( window.debug ) {
+          let r1 = object;
+          let r2 = this.colItens[i];
 
-										console.clear();
-										console.log("--------");
-										console.log('colidiu com:');
-										console.debug(this.colItens[i]);
-										console.log("--");
-										console.log("A.larg: " + aLarg + " / B.larg: " + bLarg);
-										console.log("A.alt: " + aAlt + " / B.alt: " + bAlt);
-										console.log("A.x: " + aX + " / B.x: " + bX );
-										console.log("A.y: " + aY + " / B.y: " + bY );
-										console.log("--");
-										
-										if ( aLarg > bX ) {
-											console.log('caso01 - true');
-										} else {
-											console.log('caso01 - false');
-										}
-										
-										if ( aX < bLarg ) {
-											console.log('caso02 - true');
-										} else {
-											console.log('caso02 - false');
-										}
-										
-										if ( aAlt > bY ) {
-											console.log('caso03 - true');
-										} else {
-											console.log('caso03 - false');
-										}
-										
-										if ( aY < bAlt ) {
-											console.log('caso04 - true');
-										} else {
-											console.log('caso04 - false');
-										}
-										
-										console.log("--------");
-									
-									}
-									
-								return this.colItens[i].collision(object);
-								
-							} else {
-								object.noCollision();
-							}
-													
-						}
-	
-			};
-			
-			this.checkPlayerCollision = function(B) { 
-				
-				//player é uma variável global definida no main.js
-					
-				// caracteiristicas do object passado
-					var aLarg = this.player.getX() + this.player.getWidth();
-					var aAlt = this.player.getCollisionY() + this.player.getCollisionHeight();
-					var aX = this.player.getX();
-          var aY = this.player.getCollisionY()
+          this.checkCollision(r1, r2);
+
+        }
+        
+      }
+
+      this.checkCollision = function(r1, r2) {
+        
+        //r1 -> the moving object
+        //r2 -> the "wall"
+
+        // Only checks "collidable" objects
+        if( ! r2.collision() ) return false;
+ 
+       // stores the distance between the objects (must be rectangle)
+        var catX = r1.getCenterX() - r2.getCenterX();
+        var catY = r1.getCenterY() - r2.getCenterY();
+
+        var sumHalfWidth = ( r1.getCollisionWidth() / 2 ) + ( r2.getCollisionWidth() / 2 );
+        var sumHalfHeight = ( r1.getCollisionHeight() / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
+        
+        if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
           
-				// caracteiristicas do obstáculo atual
-					var bLarg = B.x + B.width;
-					var bAlt = B.y + B.height;
-					var bX = B.x;
-					var bY = B.y;
+          var overlapX = sumHalfWidth - Math.abs(catX);
+          var overlapY = sumHalfHeight - Math.abs(catY);
           
-					if ( aLarg > bX && aX < bLarg && aAlt > bY && aY < bAlt ) {
-					 	return true;
-					}
+          if(overlapX >= overlapY){ // Direction of collision - Up/Down
+            if(catY > 0){ // Up
+              r1.setY( r1.getY() + overlapY );
+            } else {
+              r1.setY( r1.getY() - overlapY );
+            }
+          } else {// Direction of collision - Left/Right
+            if(catX > 0){ // Left
+              r1.setX( r1.getX() + overlapX );
+            } else {
+              r1.setX( r1.getX() - overlapX );
+            }
+          }
+
+        } else {
+          r1.noCollision(); // What happens if it's not colling?
+        }
+      }
+      
+      this.checkPlayerCollision = function(B) { 
+				// player is a global variable set in game.js
+        this.checkCollision( player, B);
 			};
-			
 			
 				
 		//Adiciona itens para verificar colisão	

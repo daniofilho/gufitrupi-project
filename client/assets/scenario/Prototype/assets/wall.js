@@ -11,6 +11,8 @@
 			// # Properties
 				this.width = chunkSize; //px
         this.height = chunkSize;
+
+        this.isCollidable = true;
         
 			// # Sprite
         let stageSprite = document.getElementById('sprite_prototype'); // TEMPORARY
@@ -112,7 +114,12 @@
 			this.getHeight = function() { return this.height; }
 
 			this.getCollisionHeight = function() { return this.height; }
-			this.getCollisionY = function() { return this.y; }
+      this.getCollisionWidth = function() { return this.width; }
+      this.getCollisionX = function() {  return this.x; }
+      this.getCollisionY = function() {  return this.y; }
+
+      this.getCenterX = function() { return this.getCollisionX() + this.getCollisionWidth(); }
+      this.getCenterY = function() { return this.getCollisionY() + this.getCollisionHeight(); }
 		
 		// - - - Render - - -
 		
@@ -138,11 +145,14 @@
         if( window.debug ) {
           ctx.fillStyle = "rgba(255,0,0,0.4)";
           ctx.fillRect(props.x, props.y, props.w, props.h);
+
+          ctx.rect(props.x, props.y, props.w, props.h);
+          ctx.stroke();
         }
 			};
 			
 			this.collision = function(object) {
-        return true;
+        return this.isCollidable;
       };
       
     // - - - Sprite Type - - -
