@@ -16,7 +16,7 @@
         }
         let step = [];
         let defaultStep = 1;
-        let initialStep = 1;
+        let initialStep = 2;
         let stepCount = initialStep;
         let maxSteps = 8;
         
@@ -102,11 +102,11 @@
 		
 			// # Properties
 				this.width = this.chunkSize; //px
-				this.height = this.chunkSize * 3; //px
-				this.speed0 = 3;
+				this.height = this.chunkSize * 2; //px
+				this.speed0 = 6;
 				this.speed = this.chunkSize / this.speed0;
 
-			
+        this.isCollidable = true;
 			
 		// - - - Player Movement - - -
 		
@@ -165,7 +165,12 @@
       
       //The collision will be just half of the player height
       this.getCollisionHeight = function() { return this.height / 2; }
-      this.getCollisionY = function() { return this.y + this.getCollisionHeight(); }
+      this.getCollisionWidth = function() { return this.width; }
+      this.getCollisionX = function() {  return this.x; }
+      this.getCollisionY = function() {  return this.y + this.getCollisionHeight(); }
+
+      this.getCenterX = function() { return this.getCollisionX() + this.getCollisionWidth(); }
+      this.getCenterY = function() { return this.getCollisionY() + this.getCollisionHeight(); }
 			
 			this.getColor = function() { return this.color; }
 			this.getSpeed = function() { return this.speed; }
@@ -221,14 +226,20 @@
           props.x, props.y, props.w, props.h
         );	
         // DEBUG COLLISION
-        //ctx.fillStyle = "rgba(0,100,0, 0.5)";
-        //ctx.fillRect( props.x, props.y + (props.h / 2), props.w, props.h / 2);
+        if( window.debug ) {
+          ctx.fillStyle = "rgba(0,0,100, 0.5)";
+          ctx.fillRect( props.x, this.getCollisionY(), props.w, this.getCollisionHeight() );
+        }
 			};
 			
 			this.noCollision = function() {
 				// What happens if the player is not colliding?
 				this.setSpeed(this.speed0); // Reset speed
-			}
+      }
+      
+      this.collision = function(object) {
+        return this.isCollidable;
+      };
 		
 	}//class
 	

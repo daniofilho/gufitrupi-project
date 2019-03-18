@@ -23,7 +23,7 @@ window.onload = function() {
 
 	// # Scenario
 		
-		var scenario = new scenarioWelcome(contextStatic, canvasStatic, gameProps );
+		var scenario = new scenario_Prototype(contextStatic, canvasStatic, gameProps );
 
 	// # Players
 
@@ -49,7 +49,7 @@ window.onload = function() {
 		
 		renderStatic.setScenario(scenario); // set the scenario
 		renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
-
+		
 		renderAnimated.addArrayItem( scenario.getRenderItemsAnimated() ); // Get all animated items from the scenario that needs to be rendered
 		renderAnimated.addItem( player ); // Adds the player to the animation render
 
@@ -72,32 +72,20 @@ window.onload = function() {
 
 			// # Movements 
 			
-				var tempX = player.getX();
-				var tempY = player.getY();
-				
-				if (37 in keysDown) { //left
+				if (37 in keysDown) //left
 					player.movLeft();
-					if ( collision.check(player) == true ) // If collide,  walk back
-						player.setX(tempX);
-				}
-				
-				if (38 in keysDown) { //Up  
+					
+				if (38 in keysDown) //Up  
 					player.movUp();
-					if ( collision.check(player) == true ) 	
-						player.setY(tempY);
-				}
-				
-				if (39 in keysDown) { //right
+					
+				if (39 in keysDown) //right
 					player.movRight();
-					if ( collision.check(player) == true )  
-						player.setX(tempX);
-				}
-				
-				if (40 in keysDown) { // down
+
+				if (40 in keysDown) // down
 					player.movDown();
-					if ( collision.check(player) == true ) 
-						player.setY(tempY);
-				}
+      
+      // # Check if player is colliding
+				collision.check(player);
 		    
 		};
 
