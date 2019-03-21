@@ -9,17 +9,9 @@ window.onload = function() {
 		
 		var canvasAnimated = document.getElementById('canvas_animated');
 		var contextAnimated = canvasAnimated.getContext('2d');
-
-		//var canvas_shadow = document.getElementById('canvas_shadow');
-		//var context_shadow = canvas_shadow.getContext('2d');
     
 		canvasAnimated.width = canvasStatic.width = gameProps.getProp('canvasWidth');
 		canvasAnimated.height = canvasStatic.height = gameProps.getProp('canvasHeight');
-	
-		// # Get mouse X, Y position - DEBUG ONLY
-			/*var mousePosition = new MousePosition(canvas_shadow, false); //canvas, debug?
-				mousePosition.init();*/
-
 
 	// # Scenario
 		
@@ -28,7 +20,6 @@ window.onload = function() {
 	// # Players
 
 		var player = new Player( scenario.getPlayerStartX(), scenario.getPlayerStartY(), gameProps, contextAnimated ); //posição x e y
-
 
 	// # Collision detection class
 	
@@ -111,14 +102,13 @@ window.onload = function() {
 			// if enough time has elapsed, draw the next frame
 			if (elapsed > fpsInterval) {
 	
-					// Get ready for next frame by setting then=now, but also adjust for your
-					// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-					deltaTime = now - (elapsed % fpsInterval);
+				// Get ready for next frame by setting then=now, but also adjust for your
+				// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+				deltaTime = now - (elapsed % fpsInterval);
 	
-					updateGame( deltaTime );
+				updateGame( deltaTime );
 		    
-					renderAnimated.start( deltaTime ); 
-					//render_shadow.start( Date.now() - time );
+				renderAnimated.start( deltaTime ); 
 	
 			}
 			

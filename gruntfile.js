@@ -12,6 +12,17 @@ module.exports = function(grunt) {
         
         pkg: grunt.file.readJSON('package.json'),
         
+        browserify: {
+            build: {
+                src: [
+                    'client/assets/**/*.js',
+                    'client/gameProperties.js',
+                    'client/game.js' 
+                ],
+                dest: 'client/bundle.js'
+            }
+        },
+
         // criar o server
         connect: {
             server: {
@@ -48,6 +59,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         'serve',
         [
+            'browserify',
             'connect',
             'open',
             'watch'
