@@ -1,7 +1,14 @@
+const gameProperties = require('./gameProperties');
+const scenarioPrototype = require('./assets/scenario/Prototype/scenarioPrototype');
+const Player = require('./assets/player');
+const Collision = require('./engine/collision');
+const Render = require('./engine/render');
+
 window.onload = function() {
 	
 	// # Init
-		var fps, fpsInterval, startTime, now, deltaTime, elapsed;
+		
+		var fpsInterval, now, deltaTime, elapsed;
     var gameProps = new gameProperties();
     
 		var canvasStatic = document.getElementById('canvas_static');
@@ -9,26 +16,17 @@ window.onload = function() {
 		
 		var canvasAnimated = document.getElementById('canvas_animated');
 		var contextAnimated = canvasAnimated.getContext('2d');
-
-		//var canvas_shadow = document.getElementById('canvas_shadow');
-		//var context_shadow = canvas_shadow.getContext('2d');
     
 		canvasAnimated.width = canvasStatic.width = gameProps.getProp('canvasWidth');
 		canvasAnimated.height = canvasStatic.height = gameProps.getProp('canvasHeight');
-	
-		// # Get mouse X, Y position - DEBUG ONLY
-			/*var mousePosition = new MousePosition(canvas_shadow, false); //canvas, debug?
-				mousePosition.init();*/
-
 
 	// # Scenario
 		
-		var scenario = new scenario_Prototype(contextStatic, canvasStatic, gameProps );
+		var scenario = new scenarioPrototype(contextStatic, canvasStatic, gameProps );
 
 	// # Players
 
 		var player = new Player( scenario.getPlayerStartX(), scenario.getPlayerStartY(), gameProps, contextAnimated ); //posição x e y
-
 
 	// # Collision detection class
 	
@@ -43,7 +41,6 @@ window.onload = function() {
 		
 		var renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
 		var renderAnimated = new Render(contextAnimated, canvasAnimated); //Render with animated objects only
-		//var render_shadow = new Render(context_shadow, canvas_shadow, "easy", player); //Render with shadow effect - DEACTIVATED
 			
 		// Add items to be rendered
 		
@@ -72,20 +69,21 @@ window.onload = function() {
 
 			// # Movements 
 			
-				if (37 in keysDown) //left
-					player.movLeft();
-					
-				if (38 in keysDown) //Up  
-					player.movUp();
-					
-				if (39 in keysDown) //right
-					player.movRight();
+      if (37 in keysDown) //left
+        player.movLeft();
+        
+      if (38 in keysDown) //Up  
+        player.movUp();
+        
+      if (39 in keysDown) //right
+        player.movRight();
 
-				if (40 in keysDown) // down
-					player.movDown();
+      if (40 in keysDown) // down
+        player.movDown();
       
       // # Check if player is colliding
-				collision.check(player);
+      
+      collision.check(player);
 		    
 		};
 
@@ -111,14 +109,13 @@ window.onload = function() {
 			// if enough time has elapsed, draw the next frame
 			if (elapsed > fpsInterval) {
 	
-					// Get ready for next frame by setting then=now, but also adjust for your
-					// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-					deltaTime = now - (elapsed % fpsInterval);
+				// Get ready for next frame by setting then=now, but also adjust for your
+				// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+				deltaTime = now - (elapsed % fpsInterval);
 	
-					updateGame( deltaTime );
+				updateGame( deltaTime );
 		    
-					renderAnimated.start( deltaTime ); 
-					//render_shadow.start( Date.now() - time );
+				renderAnimated.start( deltaTime ); 
 	
 			}
 			
