@@ -11,47 +11,18 @@
        		
        		<canvas id="canvas_static"></canvas>
 	        <canvas id="canvas_animated"></canvas>
-	        <canvas id="canvas_shadow" style="display: none;"></canvas><!-- deixando "guardado" aqui por enquanto -->
-       	
+	       
        	</div>
 		
-        <!-- Lib -->
- 			<script type="text/javascript" src="lib/mousePosition.js"></script>
-        
-        <!-- Scenario -->
-        	
-			<script type="text/javascript" src="assets/scenario/Prototype/scenarioPrototype.js"></script>
-				   
-				<!-- Stages -->
-				<script type="text/javascript" src="assets/scenario/Prototype/stages/stage_1.js"></script>
+		<!-- Libs -->
+		<script type="text/javascript" src="lib/mousePosition.js"></script>
 
-		   		<!-- Scenario Assets -->
-        		<script type="text/javascript" src="assets/scenario/Prototype/assets/wall.js"></script>
-        		<script type="text/javascript" src="assets/scenario/Prototype/assets/floor.js"></script>
-				
-				<!--
-				<script type="text/javascript" src="assets/scenario/welcome/assets/power.js"></script>
-        		<script type="text/javascript" src="assets/scenario/welcome/assets/water.js"></script>
-        		<script type="text/javascript" src="assets/scenario/welcome/assets/exit.js"></script>
-        		<script type="text/javascript" src="assets/scenario/welcome/assets/enemy.js"></script>
-				-->
-				
-        <!-- Assets -->
-        	
-        	<script type="text/javascript" src="assets/player.js"></script>
+		<!-- Bundle -->
+		<script type="text/javascript" src="bundle.js"></script>
 
-        <!-- Engine -->
-        	
-        	<script type="text/javascript" src="engine/render.js"></script>
-        	<script type="text/javascript" src="engine/collision.js"></script>
-        
-        <!-- Main -->
-			<script type="text/javascript" src="gameProperties.js"></script>
-			<script type="text/javascript" src="game.js"></script>
-			
 		<!-- Pre Load Images - PENSAR EM UMA FORMA MELHOR DE FAZER ISSO -->
-			<img src="./assets/sprites/player_one.png?v=2" class="hide" id="sprite_player_one">
-			<img src="./assets/scenario/Prototype/sprites/prototype.png" class="hide" id="sprite_prototype">
+		<img src="./assets/sprites/player_one.png?v=2" class="hide" id="sprite_player_one">
+		<img src="./assets/scenario/Prototype/sprites/prototype.png" class="hide" id="sprite_prototype">
                
     </body>
 </html>
