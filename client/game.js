@@ -68,21 +68,9 @@ window.onload = function() {
 		function updateGame(mod) {
 
 			// # Movements 
-			
-      if (37 in keysDown) //left
-        player.movLeft();
-        
-      if (38 in keysDown) //Up  
-        player.movUp();
-        
-      if (39 in keysDown) //right
-        player.movRight();
-
-      if (40 in keysDown) // down
-        player.movDown();
+      player.handleMovement( keysDown );
       
       // # Check if player is colliding
-      
       collision.check(player);
 		    
 		};

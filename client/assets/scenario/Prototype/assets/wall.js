@@ -1,6 +1,7 @@
 class Wall {
 
 	constructor(type, x0, y0, chunkSize) {
+    
     // # Position
     this.x = x0;
     this.y = y0;
@@ -13,7 +14,9 @@ class Wall {
       
     // # Sprite
     this.stageSprite = document.getElementById('sprite_prototype'); // TEMPORARY
-    
+    //this.stageSprite = new Image();
+    //this.stageSprite.src = '/assets/scenario/Prototype/sprites/prototype.png';
+
     this.spriteWidth = 16;
     this.spriteHeight = 16;
     this.spriteProps = new Array();

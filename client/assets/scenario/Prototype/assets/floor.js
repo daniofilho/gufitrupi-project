@@ -14,7 +14,9 @@ class Floor {
 
     // # Sprite
     this.stageSprite = document.getElementById('sprite_prototype'); // TEMPORARY
-      
+    //this.stageSprite = new Image();
+    //this.stageSprite.src = './assets/scenario/Prototype/sprites/prototype.png'; // Why not working?
+
     this.spriteWidth = 15;
     this.spriteHeight = 15;
     this.spriteProps = new Array();
