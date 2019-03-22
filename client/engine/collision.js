@@ -69,5 +69,6 @@ class Collision {
 	}
 
 }// class
-	
+
+module.exports = Collision;
 	

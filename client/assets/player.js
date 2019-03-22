@@ -238,4 +238,5 @@ class Player {
     };
 		
 }//class
-	
+
+module.exports = Player;

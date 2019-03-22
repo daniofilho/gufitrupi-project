@@ -160,4 +160,6 @@ class Wall {
       this.setSpriteType(type);
     }
 
-	}//class
+  }//class
+  
+  module.exports = Wall;

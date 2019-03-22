@@ -1,5 +1,5 @@
 // Game Properties class to define configurations
-export class gameProperties {
+class gameProperties {
 
   constructor() {
     // Canvas size based on "chunks" 
@@ -22,5 +22,6 @@ export class gameProperties {
   }
 
 }
+module.exports = gameProperties
 
 window.debug = false;

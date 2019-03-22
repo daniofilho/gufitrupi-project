@@ -41,3 +41,4 @@ class Render {
 	}
 	
 }//class
+module.exports = Render

@@ -1,4 +1,8 @@
 // Stage 01
+
+const Wall = require('../assets/wall');
+const Floor = require('../assets/floor');
+
 class Prototype_Stage_1 {
 
   constructor(chunkSize) {
@@ -87,6 +91,7 @@ class Prototype_Stage_1 {
 
 } // class
 
+module.exports = Prototype_Stage_1
 
 
 

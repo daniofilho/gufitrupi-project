@@ -1,7 +1,9 @@
 /*
 	Prototype Scenario
 */
-class scenario_Prototype {
+const Prototype_Stage_1 = require('./stages/stage_1');
+
+class scenarioPrototype {
 
 	constructor(ctx, canvas, gameProps){
 		this.ctx = ctx;
@@ -87,3 +89,5 @@ class scenario_Prototype {
 	}
 
 }//class
+
+module.exports = scenarioPrototype;

@@ -105,4 +105,6 @@ class Floor {
       this.setSpriteType(type);
     }
      
-	}//class
+  }//class
+  
+  module.exports = Floor;

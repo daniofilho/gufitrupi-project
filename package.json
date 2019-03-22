@@ -1,5 +1,8 @@
 {
-  "name": "2d-game-concept",
+  "name": "gufitrupi-project",
+  "scripts": {
+    "start": "grunt serve"
+  },
   "version": "0.1.0",
   "dependencies": {
     "grunt": "~0.4.5",

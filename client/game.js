@@ -1,4 +1,8 @@
-const gameProperties = require('gameProperties');
+const gameProperties = require('./gameProperties');
+const scenarioPrototype = require('./assets/scenario/Prototype/scenarioPrototype');
+const Player = require('./assets/player');
+const Collision = require('./engine/collision');
+const Render = require('./engine/render');
 
 window.onload = function() {
 	
@@ -18,7 +22,7 @@ window.onload = function() {
 
 	// # Scenario
 		
-		var scenario = new scenario_Prototype(contextStatic, canvasStatic, gameProps );
+		var scenario = new scenarioPrototype(contextStatic, canvasStatic, gameProps );
 
 	// # Players
 
