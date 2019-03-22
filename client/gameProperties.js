@@ -1,5 +1,5 @@
 // Game Properties class to define configurations
-class gameProperties {
+export class gameProperties {
 
   constructor() {
     // Canvas size based on "chunks" 

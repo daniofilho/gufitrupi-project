@@ -13,6 +13,11 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         
         browserify: {
+            options: {
+                browserifyOptions: {
+                   debug: true
+                }
+            },
             build: {
                 src: [
                     'client/assets/**/*.js',

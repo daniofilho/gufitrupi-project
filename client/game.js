@@ -1,7 +1,10 @@
+const gameProperties = require('gameProperties');
+
 window.onload = function() {
 	
 	// # Init
-		var fps, fpsInterval, startTime, now, deltaTime, elapsed;
+		
+		var fpsInterval, now, deltaTime, elapsed;
     var gameProps = new gameProperties();
     
 		var canvasStatic = document.getElementById('canvas_static');
@@ -34,7 +37,6 @@ window.onload = function() {
 		
 		var renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
 		var renderAnimated = new Render(contextAnimated, canvasAnimated); //Render with animated objects only
-		//var render_shadow = new Render(context_shadow, canvas_shadow, "easy", player); //Render with shadow effect - DEACTIVATED
 			
 		// Add items to be rendered
 		
@@ -63,20 +65,21 @@ window.onload = function() {
 
 			// # Movements 
 			
-				if (37 in keysDown) //left
-					player.movLeft();
-					
-				if (38 in keysDown) //Up  
-					player.movUp();
-					
-				if (39 in keysDown) //right
-					player.movRight();
+      if (37 in keysDown) //left
+        player.movLeft();
+        
+      if (38 in keysDown) //Up  
+        player.movUp();
+        
+      if (39 in keysDown) //right
+        player.movRight();
 
-				if (40 in keysDown) // down
-					player.movDown();
+      if (40 in keysDown) // down
+        player.movDown();
       
       // # Check if player is colliding
-				collision.check(player);
+      
+      collision.check(player);
 		    
 		};
 
