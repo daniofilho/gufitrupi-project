@@ -34,7 +34,7 @@ window.onload = function() {
 		
 		// Add the objects to the collision vector
 		collision.addArrayItem( scenario.getRenderItems() );
-		collision.addArrayItem( scenario.getRenderItemsAnimated() );
+		collision.addArrayItem( scenario.getLayerItems() );
 
 		
 	// # Render
@@ -47,7 +47,7 @@ window.onload = function() {
 		renderStatic.setScenario(scenario); // set the scenario
 		renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
 		
-		renderAnimated.addArrayItem( scenario.getRenderItemsAnimated() ); // Get all animated items from the scenario that needs to be rendered
+		renderAnimated.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
 		renderAnimated.addItem( player ); // Adds the player to the animation render
 
 

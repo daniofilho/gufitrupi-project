@@ -18,27 +18,27 @@ class Collision {
     } 
   }
 
+  // @r1: the moving object
+  // @r2: the "wall"
   checkCollision(r1, r2) {
-        
-    //r1 -> the moving object
-    //r2 -> the "wall"
+    
+    // Only checks objects that needs to be checked
+    if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) { return false; }
 
-    // Only checks "collidable" objects
-      if( ! r2.collision() ) return false;
- 
     // stores the distance between the objects (must be rectangle)
-      var catX = r1.getCenterX() - r2.getCenterX();
-      var catY = r1.getCenterY() - r2.getCenterY();
+    var catX = r1.getCenterX() - r2.getCenterX();
+    var catY = r1.getCenterY() - r2.getCenterY();
 
-      var sumHalfWidth = ( r1.getCollisionWidth() / 2 ) + ( r2.getCollisionWidth() / 2 );
-      var sumHalfHeight = ( r1.getCollisionHeight() / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
-        
-      if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
-        
-        var overlapX = sumHalfWidth - Math.abs(catX);
-        var overlapY = sumHalfHeight - Math.abs(catY);
-        
-        if(overlapX >= overlapY){ // Direction of collision - Up/Down
+    var sumHalfWidth = ( r1.getCollisionWidth() / 2 ) + ( r2.getCollisionWidth() / 2 );
+    var sumHalfHeight = ( r1.getCollisionHeight() / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
+      
+    if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
+      
+      var overlapX = sumHalfWidth - Math.abs(catX);
+      var overlapY = sumHalfHeight - Math.abs(catY);
+      
+      if( r2.stopIfCollision() ) {
+        if(overlapX >= overlapY ){ // Direction of collision - Up/Down && r2.()
           if(catY > 0){ // Up
             r1.setY( r1.getY() + overlapY );
           } else {
@@ -51,10 +51,18 @@ class Collision {
             r1.setX( r1.getX() - overlapX );
           }
         }
-
-      } else {
-        r1.noCollision(); // What happens if it's not colling?
       }
+
+      // Triggers Collision event
+      r1.collision(r2);
+      r2.collision(r1);
+
+    } else {
+      // Triggers not in collision event
+      r1.noCollision(r2); 
+      r2.noCollision(r1); 
+    }
+
   }
 			
 	// Add items to check for collision

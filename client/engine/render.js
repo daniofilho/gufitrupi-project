@@ -1,6 +1,6 @@
 class Render {
 
-	constructor(ctx, canvas, dificuldade, player) {
+	constructor(ctx, canvas, player) {
 		this.ctx = ctx; 
 		this.scenario = "";
 		this.canvas = canvas;
