@@ -32,9 +32,9 @@ class Teleport extends _Collidable {
 
   // Collision Event
   collision(obj){ 
-    setTimeout(() => {
+    //setTimeout(() => {
       obj.resetPosition();
-    }, 200);
+    //}, 400);
   }
 
 }//class

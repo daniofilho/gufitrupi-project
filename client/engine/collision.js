@@ -36,31 +36,36 @@ class Collision {
       
       var overlapX = sumHalfWidth - Math.abs(catX);
       var overlapY = sumHalfHeight - Math.abs(catY);
-      
+      var collisionDirection = false;
+
       if( r2.stopIfCollision() ) {
         if(overlapX >= overlapY ){ // Direction of collision - Up/Down && r2.()
           if(catY > 0){ // Up
             r1.setY( r1.getY() + overlapY );
+            collisionDirection = "up";
           } else {
             r1.setY( r1.getY() - overlapY );
+            collisionDirection = "down";
           }
         } else {// Direction of collision - Left/Right
           if(catX > 0){ // Left
             r1.setX( r1.getX() + overlapX );
+            collisionDirection = "left";
           } else {
             r1.setX( r1.getX() - overlapX );
+            collisionDirection = "right";
           }
         }
       }
 
       // Triggers Collision event
-      r1.collision(r2);
-      r2.collision(r1);
+      r1.collision(r2, collisionDirection);
+      r2.collision(r1, collisionDirection);
 
     } else {
       // Triggers not in collision event
-      r1.noCollision(r2); 
-      r2.noCollision(r1); 
+      r1.noCollision(r2, collisionDirection); 
+      r2.noCollision(r1, collisionDirection); 
     }
 
   }

@@ -70,6 +70,7 @@ class Prototype_Stage_1 extends _Stage{
     // # Proccess scenario design
     scenarioDesign.map( (array, x) => {
       array.map( (item, y) => {
+      if( !item ) return; // Jump false elements
       let x0 = y * this.chunkSize;
       let y0 = x * this.chunkSize;
       this.addRenderItem(this.getScenarioAssetItem(item, x0, y0));
@@ -100,6 +101,7 @@ class Prototype_Stage_1 extends _Stage{
     // # Proccess scenario design
     scenarioDesign.map( (array, x) => {
       array.map( (item, y) => {
+      if( !item ) return; // Jump false elements
       let x0 = y * this.chunkSize;
       let y0 = x * this.chunkSize;
       this.addRenderLayerItem( this.getScenarioAssetItem(item, x0, y0) );
