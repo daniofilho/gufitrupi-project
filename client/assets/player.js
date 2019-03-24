@@ -2,8 +2,8 @@ class Player {
 
 	constructor(x0, y0, gameProps) {
     // # Sprite
-      //let playerSprite = new Image();
-      //playerSprite.src = './assets/sprites/player_one.png';
+      //this.playerSprite = new Image();
+      //this.playerSprite.src = './assets/sprites/player_one.png';
       this.playerSprite = document.getElementById('sprite_player_one'); // Pegar esse id da instancia!!
       
       // http://getspritexy.com/ <= Para mapear os sprites!
@@ -13,9 +13,15 @@ class Player {
       }
       this.step = [];
       this.defaultStep = 1;
-      this.initialStep = 2;
-      this.stepCount = this.initialStep;
+      this.initialStep = 3;
+      this.stepCount = this.defaultStep;
       this.maxSteps = 8;
+
+      this.name = "Player";
+
+      // Controls the player FPS Animation
+      this.fpsInterval = 1000 / 12; // 1000 / FPS
+      this.deltaTime = Date.now();
     
     // # Position
       this.x = x0;
@@ -104,6 +110,18 @@ class Player {
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
     }
+
+  // # Controls the player FPS Movement independent of game FPS
+    canRenderNextFrame() {
+      let now = Date.now();
+			let elapsed = now - this.deltaTime;
+      if (elapsed > this.fpsInterval) {
+	      this.deltaTime = now - (elapsed % this.fpsInterval);
+        return true;
+			} else {
+        return false;
+      }
+    }  
     
 	// # Player Movement
 		
@@ -130,6 +148,22 @@ class Player {
       this.setLookDirection( this.lookDown() );
       this.setY( this.getY() + this.getSpeed() ); 
     };
+
+    handleMovement( keysDown ) {
+      
+      if (37 in keysDown) // Left
+        this.movLeft();
+        
+      if (38 in keysDown) // Up  
+        this.movUp();
+        
+      if (39 in keysDown) // Right
+        this.movRight();
+
+      if (40 in keysDown) // Down
+        this.movDown();
+
+    }
 		
 	// # Sets
 		
@@ -147,7 +181,7 @@ class Player {
 		resetPosition() {
 			this.setX( this.x0 );
 		  this.setY( this.y0 );
-		}
+    }
 		
 	// # Gets
 			
@@ -172,9 +206,11 @@ class Player {
     getSpriteProps() { return this.spriteProps; }
       
     increaseStep() {
-      this.stepCount++;
-      if( this.stepCount > this.maxSteps ) {
-        this.stepCount = this.initialStep;
+      if(this.canRenderNextFrame()) {
+        this.stepCount++;
+        if( this.stepCount > this.maxSteps ) {
+          this.stepCount = this.initialStep;
+        }
       }
     }
     resetStep() {
@@ -221,8 +257,8 @@ class Player {
       );	
       // DEBUG COLLISION
       if( window.debug ) {
-        ctx.fillStyle = "rgba(0,0,100, 0.5)";
-        ctx.fillRect( this.props.x, this.getCollisionY(), this.props.w, this.getCollisionHeight() );
+        ctx.fillStyle = "rgba(0,0,255, 0.4)";
+        ctx.fillRect( props.x, this.getCollisionY(), props.w, this.getCollisionHeight() );
       }
 		};
   

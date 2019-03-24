@@ -45,9 +45,17 @@ module.exports = function(grunt) {
                 livereload: true
             },
             includes: {
-                files: ['*.html', 'client/**/*.html', 'client/*.html'],
-                files: ['*.js', 'client/**/*.js', 'client/*.js'],
-            }
+                files: [
+                    'client/*.html', 
+                    'client/**/*.html', 
+                    'client/*.html', 
+                    'client/assets/**/*.js', 
+                    'client/engine/**/*.js', 
+                    'client/game.js', 
+                    'client/gameProperties.js', 
+                ],
+                tasks: ['browserify']
+            },
         },
 
         //  Abre o navegador com o server recém criado
