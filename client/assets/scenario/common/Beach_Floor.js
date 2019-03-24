@@ -43,5 +43,11 @@ class Beach_Floor extends _Collidable {
 
   }
 
+   // If it's not colliding to any teleport chunk anymore, make it ready to teleport again
+   collision(player){ 
+    player.setTeleporting(false);
+    return true; 
+  }
+
 }//class
 module.exports = Beach_Floor;

@@ -81,6 +81,34 @@ class Beach_wall extends _Collidable {
           sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
         }
         break;
+      
+      case "inner_corner_top_left":
+        this.spriteProps = { 
+          clip_x: 426, clip_y: 10, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        break;
+        
+      case "inner_corner_top_right":
+        this.spriteProps = { 
+          clip_x: 443, clip_y: 10, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        break;
+        
+      case "inner_corner_bottom_left":
+        this.spriteProps = { 
+          clip_x: 426, clip_y: 27, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        break;
+        
+      case "inner_corner_bottom_right":
+        this.spriteProps = { 
+          clip_x: 443, clip_y: 27, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        break;
         
       case "water":
         this.spriteProps = { 

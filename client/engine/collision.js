@@ -56,9 +56,8 @@ class Collision {
             collisionDirection = "right";
           }
         }
+        
       }
-
-      console.log(r1, r2);
 
       // Triggers Collision event
       r1.collision(r2, r1, collisionDirection);

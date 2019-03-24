@@ -37,59 +37,73 @@ class Teleport extends _Collidable {
 
   // Collision Event
   collision(player, collidable, collisionDirection){
-    this.teleport( player );
-    // Change stage
-    collidable.scenario.setStage( 
-      this.teleportProps.targetStage,
-      false // firstStage ?
-    );
     
+    // If the player teleports, then change stage
+    if( this.teleport( player ) ) {
+      // Change stage
+      collidable.scenario.setStage( 
+        this.teleportProps.targetStage,
+        false // firstStage ?
+      );
+    }
+
   }
 
   // What kind of teleport?
   teleport( player ) {
-
+    
     let gameProps = new gameProperties();
 
     let type = this.teleportProps.teleportType;
     let targetX = 0;
     let targetY = 0;
 
+    let willTeleport = false;
+
     switch(type){
       default:
         targetX = this.teleportProps.targetX;
         targetY = this.teleportProps.targetY;
+        willTeleport = true;
         break;
       case "relative":
         switch (this.teleportProps.cameFrom) {
           case "top":
-           // if( player.spriteProps.direction != "up" ){ return; } // If is looking from the opposite direction, it means that it just came from a teleport
+            if( player.spriteProps.direction != "up" ){ return; } // If is looking from the opposite direction, it means that it just came from a teleport
             targetX = this.xIndex * this.chunkSize;
-            targetY = ( (gameProps.getProp('screenVerticalChunks') -2) * this.chunkSize) - this.chunkSize; // -1 because of the player collision box
+            targetY = ( (gameProps.getProp('screenVerticalChunks') -1) * this.chunkSize) - this.chunkSize; // -1 because of the player collision box
+            willTeleport = true;
             break;
           case "bottom":
-           // if( player.spriteProps.direction != "down" ){ return; }
+            if( player.spriteProps.direction != "down" ){ return; }
             targetX = this.xIndex * this.chunkSize;
-            targetY = 1 * this.chunkSize; // This 1 is just to remeber that it will be teleported to index Xx1 and not Xx0
+            targetY = ( 0 * this.chunkSize ) - this.chunkSize; // This 0* is just to remeber that it will be teleported to index Xx0, but because of player hit box, it will spawn a chunk above
+            willTeleport = true;
             break;
           case "right":
+            if( player.spriteProps.direction != "right" ){ return; }
             targetY = ( this.yIndex * this.chunkSize) - this.chunkSize;
             targetX = 1 * this.chunkSize;
+            willTeleport = true;
             break;
           case "left":
+            if( player.spriteProps.direction != "left" ){ return; }
             targetY = ( this.yIndex * this.chunkSize) - this.chunkSize;
-            targetX = ( ( gameProps.getProp('screenHorizontalChunks') -1 )  * this.chunkSize) - this.chunkSize; 
+            targetX = (gameProps.getProp('screenHorizontalChunks') * this.chunkSize) - this.chunkSize; 
+            willTeleport = true;
             break;
         }
         break;
     }
 
-    player.setX( targetX ); // always using X and Y relative to teleport not player because it fix the player position to fit inside destination square.
-    player.setY( targetY );
-    
-    console.log('teleported');
-    console.log(player.spriteProps.direction, this.teleportProps);
-    
+    // Only teleports if it can teleport
+    if( willTeleport ) {
+      player.setX( targetX ); // always using X and Y relative to teleport not player because it fix the player position to fit inside destination square.
+      player.setY( targetY );
+    }
+
+    return willTeleport;
+
   }
 
 }//class

@@ -10,8 +10,8 @@ class Prototype_Stage_1 extends _Stage{
   constructor(chunkSize) {
     super(chunkSize);
 
-    let playerStartX = chunkSize * 1;
-    let playerStartY = chunkSize * 2;
+    let playerStartX = chunkSize * 7;
+    let playerStartY = chunkSize * 6;
 
     this.run(playerStartX, playerStartY);
   }
@@ -44,6 +44,11 @@ class Prototype_Stage_1 extends _Stage{
     let wc_tr = { name: "wall", type: "corner_top_right"};
     let wc_bl = { name: "wall", type: "corner_bottom_left"};
     let wc_br = { name: "wall", type: "corner_bottom_right"};
+
+    let iwc_tl = { name: "wall", type: "inner_corner_top_left"};
+    let iwc_tr = { name: "wall", type: "inner_corner_top_right"};
+    let iwc_bl = { name: "wall", type: "inner_corner_bottom_left"};
+    let iwc_br = { name: "wall", type: "inner_corner_bottom_right"};
     
     let wtr = { name: "wall", type: "water"};
     let ob = { name: "wall", type: "obstacle"};
@@ -54,21 +59,20 @@ class Prototype_Stage_1 extends _Stage{
 
     // Make shure to design basead on gameProperties !
     let scenarioDesign = [
-      
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f2,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f2,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f2,   f2,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f2,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f2,   f2,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f2,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f2,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wl,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   f1,   wr ],
-      [ wc_bl,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wb,   wc_br ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   ob,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   ob,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   ob,   f1,   f1,   f2,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   ob,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wt,     wt,     wt,     wt,     iwc_br,     f1,   f1,   ob,   f1,   f1,   f1,   iwc_bl,   wt,     wt,     wt,     wt ],
+      [ f1,     f1,     f1,     f1,     f1,         f1,   f2,   f1,   f1,   f1,   f1,   f1,       f1,     f1,     f1,     f1 ],
+      [ ob,     ob,     ob,     ob,     ob,         ob,   f1,   f1,   f1,   f1,   f1,   f1,       f1,     f1,     f1,     f1 ],
+      [ f1,     f1,     f1,     f1,     f1,         f1,   f1,   f1,   f1,   f1,   ob,   ob,       ob,     ob,     ob,     ob ],
+      [ f1,     f2,     f1,     f1,     f1,         f1,   f1,   f1,   f1,   f1,   f1,   f2,       f1,     f1,     f1,     f1 ],
+      [ wb,     wb,     wb,     wb,     iwc_tr,     f1,   f2,   f1,   ob,   f1,   f1,   iwc_tl,   wb,     wb,     wb,     wb ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ]
     ]
 
     // # Proccess scenario design
@@ -86,23 +90,25 @@ class Prototype_Stage_1 extends _Stage{
   scenarioDesignLayer() {
 
     // Teleport
-    let tp_02 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "top",     targetStage: 2 };
+    let tp_02 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "top",        targetStage: 2 };
+    let tp_03 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "right",      targetStage: 3 };
+    let tp_04 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "bottom",     targetStage: 4 };
+    let tp_05 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "left",       targetStage: 5 };
     
     let scenarioDesign = [
-      [ false,   tp_02,  tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   tp_02,   false ],
+      [ false,   false,  false,   false,   false,   tp_02,   tp_02,   false,   tp_02,   tp_02,   tp_02,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ tp_05,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_03 ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_03 ],
+      [ tp_05,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ tp_05,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_03 ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   tp_04,   tp_04,   tp_04,   false,   tp_04,   tp_04,   false,   false,   false,   false,   false ],
     ]
 
     // # Proccess scenario design

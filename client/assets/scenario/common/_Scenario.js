@@ -24,7 +24,11 @@ class _Scenario {
 	}
 	addRenderLayerItem(item){
 		this.renderLayerItems.push(item);
-  }
+	}
+	clearItems(){
+		this.renderItems = new Array();
+		this.renderLayerItems = new Array();
+	}
   
 	// # Gets
 	getCtx() { return this.ctx; }

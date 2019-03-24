@@ -15,7 +15,7 @@ class _Collidable {
     this.stopOnCollision = stopOnCollision;
     this.hasCollisionEvent = hasCollisionEvent;
 
-    this.name = name;
+    this.name = name + "(" + this.x + "/" + this.y + ")";
       
     // # Sprite
     this.stageSprite = stageSprite;

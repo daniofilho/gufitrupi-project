@@ -17,6 +17,8 @@ class Player {
       this.stepCount = this.defaultStep;
       this.maxSteps = 8;
 
+      this.name = "Player";
+
       // Controls the player FPS Animation
       this.fpsInterval = 1000 / 12; // 1000 / FPS
       this.deltaTime = Date.now();
@@ -179,7 +181,7 @@ class Player {
 		resetPosition() {
 			this.setX( this.x0 );
 		  this.setY( this.y0 );
-		}
+    }
 		
 	// # Gets
 			
