@@ -58,6 +58,8 @@ class Collision {
         }
       }
 
+      console.log(r1, r2);
+
       // Triggers Collision event
       r1.collision(r2, r1, collisionDirection);
       r2.collision(r1, r2, collisionDirection);

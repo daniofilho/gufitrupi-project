@@ -32,8 +32,6 @@ window.onload = function() {
 
     var collision = new Collision(canvasAnimated.width, canvasAnimated.height );
 
-   
-
   // # Render
 
     var renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
@@ -43,9 +41,6 @@ window.onload = function() {
 
     renderStatic.setScenario(scenario); // set the scenario
     
-    
-
-
   // # Keyboard Events
 
     var keysDown = {};
@@ -56,11 +51,22 @@ window.onload = function() {
       delete keysDown[e.keyCode];
       player.resetStep();
     });
-
+  
+  // Unpause the game when click on screen
+    window.addEventListener('keypress', function(e) {
+      if( e.keyCode == 13 ) { // Enter
+        window.togglePause();
+      }
+    });
 
   // # The Game Loop
 
-    function updateGame(mod) {
+    function updateGame(deltaTime) {
+
+      if( window.isPaused() ) return;
+      
+      renderStatic.start( deltaTime );  // Static can also change, because it is the scenario... maybe will change this names to layers
+      renderAnimated.start( deltaTime );
 
       // # Add the objects to the collision vector
       collision.clearArrayItems();
@@ -92,10 +98,6 @@ window.onload = function() {
 
     function gameLoop() {
 
-      // Runs only when the browser is in focus
-      // Request another frame
-      requestAnimationFrame(gameLoop);
-
       // calc elapsed time since last loop
       now = Date.now();
       elapsed = now - deltaTime;
@@ -109,10 +111,11 @@ window.onload = function() {
 
         updateGame( deltaTime );
 
-        renderStatic.start( deltaTime );  // Static can also chance, because it is the scenario
-        renderAnimated.start( deltaTime );
-
       }
+
+      // Runs only when the browser is in focus
+      // Request another frame
+      requestAnimationFrame(gameLoop);
 
     }
 

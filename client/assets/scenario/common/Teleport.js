@@ -37,13 +37,13 @@ class Teleport extends _Collidable {
 
   // Collision Event
   collision(player, collidable, collisionDirection){
-    
-    // Change stage
-    collidable.scenario.setStage( this.teleportProps.targetStage );
-
-    // Teleport the player
     this.teleport( player );
-
+    // Change stage
+    collidable.scenario.setStage( 
+      this.teleportProps.targetStage,
+      false // firstStage ?
+    );
+    
   }
 
   // What kind of teleport?
@@ -63,10 +63,12 @@ class Teleport extends _Collidable {
       case "relative":
         switch (this.teleportProps.cameFrom) {
           case "top":
+           // if( player.spriteProps.direction != "up" ){ return; } // If is looking from the opposite direction, it means that it just came from a teleport
             targetX = this.xIndex * this.chunkSize;
-            targetY = ((gameProps.getProp('screenVerticalChunks') - 2) * this.chunkSize ) - this.chunkSize; // -2 on X is the square before the last. Why? Why Y you have to use -1 only?
+            targetY = ( (gameProps.getProp('screenVerticalChunks') -2) * this.chunkSize) - this.chunkSize; // -1 because of the player collision box
             break;
           case "bottom":
+           // if( player.spriteProps.direction != "down" ){ return; }
             targetX = this.xIndex * this.chunkSize;
             targetY = 1 * this.chunkSize; // This 1 is just to remeber that it will be teleported to index Xx1 and not Xx0
             break;
@@ -76,7 +78,7 @@ class Teleport extends _Collidable {
             break;
           case "left":
             targetY = ( this.yIndex * this.chunkSize) - this.chunkSize;
-            targetX = ((gameProps.getProp('screenHorizontalChunks') - 1) * this.chunkSize) - this.chunkSize; // -1 because it will spawn not in last square, but the one before it. 
+            targetX = ( ( gameProps.getProp('screenHorizontalChunks') -1 )  * this.chunkSize) - this.chunkSize; 
             break;
         }
         break;
@@ -84,6 +86,10 @@ class Teleport extends _Collidable {
 
     player.setX( targetX ); // always using X and Y relative to teleport not player because it fix the player position to fit inside destination square.
     player.setY( targetY );
+    
+    console.log('teleported');
+    console.log(player.spriteProps.direction, this.teleportProps);
+    
   }
 
 }//class

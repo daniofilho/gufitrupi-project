@@ -13,11 +13,9 @@ class _Scenario {
     this.playerStartX = 0; 
     this.playerStartY = 0; 
 
-    this.stage = [];
+    this.stage = 0;
 
 		this.chunkSize = gameProps.getProp('chunkSize');
-
-		this.run();
 	}
 
   // # Add Items to the render
@@ -43,9 +41,6 @@ class _Scenario {
   setPlayerStartY(y) { this.playerStartY = y; }
 
   render() { }
-
-	// # Run when class loads
-	run() { }
 
 }//class
 module.exports = _Scenario;
