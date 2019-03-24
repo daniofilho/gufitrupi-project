@@ -255,8 +255,8 @@ class Player {
       );	
       // DEBUG COLLISION
       if( window.debug ) {
-        ctx.fillStyle = "rgba(0,0,100, 0.5)";
-        ctx.fillRect( this.props.x, this.getCollisionY(), this.props.w, this.getCollisionHeight() );
+        ctx.fillStyle = "rgba(0,0,255, 0.4)";
+        ctx.fillRect( props.x, this.getCollisionY(), props.w, this.getCollisionHeight() );
       }
 		};
   

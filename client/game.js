@@ -32,9 +32,7 @@ window.onload = function() {
 
     var collision = new Collision(canvasAnimated.width, canvasAnimated.height );
 
-    // Add the objects to the collision vector
-    collision.addArrayItem( scenario.getRenderItems() );
-    collision.addArrayItem( scenario.getLayerItems() );
+   
 
   // # Render
 
@@ -44,10 +42,8 @@ window.onload = function() {
     // Add items to be rendered
 
     renderStatic.setScenario(scenario); // set the scenario
-    renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
-
-    renderAnimated.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
-    renderAnimated.addItem( player ); // Adds the player to the animation render
+    
+    
 
 
   // # Keyboard Events
@@ -65,6 +61,18 @@ window.onload = function() {
   // # The Game Loop
 
     function updateGame(mod) {
+
+      // # Add the objects to the collision vector
+      collision.clearArrayItems();
+      collision.addArrayItem( scenario.getRenderItems() );
+      collision.addArrayItem( scenario.getLayerItems() );
+      
+      renderStatic.clearArrayItems();
+      renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
+
+      renderAnimated.clearArrayItems();
+      renderAnimated.addItem( player ); // Adds the player to the animation render
+      renderAnimated.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
 
       // # Movements
       player.handleMovement( keysDown );
@@ -101,6 +109,7 @@ window.onload = function() {
 
         updateGame( deltaTime );
 
+        renderStatic.start( deltaTime );  // Static can also chance, because it is the scenario
         renderAnimated.start( deltaTime );
 
       }
@@ -108,8 +117,6 @@ window.onload = function() {
     }
 
   // # Starts the game
-
-    renderStatic.start( deltaTime );  // Render the static layers only once
     runGame( gameProps.getProp('fps') );	// GO GO GO
 
 }

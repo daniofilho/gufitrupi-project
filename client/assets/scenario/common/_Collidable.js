@@ -10,6 +10,8 @@ class _Collidable {
     this.width = chunkSize; //px
     this.height = chunkSize;
 
+    this.chunkSize = chunkSize;
+
     this.stopOnCollision = stopOnCollision;
     this.hasCollisionEvent = hasCollisionEvent;
 
@@ -77,10 +79,11 @@ class _Collidable {
       
     //DEBUG Chunk Size
     if( window.debug ) {
-      ctx.fillStyle = "rgba(255,0,0,0.4)";
+      ctx.fillStyle = this.stopOnCollision ? "rgba(255,0,0,0.2)" : "rgba(0,255,0,0.2)";
       ctx.fillRect(props.x, props.y, props.w, props.h);
-      ctx.rect(props.x, props.y, props.w, props.h);
-      ctx.stroke();
+      ctx.strokeStyle = "rgba(0,0,0,0.2)";
+      ctx.lineWidth   = 5;
+      ctx.strokeRect(props.x, props.y, props.w, props.h);
     }
   
   }

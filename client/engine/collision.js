@@ -39,7 +39,7 @@ class Collision {
       var collisionDirection = false;
 
       if( r2.stopIfCollision() ) {
-        if(overlapX >= overlapY ){ // Direction of collision - Up/Down && r2.()
+        if(overlapX >= overlapY ){ // Direction of collision - Up/Down
           if(catY > 0){ // Up
             r1.setY( r1.getY() + overlapY );
             collisionDirection = "up";
@@ -59,13 +59,13 @@ class Collision {
       }
 
       // Triggers Collision event
-      r1.collision(r2, collisionDirection);
-      r2.collision(r1, collisionDirection);
+      r1.collision(r2, r1, collisionDirection);
+      r2.collision(r1, r2, collisionDirection);
 
     } else {
       // Triggers not in collision event
-      r1.noCollision(r2, collisionDirection); 
-      r2.noCollision(r1, collisionDirection); 
+      r1.noCollision(r2, r2, collisionDirection); 
+      r2.noCollision(r1, r2, collisionDirection); 
     }
 
   }
@@ -79,7 +79,11 @@ class Collision {
 		for (let i in object){
       this.colItens.push(object[i]);
     }
-	}
+  }
+  
+  clearArrayItems() {
+    this.colItens = new Array();
+  }
 
 }// class
 

@@ -17,6 +17,9 @@ class Render {
 			this.renderItems.push(object[i]);
 		}
 	}
+	clearArrayItems(){ 
+		this.renderItems = new Array(); 
+	}
 	setScenario(scenario){
 		this.scenario = scenario;
 	}
