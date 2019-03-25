@@ -16,6 +16,8 @@ class _Scenario {
     this.stage = 0;
 
 		this.chunkSize = gameProps.getProp('chunkSize');
+
+		this.players = new Array();
 	}
 
   // # Add Items to the render
@@ -25,10 +27,16 @@ class _Scenario {
 	addRenderLayerItem(item){
 		this.renderLayerItems.push(item);
 	}
-	clearItems(){
+	clearArrayItems(){
 		this.renderItems = new Array();
 		this.renderLayerItems = new Array();
 	}
+
+	// # Players
+	addPlayer(player) {
+		this.players.push(player);
+	}
+	getPlayers() { return this.players; }
   
 	// # Gets
 	getCtx() { return this.ctx; }
@@ -37,12 +45,18 @@ class _Scenario {
 	getRenderItems() { return this.renderItems; }
 	getLayerItems() {  return this.renderLayerItems; }
   
-  getPlayerStartX() { return this.playerStartX; }
-  getPlayerStartY() { return this.playerStartY; }
-
+  getPlayer1StartX() { return this.player1StartX; }
+  getPlayer1StartY() { return this.player1StartY; }
+  
+  getPlayer2StartX() { return this.player2StartX; }
+  getPlayer2StartY() { return this.player2StartY; }
+  
   // # Sets
-  setPlayerStartX(x) { this.playerStartX = x; }
-  setPlayerStartY(y) { this.playerStartY = y; }
+  setPlayer1StartX(x) { this.player1StartX = x; }
+  setPlayer1StartY(y) { this.player1StartY = y; }
+
+  setPlayer2StartX(x) { this.player2StartX = x; }
+  setPlayer2StartY(y) { this.player2StartY = y; }
 
   render() { }
 

@@ -20,13 +20,22 @@ window.onload = function() {
     canvasAnimated.width = canvasStatic.width = gameProps.getProp('canvasWidth');
     canvasAnimated.height = canvasStatic.height = gameProps.getProp('canvasHeight');
 
+    var players = new Array();
+
   // # Scenario
 
-     var scenario = new scenarioPrototype(contextStatic, canvasStatic, gameProps );
+    var scenario = new scenarioPrototype(contextStatic, canvasStatic, gameProps );
 
   // # Players
 
-    var player = new Player( scenario.getPlayerStartX(), scenario.getPlayerStartY(), gameProps, contextAnimated ); //posição x e y
+    var player = new Player( scenario.getPlayer1StartX(), scenario.getPlayer1StartY(), gameProps, 1 ); 
+    players.push(player);
+    var player2 = new Player( scenario.getPlayer2StartX(), scenario.getPlayer2StartY(), gameProps, 2 ); 
+    players.push(player2);
+
+    players.map( (player) => {
+      scenario.addPlayer(player);
+    });
 
   // # Collision detection class
 
@@ -49,7 +58,9 @@ window.onload = function() {
     });
     window.addEventListener('keyup', function(e) {
       delete keysDown[e.keyCode];
-      player.resetStep();
+      players.map( (player) => {
+        player.resetStep();
+      });
     });
   
   // Unpause the game when click on screen
@@ -77,14 +88,20 @@ window.onload = function() {
       renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
 
       renderAnimated.clearArrayItems();
-      renderAnimated.addItem( player ); // Adds the player to the animation render
+      players.map( (player) => {
+        renderAnimated.addItem( player ); // Adds the player to the animation render
+      });
       renderAnimated.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
 
       // # Movements
-      player.handleMovement( keysDown );
-
+      players.map( (player) => {
+        player.handleMovement( keysDown );
+      });
+      
       // # Check if player is colliding
-      collision.check(player);
+      players.map( (player) => {
+        collision.check(player);
+      });
 
     };
 

@@ -19,7 +19,7 @@ class scenarioPrototype extends _Scenario {
   // # Stages
   setStage(stage_number, firstStage) {
 
-    this.clearItems();
+    this.clearArrayItems();
     
     let stage_01 = new Prototype_Stage_1( this.chunkSize );
     let stage_02 = new Prototype_Stage_2( this.chunkSize );
@@ -68,8 +68,10 @@ class scenarioPrototype extends _Scenario {
     
     // Only set player start at first load
     if(firstStage) {
-      this.setPlayerStartX( this.stage.getPlayerStartX() );
-      this.setPlayerStartY( this.stage.getPlayerStartY() );
+      this.setPlayer1StartX( this.stage.getPlayer1StartX() );
+      this.setPlayer1StartY( this.stage.getPlayer1StartY() );
+      this.setPlayer2StartX( this.stage.getPlayer2StartX() );
+      this.setPlayer2StartY( this.stage.getPlayer2StartY() );
     }
     
   }
