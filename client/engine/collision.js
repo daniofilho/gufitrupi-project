@@ -21,9 +21,12 @@ class Collision {
   // @r1: the moving object
   // @r2: the "wall"
   checkCollision(r1, r2) {
+
+    // Don't check collision between same object
+    if( r1.name == r2.name ) return;
     
     // Only checks objects that needs to be checked
-    if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) { return false; }
+    if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) return false;
 
     // stores the distance between the objects (must be rectangle)
     var catX = r1.getCenterX() - r2.getCenterX();

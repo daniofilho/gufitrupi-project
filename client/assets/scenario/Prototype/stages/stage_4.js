@@ -10,10 +10,13 @@ class Prototype_Stage_4 extends _Stage{
   constructor(chunkSize) {
     super(chunkSize);
 
-    let playerStartX = chunkSize * 6;
-    let playerStartY = chunkSize * 6;
+    let player1StartX = chunkSize * 0;
+    let player1StartY = chunkSize * 0;
+    
+    let player2StartX = chunkSize * 1;
+    let player2StartY = chunkSize * 0;
 
-    this.run(playerStartX, playerStartY);
+    this.run(player1StartX, player1StartY, player2StartX, player2StartY);
   }
   
   // # Scenario 
@@ -93,7 +96,7 @@ class Prototype_Stage_4 extends _Stage{
     let tp_01 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "top",     targetStage: 1 };
     
     let scenarioDesign = [
-      [ false,   false,  false,   false,   false,   tp_01,   tp_01,   false,   tp_01,   tp_01,   tp_01,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   tp_01,   tp_01,   tp_01,   false,   tp_01,   tp_01,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
@@ -121,9 +124,11 @@ class Prototype_Stage_4 extends _Stage{
   
   }
 
-  run(setPlayerStartX, setPlayerStartY) {
-    this.setPlayerStartX(setPlayerStartX);
-    this.setPlayerStartY(setPlayerStartY);
+  run(player1StartX, player1StartY, player2StartX, player2StartY) {
+    this.setPlayer1StartX(player1StartX);
+    this.setPlayer1StartY(player1StartY);
+    this.setPlayer2StartX(player2StartX);
+    this.setPlayer2StartY(player2StartY);
     this.scenarioDesign();
     this.scenarioDesignLayer();
   }

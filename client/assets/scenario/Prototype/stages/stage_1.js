@@ -10,10 +10,13 @@ class Prototype_Stage_1 extends _Stage{
   constructor(chunkSize) {
     super(chunkSize);
 
-    let playerStartX = chunkSize * 7;
-    let playerStartY = chunkSize * 6;
+    let player1StartX = chunkSize * 7;
+    let player1StartY = chunkSize * 6;
+    
+    let player2StartX = chunkSize * 8;
+    let player2StartY = chunkSize * 6;
 
-    this.run(playerStartX, playerStartY);
+    this.run(player1StartX, player1StartY, player2StartX, player2StartY);
   }
   
   // # Scenario 
@@ -108,6 +111,7 @@ class Prototype_Stage_1 extends _Stage{
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   tp_04,   tp_04,   tp_04,   false,   tp_04,   tp_04,   false,   false,   false,   false,   false ],
     ]
 
@@ -123,9 +127,11 @@ class Prototype_Stage_1 extends _Stage{
   
   }
 
-  run(setPlayerStartX, setPlayerStartY) {
-    this.setPlayerStartX(setPlayerStartX);
-    this.setPlayerStartY(setPlayerStartY);
+  run(player1StartX, player1StartY, player2StartX, player2StartY) {
+    this.setPlayer1StartX(player1StartX);
+    this.setPlayer1StartY(player1StartY);
+    this.setPlayer2StartX(player2StartX);
+    this.setPlayer2StartY(player2StartY);
     this.scenarioDesign();
     this.scenarioDesignLayer();
   }

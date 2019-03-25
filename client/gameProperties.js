@@ -21,12 +21,14 @@ class gameProperties {
   }
 
 }
-module.exports = gameProperties
+module.exports = gameProperties;
 
 // Global values
 
   // Debug
   window.debug = false;
+
+  // Pause
   window._pause = false;
   window.isPaused = function() { return _pause; }
   window.pause = function() { window._pause = true; console.log('Game Paused!'); }

@@ -1,5 +1,5 @@
 body {
-    background: url('./img/noisy_net.png');
+    background: #000;
     font-family: Arial;
     margin: 0px;
     padding: 0px;
@@ -23,7 +23,6 @@ canvas { position: absolute; width: 100%; height: 100%; }
 }
 
 .game {
-    background: url('./img/noisy_net.png');
     width: 100%;
     height: 100%;
     margin: 0px auto;

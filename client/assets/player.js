@@ -1,10 +1,13 @@
 class Player {
 
-	constructor(x0, y0, gameProps) {
+	constructor(x0, y0, gameProps, playerNumber) {
     // # Sprite
-      //this.playerSprite = new Image();
-      //this.playerSprite.src = './assets/sprites/player_one.png';
-      this.playerSprite = document.getElementById('sprite_player_one'); // Pegar esse id da instancia!!
+      if( playerNumber == 1 ) {
+        this.playerSprite = document.getElementById('sprite_player_one');
+      }
+      if( playerNumber == 2 ) {
+        this.playerSprite = document.getElementById('sprite_player_two');
+      }
       
       // http://getspritexy.com/ <= Para mapear os sprites!
       this.spriteProps = {
@@ -17,11 +20,11 @@ class Player {
       this.stepCount = this.defaultStep;
       this.maxSteps = 8;
 
-      this.name = "Player";
-
       // Controls the player FPS Animation
       this.fpsInterval = 1000 / 12; // 1000 / FPS
       this.deltaTime = Date.now();
+
+      this.hideSprite = false;
     
     // # Position
       this.x = x0;
@@ -32,8 +35,6 @@ class Player {
 
       this.chunkSize = gameProps.getProp('chunkSize');
 
-      this.lookDirection = this.lookDown();
-
     // # Properties
       this.width = this.chunkSize; //px
       this.height = this.chunkSize * 2; //px
@@ -41,6 +42,16 @@ class Player {
       this.speed = this.chunkSize / this.speed0;
 
       this.isCollidable = true;
+
+      this.isMoving = false;
+
+      this.name = "Player " + playerNumber;
+      this.playerNumber = playerNumber;
+      
+      this.hasCollisionEvent = false;
+      this.stopOnCollision = true;
+
+      this.run();
   }
         
   // # Sprites state for player direction
@@ -151,17 +162,38 @@ class Player {
 
     handleMovement( keysDown ) {
       
-      if (37 in keysDown) // Left
-        this.movLeft();
-        
-      if (38 in keysDown) // Up  
-        this.movUp();
-        
-      if (39 in keysDown) // Right
-        this.movRight();
+      if ( this.hideSprite ) return;
 
-      if (40 in keysDown) // Down
-        this.movDown();
+      // Player 1 Controls
+      if( this.playerNumber == 1 ) {
+        if (37 in keysDown) // Left
+          this.movLeft();
+          
+        if (38 in keysDown) // Up  
+          this.movUp();
+          
+        if (39 in keysDown) // Right
+          this.movRight();
+
+        if (40 in keysDown) // Down
+          this.movDown();
+      }
+      
+      // Player 2 Controls
+      if( this.playerNumber == 2 ) {
+        if (65 in keysDown) // Left
+          this.movLeft();
+          
+        if (87 in keysDown) // Up  
+          this.movUp();
+          
+        if (68 in keysDown) // Right
+          this.movRight();
+
+        if (83 in keysDown) // Down
+          this.movDown();
+      }
+      
 
     }
 		
@@ -176,7 +208,10 @@ class Player {
 		setSpeed(speed) { this.speed = this.chunkSize / speed; }
 
 		setLookDirection(lookDirection) { this.lookDirection = lookDirection; }
-		setLookDirectionVal(string) { this.lookDirectionVar = string; }
+		triggerLookDirection(direction) { 
+      this.spriteProps.direction = direction;
+      this.resetStep();
+    }
 
 		resetPosition() {
 			this.setX( this.x0 );
@@ -230,11 +265,15 @@ class Player {
           break;
       }
     }
-		
+		hidePlayer() { this.hideSprite = true; }
+    showPlayer() { this.hideSprite = false; }
+    
 	// # Player Render
 				
 	  render(ctx) {
-        
+      
+      if ( this.hideSprite ) return;
+
       // What to do every frame in terms of render? Draw the player
       let props = {
         x: this.getX(),
@@ -263,15 +302,25 @@ class Player {
 		};
   
   // # Collision
-  
+    
+    // Has a collision Event?
+    triggersCollisionEvent() { return this.hasCollisionEvent; }
+
+    // Will it Stop the other object if collides?
+    stopIfCollision() { return this.stopOnCollision; }
+
 		noCollision() {
 			// What happens if the player is not colliding?
 			this.setSpeed(this.speed0); // Reset speed
     }
       
     collision(object) {
-       return this.isCollidable;
+      return this.isCollidable;
     };
+
+  run() {
+    this.lookDirection = this.lookDown();
+  }
 		
 }//class
 
