@@ -83,6 +83,10 @@ window.onload = function() {
       collision.clearArrayItems();
       collision.addArrayItem( scenario.getRenderItems() );
       collision.addArrayItem( scenario.getLayerItems() );
+      /*
+      players.map( (player) => {
+        collision.addItem(player);
+      });*/
       
       renderStatic.clearArrayItems();
       renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered

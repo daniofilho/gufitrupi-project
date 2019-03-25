@@ -2,9 +2,12 @@ class Player {
 
 	constructor(x0, y0, gameProps, playerNumber) {
     // # Sprite
-      //this.playerSprite = new Image();
-      //this.playerSprite.src = './assets/sprites/player_one.png';
-      this.playerSprite = document.getElementById('sprite_player_one'); // Pegar esse id da instancia!!
+      if( playerNumber == 1 ) {
+        this.playerSprite = document.getElementById('sprite_player_one');
+      }
+      if( playerNumber == 2 ) {
+        this.playerSprite = document.getElementById('sprite_player_two');
+      }
       
       // http://getspritexy.com/ <= Para mapear os sprites!
       this.spriteProps = {
@@ -44,7 +47,10 @@ class Player {
 
       this.name = "Player " + playerNumber;
       this.playerNumber = playerNumber;
-  
+      
+      this.hasCollisionEvent = false;
+      this.stopOnCollision = true;
+
       this.run();
   }
         
@@ -296,14 +302,20 @@ class Player {
 		};
   
   // # Collision
-  
+    
+    // Has a collision Event?
+    triggersCollisionEvent() { return this.hasCollisionEvent; }
+
+    // Will it Stop the other object if collides?
+    stopIfCollision() { return this.stopOnCollision; }
+
 		noCollision() {
 			// What happens if the player is not colliding?
 			this.setSpeed(this.speed0); // Reset speed
     }
       
     collision(object) {
-       return this.isCollidable;
+      return this.isCollidable;
     };
 
   run() {
