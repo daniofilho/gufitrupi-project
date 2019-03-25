@@ -36,15 +36,43 @@ class Teleport extends _Collidable {
   }
 
   // Collision Event
-  collision(player, collidable, collisionDirection){
+  collision(playerWhoActivatedTeleport, collidable, collisionDirection){
     
+    let players = collidable.scenario.getPlayers();
+
     // If the player teleports, then change stage
-    if( this.teleport( player ) ) {
-      // Change stage
-      collidable.scenario.setStage( 
-        this.teleportProps.targetStage,
-        false // firstStage ?
-      );
+    if( this.teleport( playerWhoActivatedTeleport ) ) {
+
+      // Make everything dark
+      collidable.scenario.clearArrayItems();
+
+      // Hide all players
+      players.map( (player) => {
+        player.hidePlayer();
+      });
+
+      // Wait some time
+      setTimeout( () => {
+        
+        // Now teleport all players to same location and direction
+        let targetX = playerWhoActivatedTeleport.getX();
+        let targetY = playerWhoActivatedTeleport.getY();
+        let lookDirection = playerWhoActivatedTeleport.getSpriteProps().direction;
+        
+        players.map( (player) => {
+          player.setX(targetX);
+          player.setY(targetY);
+          player.triggerLookDirection(lookDirection);
+          player.showPlayer();
+        });
+
+        // Change stage
+        collidable.scenario.setStage( 
+          this.teleportProps.targetStage,
+          false // firstStage ?
+        );
+      }, 300);
+      
     }
 
   }
@@ -69,27 +97,23 @@ class Teleport extends _Collidable {
       case "relative":
         switch (this.teleportProps.cameFrom) {
           case "top":
-            if( player.spriteProps.direction != "up" ){ return; } // If is looking from the opposite direction, it means that it just came from a teleport
             targetX = this.xIndex * this.chunkSize;
-            targetY = ( (gameProps.getProp('screenVerticalChunks') -1) * this.chunkSize) - this.chunkSize; // -1 because of the player collision box
+            targetY = ( (gameProps.getProp('screenVerticalChunks') - 3 ) * this.chunkSize); // -3 because of the player collision box
             willTeleport = true;
             break;
           case "bottom":
-            if( player.spriteProps.direction != "down" ){ return; }
             targetX = this.xIndex * this.chunkSize;
-            targetY = ( 0 * this.chunkSize ) - this.chunkSize; // This 0* is just to remeber that it will be teleported to index Xx0, but because of player hit box, it will spawn a chunk above
+            targetY = 0 * this.chunkSize; // Teleport to Y=0, but player hitbox will make him go 1 tile down
             willTeleport = true;
             break;
           case "right":
-            if( player.spriteProps.direction != "right" ){ return; }
             targetY = ( this.yIndex * this.chunkSize) - this.chunkSize;
             targetX = 1 * this.chunkSize;
             willTeleport = true;
             break;
           case "left":
-            if( player.spriteProps.direction != "left" ){ return; }
             targetY = ( this.yIndex * this.chunkSize) - this.chunkSize;
-            targetX = (gameProps.getProp('screenHorizontalChunks') * this.chunkSize) - this.chunkSize; 
+            targetX = ( gameProps.getProp('screenHorizontalChunks') - 2 ) * this.chunkSize; 
             willTeleport = true;
             break;
         }
