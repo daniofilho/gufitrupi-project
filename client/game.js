@@ -1,8 +1,9 @@
 const gameProperties = require('./gameProperties');
 const scenarioPrototype = require('./assets/scenario/Prototype/scenarioPrototype');
-const Player = require('./assets/player');
-const Collision = require('./engine/collision');
-const Render = require('./engine/render');
+const Player = require('./assets/Player');
+const Collision = require('./engine/Collision');
+const Render = require('./engine/Render');
+const UI = require('./engine/UI');
 
 window.onload = function() {
 
@@ -14,11 +15,14 @@ window.onload = function() {
     var canvasStatic = document.getElementById('canvas_static');
     var contextStatic = canvasStatic.getContext('2d');
 
-    var canvasAnimated = document.getElementById('canvas_animated');
-    var contextAnimated = canvasAnimated.getContext('2d');
+    var canvasLayers = document.getElementById('canvas_layers');
+    var contextLayers = canvasLayers.getContext('2d');
+    
+    var canvasUI = document.getElementById('canvas_ui');
+    var contextUI = canvasUI.getContext('2d');
 
-    canvasAnimated.width = canvasStatic.width = gameProps.getProp('canvasWidth');
-    canvasAnimated.height = canvasStatic.height = gameProps.getProp('canvasHeight');
+    canvasLayers.width = canvasStatic.width = canvasUI.width = gameProps.getProp('canvasWidth');
+    canvasLayers.height = canvasStatic.height = canvasUI.height = gameProps.getProp('canvasHeight');
 
     var players = new Array();
 
@@ -36,15 +40,20 @@ window.onload = function() {
     players.map( (player) => {
       scenario.addPlayer(player);
     });
+  
+  // # UI
+    
+    var _UI = new UI(player, player2, gameProps);
 
   // # Collision detection class
 
-    var collision = new Collision(canvasAnimated.width, canvasAnimated.height );
+    var collision = new Collision(canvasLayers.width, canvasLayers.height );
 
   // # Render
 
     var renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
-    var renderAnimated = new Render(contextAnimated, canvasAnimated); //Render with animated objects only
+    var renderLayers = new Render(contextLayers, canvasLayers); //Render with animated objects only
+    var renderUI     = new Render(contextUI, canvasUI); 
 
     // Add items to be rendered
 
@@ -77,7 +86,8 @@ window.onload = function() {
       if( window.isPaused() ) return;
       
       renderStatic.start( deltaTime );  // Static can also change, because it is the scenario... maybe will change this names to layers
-      renderAnimated.start( deltaTime );
+      renderUI.start( deltaTime );
+      renderLayers.start( deltaTime );
 
       // # Add the objects to the collision vector
       collision.clearArrayItems();
@@ -87,16 +97,22 @@ window.onload = function() {
       players.map( (player) => {
         collision.addItem(player);
       });*/
-      
+
+      // "Static" Render
       renderStatic.clearArrayItems();
       renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
 
-      renderAnimated.clearArrayItems();
+      // Layers Render
+      renderLayers.clearArrayItems();
       players.map( (player) => {
-        renderAnimated.addItem( player ); // Adds the player to the animation render
+        renderLayers.addItem( player ); // Adds the player to the animation render
       });
-      renderAnimated.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
+      renderLayers.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
 
+      // UI Render
+      renderUI.clearArrayItems();
+      renderUI.addArrayItem( _UI.getRenderItems());
+      
       // # Movements
       players.map( (player) => {
         player.handleMovement( keysDown );

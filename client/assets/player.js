@@ -9,7 +9,6 @@ class Player {
         this.playerSprite = document.getElementById('sprite_player_two');
       }
       
-      // http://getspritexy.com/ <= Para mapear os sprites!
       this.spriteProps = {
         sprite_width: 20, // Player size inside sprite
         sprite_height: 40
@@ -41,6 +40,8 @@ class Player {
       this.speed0 = 6;
       this.speed = this.chunkSize / this.speed0;
 
+      this.lifes = 6;
+      
       this.isCollidable = true;
 
       this.isMoving = false;
@@ -219,7 +220,9 @@ class Player {
     }
 		
 	// # Gets
-			
+    
+    getLifes() { return this.lifes; }
+  
 	  getX() { return this.x; }
 		getY() { return this.y; }
 			
