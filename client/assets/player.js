@@ -40,7 +40,8 @@ class Player {
       this.speed0 = 6;
       this.speed = this.chunkSize / this.speed0;
 
-      this.lifes = 6;
+      this.defaultLifes = 6;
+      this.lifes = this.defaultLifes;
       
       this.isCollidable = true;
 
@@ -51,6 +52,10 @@ class Player {
       
       this.hasCollisionEvent = false;
       this.stopOnCollision = true;
+    
+    // Hurt
+      this.canBeHurt = true;
+      this.hurtCoolDownTime = 2000; //2s
 
       this.run();
   }
@@ -218,6 +223,34 @@ class Player {
 			this.setX( this.x0 );
 		  this.setY( this.y0 );
     }
+
+    hurtPlayer( amount ) {
+      if( this.canBeHurt ) {
+        
+        // Hurt player
+        this.lifes -= amount;
+        if( this.lifes < 0 ) this.lifes = 0;
+
+        // Start cooldown
+        this.canBeHurt = false;
+        setTimeout( () => {
+          this.canBeHurt = true;
+          this.hideSprite = false; // avoid problems that
+        }, this.hurtCoolDownTime);
+
+        // Check if player died
+        this.checkPlayerDeath();
+      }
+    }
+
+    checkPlayerDeath() {
+      if( this.lifes < 1 ) {
+        this.canBeHurt = true;
+        this.hideSprite = false;
+        this.lifes = this.defaultLifes;
+        this.resetPosition(); // TODO: Make the game reset Scenario too!!!!
+      }
+    }
 		
 	// # Gets
     
@@ -274,6 +307,11 @@ class Player {
 	// # Player Render
 				
 	  render(ctx) {
+
+      // Blink player if it can't be hurt
+      if( ! this.canBeHurt ) {
+        this.hideSprite = !this.hideSprite;
+      }
       
       if ( this.hideSprite ) return;
 

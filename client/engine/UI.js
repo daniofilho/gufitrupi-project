@@ -27,6 +27,13 @@ class UI {
     return this.renderItems;
   }
 
+  // Clear array and rerun code to get new items
+  getNewRenderItems() {
+    this.clearArrayItems();
+    this.run();
+    return this.getRenderItems();
+  }
+
   // Math
   fromRight(value) {
     return ( this.gameProps.getProp('screenHorizontalChunks') * this.chunkSize ) - value;

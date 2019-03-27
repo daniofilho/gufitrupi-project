@@ -104,14 +104,14 @@ window.onload = function() {
 
       // Layers Render
       renderLayers.clearArrayItems();
+      renderLayers.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
       players.map( (player) => {
         renderLayers.addItem( player ); // Adds the player to the animation render
       });
-      renderLayers.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
 
       // UI Render
       renderUI.clearArrayItems();
-      renderUI.addArrayItem( _UI.getRenderItems());
+      renderUI.addArrayItem( _UI.getNewRenderItems());
       
       // # Movements
       players.map( (player) => {
