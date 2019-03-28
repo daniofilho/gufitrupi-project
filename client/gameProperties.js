@@ -26,7 +26,7 @@ module.exports = gameProperties;
 // Global values
 
   // Debug
-  window.debug = false;
+  window.debug = true;
 
   // Pause
   window._pause = false;
