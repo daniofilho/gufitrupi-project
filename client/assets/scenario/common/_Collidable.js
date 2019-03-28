@@ -39,6 +39,10 @@ class _Collidable {
   setSpriteType(type) {
     // ! Must have in childs Class
   }
+
+  setStopOnCollision(bool){
+    this.stopOnCollision = bool;
+  }
 			
 	// # Gets
 			

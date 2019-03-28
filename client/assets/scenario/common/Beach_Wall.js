@@ -12,9 +12,7 @@ class Beach_wall extends _Collidable {
     // # Sprite
     let spriteWidth = 16;
     let spriteHeight = 16;
-    let stageSprite = document.getElementById('sprite_beach'); // TEMPORARY
-    //this.stageSprite = new Image();
-    //this.stageSprite.src = '/assets/scenario/Prototype/sprites/prototype.png';
+    let stageSprite = document.getElementById('sprite_beach'); 
 
     super(type, x0, y0, chunkSize, stageSprite, spriteWidth, spriteHeight, stopOnCollision, hasCollisionEvent, name);
 
@@ -120,6 +118,46 @@ class Beach_wall extends _Collidable {
       case "obstacle":
         this.spriteProps = { 
           clip_x: 40, clip_y: 75, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        break;
+      case "tree_top_left":
+        this.spriteProps = { 
+          clip_x: 693, clip_y:96, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        this.setStopOnCollision(false);
+        break;
+      case "tree_top_right":
+        this.spriteProps = { 
+          clip_x: 710, clip_y: 96, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        this.setStopOnCollision(false);
+        break;
+      case "tree_middle_left":
+        this.spriteProps = { 
+          clip_x: 692, clip_y: 11, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        this.setStopOnCollision(false);
+        break;
+      case "tree_middle_right":
+        this.spriteProps = { 
+          clip_x: 710, clip_y: 11, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        this.setStopOnCollision(false);
+        break;
+      case "tree_bottom_left":
+        this.spriteProps = { 
+          clip_x: 625, clip_y: 11, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+        }
+        break;
+      case "tree_bottom_right":
+        this.spriteProps = { 
+          clip_x: 744, clip_y: 11, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
         }
         break;

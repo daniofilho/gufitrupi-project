@@ -84,13 +84,13 @@ class Prototype_Stage_3 extends _Stage{
       if( !item ) return; // Jump false elements
       let x0 = xIndex * this.chunkSize;
       let y0 = yIndex * this.chunkSize;
-      this.addRenderItem(this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex));
+      this.addStaticItem(this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex));
       });
     });
   }
 
   // # Scenario Animated items
-  scenarioDesignLayer() {
+  scenarioDesignLayer__bottom() {
 
     // Teleport
     let tp_01 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "left",     targetStage: 1 };
@@ -118,7 +118,7 @@ class Prototype_Stage_3 extends _Stage{
       if( !item ) return; // Jump false elements
       let x0 = xIndex * this.chunkSize;
       let y0 = yIndex * this.chunkSize;
-      this.addRenderLayerItem( this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex) );
+      this.addRenderLayerItem__bottom( this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex) );
       });
     });
   
@@ -130,7 +130,7 @@ class Prototype_Stage_3 extends _Stage{
     this.setPlayer2StartX(player2StartX);
     this.setPlayer2StartY(player2StartY);
     this.scenarioDesign();
-    this.scenarioDesignLayer();
+    this.scenarioDesignLayer__bottom();
   }
 
 } // class
