@@ -4,6 +4,7 @@ const _Stage = require('../../common/_Stage');
 const Beach_Wall = require('../../common/Beach_Wall');
 const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
+const Fire = require('../../common/Fire');
 
 class Prototype_Stage_1 extends _Stage{
 
@@ -30,6 +31,9 @@ class Prototype_Stage_1 extends _Stage{
         break;
       case "teleport":
         return new Teleport(item.type, x, y, xIndex, yIndex, this.chunkSize, item );
+        break;
+      case "fire":
+        return new Fire(item.type, x, y, this.chunkSize);
         break;
     }
   }
@@ -58,7 +62,7 @@ class Prototype_Stage_1 extends _Stage{
         
     // Floor
     let f1 = { name: "floor", type: "01"};
-    let f2 = { name: "floor", type: "02"};
+    let f2 = { name: "floor", type: "02"};  
 
     // Make shure to design basead on gameProperties !
     let scenarioDesign = [
@@ -98,6 +102,8 @@ class Prototype_Stage_1 extends _Stage{
     let tp_04 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "bottom",     targetStage: 4 };
     let tp_05 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "left",       targetStage: 5 };
     
+    let fire = { name: "fire", type: "01"}; 
+
     let scenarioDesign = [
       [ false,   false,  false,   false,   false,   tp_02,   tp_02,   false,   tp_02,   tp_02,   tp_02,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
@@ -110,7 +116,7 @@ class Prototype_Stage_1 extends _Stage{
       [ tp_05,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_03 ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   fire,    false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   tp_04,   tp_04,   tp_04,   false,   tp_04,   tp_04,   false,   false,   false,   false,   false ],
     ]

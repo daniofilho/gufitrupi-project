@@ -9,7 +9,6 @@ class Player {
         this.playerSprite = document.getElementById('sprite_player_two');
       }
       
-      // http://getspritexy.com/ <= Para mapear os sprites!
       this.spriteProps = {
         sprite_width: 20, // Player size inside sprite
         sprite_height: 40
@@ -41,6 +40,9 @@ class Player {
       this.speed0 = 6;
       this.speed = this.chunkSize / this.speed0;
 
+      this.defaultLifes = 6;
+      this.lifes = this.defaultLifes;
+      
       this.isCollidable = true;
 
       this.isMoving = false;
@@ -50,6 +52,10 @@ class Player {
       
       this.hasCollisionEvent = false;
       this.stopOnCollision = true;
+    
+    // Hurt
+      this.canBeHurt = true;
+      this.hurtCoolDownTime = 2000; //2s
 
       this.run();
   }
@@ -217,9 +223,39 @@ class Player {
 			this.setX( this.x0 );
 		  this.setY( this.y0 );
     }
+
+    hurtPlayer( amount ) {
+      if( this.canBeHurt ) {
+        
+        // Hurt player
+        this.lifes -= amount;
+        if( this.lifes < 0 ) this.lifes = 0;
+
+        // Start cooldown
+        this.canBeHurt = false;
+        setTimeout( () => {
+          this.canBeHurt = true;
+          this.hideSprite = false; // avoid problems that
+        }, this.hurtCoolDownTime);
+
+        // Check if player died
+        this.checkPlayerDeath();
+      }
+    }
+
+    checkPlayerDeath() {
+      if( this.lifes < 1 ) {
+        this.canBeHurt = true;
+        this.hideSprite = false;
+        this.lifes = this.defaultLifes;
+        this.resetPosition(); // TODO: Make the game reset Scenario too!!!!
+      }
+    }
 		
 	// # Gets
-			
+    
+    getLifes() { return this.lifes; }
+  
 	  getX() { return this.x; }
 		getY() { return this.y; }
 			
@@ -271,6 +307,11 @@ class Player {
 	// # Player Render
 				
 	  render(ctx) {
+
+      // Blink player if it can't be hurt
+      if( ! this.canBeHurt ) {
+        this.hideSprite = !this.hideSprite;
+      }
       
       if ( this.hideSprite ) return;
 
@@ -282,11 +323,6 @@ class Player {
         h: this.getHeight()
       } 
       
-      /*playerSprite.onload = function() { // onload não quer carregar no player..pq ??
-        ctx.drawImage(playerSprite, props.x, props.y, props.w, props.h);	
-      }	*/
-      //drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
-      // # https://www.w3schools.com/tags/canvas_drawimage.asp
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(
         this.playerSprite,  
@@ -294,11 +330,13 @@ class Player {
         this.spriteProps.sprite_width, this.spriteProps.sprite_height, 
         props.x, props.y, props.w, props.h
       );	
+      
       // DEBUG COLLISION
       if( window.debug ) {
         ctx.fillStyle = "rgba(0,0,255, 0.4)";
         ctx.fillRect( props.x, this.getCollisionY(), props.w, this.getCollisionHeight() );
       }
+      
 		};
   
   // # Collision
