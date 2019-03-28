@@ -323,11 +323,6 @@ class Player {
         h: this.getHeight()
       } 
       
-      /*playerSprite.onload = function() { // onload não quer carregar no player..pq ??
-        ctx.drawImage(playerSprite, props.x, props.y, props.w, props.h);	
-      }	*/
-      //drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
-      // # https://www.w3schools.com/tags/canvas_drawimage.asp
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(
         this.playerSprite,  
@@ -335,11 +330,13 @@ class Player {
         this.spriteProps.sprite_width, this.spriteProps.sprite_height, 
         props.x, props.y, props.w, props.h
       );	
+      
       // DEBUG COLLISION
       if( window.debug ) {
         ctx.fillStyle = "rgba(0,0,255, 0.4)";
         ctx.fillRect( props.x, this.getCollisionY(), props.w, this.getCollisionHeight() );
       }
+      
 		};
   
   // # Collision
