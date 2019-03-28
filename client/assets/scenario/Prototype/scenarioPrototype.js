@@ -57,13 +57,18 @@ class scenarioPrototype extends _Scenario {
     // Add the Static Items
     this.stage.getStaticItems().map( (item) => { 
       item.scenario = this; // Pass this scenario class as an argument, so other functions can refer to this
-      this.addRenderItem(item);
+      this.addStaticItem(item);
     });
 
-    // Add the Animated Items
-    this.stage.getLayerItems().map( (item) => { 
+    // Add the Animated Items - Bottom
+    this.stage.getLayerItems__bottom().map( (item) => { 
       item.scenario = this;
-      this.addRenderLayerItem(item);
+      this.addRenderLayerItem__bottom(item);
+    });
+    
+    this.stage.getLayerItems__top().map( (item) => { 
+      item.scenario = this;
+      this.addRenderLayerItem__top(item);
     });
     
     // Only set player start at first load
@@ -82,5 +87,4 @@ class scenarioPrototype extends _Scenario {
 	}
 
 }//class
-
 module.exports = scenarioPrototype;

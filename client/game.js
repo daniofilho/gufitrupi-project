@@ -91,23 +91,31 @@ window.onload = function() {
 
       // # Add the objects to the collision vector
       collision.clearArrayItems();
-      collision.addArrayItem( scenario.getRenderItems() );
-      collision.addArrayItem( scenario.getLayerItems() );
+      collision.addArrayItem( scenario.getStaticItems() );
+      collision.addArrayItem( scenario.getLayerItems__bottom() );
+      collision.addArrayItem( scenario.getLayerItems__top() );
       /*
       players.map( (player) => {
         collision.addItem(player);
       });*/
 
-      // "Static" Render
+      // "Static" Render - Background
       renderStatic.clearArrayItems();
-      renderStatic.addArrayItem(scenario.getRenderItems()); // Get all items from the scenario that needs to be rendered
+      renderStatic.addArrayItem(scenario.getStaticItems()); // Get all items from the scenario that needs to be rendered
 
       // Layers Render
-      renderLayers.clearArrayItems();
-      renderLayers.addArrayItem( scenario.getLayerItems() ); // Get all animated items from the scenario that needs to be rendered
-      players.map( (player) => {
-        renderLayers.addItem( player ); // Adds the player to the animation render
-      });
+        renderLayers.clearArrayItems();
+
+        // # Bottom 
+        renderLayers.addArrayItem( scenario.getLayerItems__bottom() );
+        
+        // # Middle
+        players.map( (player) => {
+          renderLayers.addItem( player ); // Adds the player to the animation render
+        });
+
+        // # Top
+        renderLayers.addArrayItem( scenario.getLayerItems__top() );
 
       // UI Render
       renderUI.clearArrayItems();

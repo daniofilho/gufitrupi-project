@@ -38,7 +38,7 @@ class Prototype_Stage_1 extends _Stage{
     }
   }
         
-  // # Scenario Desgin (Static)
+  // # Scenario Design (Static)
   scenarioDesign() {
 
     // Walls
@@ -75,11 +75,11 @@ class Prototype_Stage_1 extends _Stage{
       [ ob,     ob,     ob,     ob,     ob,         ob,   f1,   f1,   f1,   f1,   f1,   f1,       f1,     f1,     f1,     f1 ],
       [ f1,     f1,     f1,     f1,     f1,         f1,   f1,   f1,   f1,   f1,   ob,   ob,       ob,     ob,     ob,     ob ],
       [ f1,     f2,     f1,     f1,     f1,         f1,   f1,   f1,   f1,   f1,   f1,   f2,       f1,     f1,     f1,     f1 ],
-      [ wb,     wb,     wb,     wb,     iwc_tr,     f1,   f2,   f1,   ob,   f1,   f1,   iwc_tl,   wb,     wb,     wb,     wb ],
-      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
-      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
-      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
-      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   ob,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ]
+      [ wb,     wb,     wb,     wb,     iwc_tr,     f1,   f2,   f1,   f1,   f1,   f1,   iwc_tl,   wb,     wb,     wb,     wb ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ],
+      [ wtr,    wtr,    wtr,    wtr,    wl,         f1,   f1,   f1,   f1,   f1,   f1,   wr,       wtr,    wtr,    wtr,    wtr ]
     ]
 
     // # Proccess scenario design
@@ -88,13 +88,13 @@ class Prototype_Stage_1 extends _Stage{
       if( !item ) return; // Jump false elements
       let x0 = xIndex * this.chunkSize;
       let y0 = yIndex * this.chunkSize;
-      this.addRenderItem(this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex));
+      this.addStaticItem(this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex));
       });
     });
   }
 
-  // # Scenario Animated items
-  scenarioDesignLayer() {
+  // # Scenario Layer - Bottom
+  scenarioDesignLayer__bottom() {
 
     // Teleport
     let tp_02 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "top",        targetStage: 2 };
@@ -103,6 +103,9 @@ class Prototype_Stage_1 extends _Stage{
     let tp_05 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "left",       targetStage: 5 };
     
     let fire = { name: "fire", type: "01"}; 
+
+    let tbl = { name: "wall", type: "tree_bottom_left" };  
+    let tbr = { name: "wall", type: "tree_bottom_right" }; 
 
     let scenarioDesign = [
       [ false,   false,  false,   false,   false,   tp_02,   tp_02,   false,   tp_02,   tp_02,   tp_02,   false,   false,   false,   false,   false ],
@@ -115,10 +118,10 @@ class Prototype_Stage_1 extends _Stage{
       [ tp_05,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ tp_05,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_03 ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   tbl,     tbr,     false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   fire,    false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   tp_04,   tp_04,   tp_04,   false,   tp_04,   tp_04,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   tp_04,   tp_04,   tp_04,   tp_04,   tp_04,   tp_04,   false,   false,   false,   false,   false ],
     ]
 
     // # Proccess scenario design
@@ -127,7 +130,43 @@ class Prototype_Stage_1 extends _Stage{
       if( !item ) return; // Jump false elements
       let x0 = xIndex * this.chunkSize;
       let y0 = yIndex * this.chunkSize;
-      this.addRenderLayerItem( this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex) );
+      this.addRenderLayerItem__bottom( this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex) );
+      });
+    });
+  
+  }
+
+  scenarioDesignLayer__top() {
+
+    let ttl = { name: "wall", type: "tree_top_left" };  
+    let ttr = { name: "wall", type: "tree_top_right" };  
+    let tml = { name: "wall", type: "tree_middle_left" };  
+    let tmr = { name: "wall", type: "tree_middle_right" };  
+
+    let scenarioDesign = [
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   ttl,     ttr,     false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   tml,     tmr,     false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,     false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+    ]
+
+    // # Proccess scenario design
+    scenarioDesign.map( (array, yIndex) => {
+      array.map( (item, xIndex) => {
+      if( !item ) return; // Jump false elements
+      let x0 = xIndex * this.chunkSize;
+      let y0 = yIndex * this.chunkSize;
+      this.addRenderLayerItem__top( this.getScenarioAssetItem(item, x0, y0, xIndex, yIndex) );
       });
     });
   
@@ -139,7 +178,8 @@ class Prototype_Stage_1 extends _Stage{
     this.setPlayer2StartX(player2StartX);
     this.setPlayer2StartY(player2StartY);
     this.scenarioDesign();
-    this.scenarioDesignLayer();
+    this.scenarioDesignLayer__bottom();
+    this.scenarioDesignLayer__top();
   }
 
 } // class

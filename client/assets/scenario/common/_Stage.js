@@ -1,8 +1,13 @@
 class _Stage {
 
   constructor(chunkSize) {
+    
     this.renderItems = new Array();
+    
     this.renderLayerItems = new Array();
+    this.renderLayerItems__top = new Array();
+    this.renderLayerItems__bottom = new Array();
+
     this.chunkSize = chunkSize;
 
     this.player1StartX = 0;
@@ -15,8 +20,10 @@ class _Stage {
   }
   
   // # Gets
-  getStaticItems() {  return this.renderItems; }
-  getLayerItems() {  return this.renderLayerItems; }
+  getStaticItems() { return this.renderItems; }
+  getLayerItems() { return this.renderLayerItems; }
+  getLayerItems__bottom() { return this.renderLayerItems__bottom; }
+  getLayerItems__top() { return this.renderLayerItems__top; }
   
   getPlayer1StartX() { return this.player1StartX; }
   getPlayer1StartY() { return this.player1StartY; }
@@ -32,15 +39,22 @@ class _Stage {
   setPlayer2StartY(y) { this.player2StartY = y; }
   
   // # Add Items to the render
-	addRenderItem(item){
-		this.renderItems.push(item);
-	}
-	addRenderLayerItem(item){
-		this.renderLayerItems.push(item);
+	addStaticItem(item){
+    this.renderItems.push(item);
   }
-  clearArrayItems(){ 
+  addRenderLayerItem(item){
+    this.renderLayerItems.push(item);
+  }
+  addRenderLayerItem__bottom(item){
+    this.renderLayerItems__bottom.push(item);
+  }
+  addRenderLayerItem__top(item){
+    this.renderLayerItems__top.push(item);
+  }
+  clearArrayItems(){
     this.renderItems = new Array();
-    this.renderLayerItems = new Array();
+    this.renderLayerItems__bottom = new Array();
+    this.renderLayerItems__top = new Array();
   }
   
   run () { }
