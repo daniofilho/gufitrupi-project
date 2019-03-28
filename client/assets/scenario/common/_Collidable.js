@@ -55,9 +55,14 @@ class _Collidable {
 
   getCenterX() { return this.getCollisionX() + this.getCollisionWidth(); }
   getCenterY() { return this.getCollisionY() + this.getCollisionHeight(); }
+
+  // Hook to run before render
+  beforeRender() { }
 		
 	// # Render
   render(ctx) {
+
+    this.beforeRender();
       
     let props = {
       x: this.getX(),

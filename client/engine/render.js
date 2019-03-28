@@ -34,7 +34,7 @@ class Render {
     // Scenario
     if ( this.scenario != "") 
       this.scenario.render(this.ctx);
-                
+      
     // Render items
     for (let i in this.renderItems) {
       // Execute the render function - Include this function on every class!
