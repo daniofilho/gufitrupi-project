@@ -4,17 +4,37 @@ class Beach_wall extends _Collidable {
 
 	constructor(type, x0, y0, chunkSize) {
     
-    let stopOnCollision = true;
-    let hasCollisionEvent = false;
+    let props = {
+      name: "Beach Wall",
+      type: type
+    }
+
+    let position = {
+      x: x0,
+      y: y0
+    }
+
+    let dimension = {
+      width: chunkSize,
+      height: chunkSize
+    }
+
+    let game = {
+      chunkSize: chunkSize
+    }
+
+    let sprite = {
+      width: 16,
+      height: 16,
+      stageSprite: document.getElementById('sprite_beach')
+    }
+
+    let events = {
+      stopOnCollision: true,
+      hasCollisionEvent: false
+    }
     
-    let name = "Beach Wall";
-
-    // # Sprite
-    let spriteWidth = 16;
-    let spriteHeight = 16;
-    let stageSprite = document.getElementById('sprite_beach'); 
-
-    super(type, x0, y0, chunkSize, stageSprite, spriteWidth, spriteHeight, stopOnCollision, hasCollisionEvent, name);
+    super(props, position, dimension, game, sprite, events);
 
   }
 
@@ -150,16 +170,27 @@ class Beach_wall extends _Collidable {
         this.setStopOnCollision(false);
         break;
       case "tree_bottom_left":
+        // Sprite
         this.spriteProps = { 
           clip_x: 625, clip_y: 11, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
         }
+        // Collision Size
+        this.setCollisionWidth( this.chunkSize * 0.3 );
+        this.setCollisionX(this.x + this.chunkSize * 0.7);
+        this.setCollisionHeight( this.chunkSize * 0.5 );
+        this.setCollisionY(this.y + this.chunkSize * 0.5);
         break;
       case "tree_bottom_right":
+        // Sprite
         this.spriteProps = { 
           clip_x: 744, clip_y: 11, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
         }
+        // Collision Size
+        this.setCollisionWidth( this.chunkSize * 0.3 );
+        this.setCollisionHeight( this.chunkSize * 0.5 );
+        this.setCollisionY(this.y + this.chunkSize * 0.5);
         break;
     }
 

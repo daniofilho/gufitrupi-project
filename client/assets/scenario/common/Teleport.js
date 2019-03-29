@@ -5,22 +5,43 @@ class Teleport extends _Collidable {
 
 	constructor(type, x0, y0, xIndex, yIndex, chunkSize, teleportProps) {
     
-    let stopOnCollision = false;
-    let hasCollisionEvent = true;
-    
-    let name = "Teleport";
+    let props = {
+      name: "Teleport",
+      type: type
+    }
 
-    // # Sprite
-    let spriteWidth = 16;
-    let spriteHeight = 16;
-	  let stageSprite = false;
-	
-    super(type, x0, y0, chunkSize, stageSprite, spriteWidth, spriteHeight, stopOnCollision, hasCollisionEvent, name);
+    let position = {
+      x: x0,
+      y: y0
+    }
+
+    let dimension = {
+      width: chunkSize,
+      height: chunkSize
+    }
+
+    let game = {
+      chunkSize: chunkSize
+    }
+
+    let sprite = {
+      width: 16,
+      height: 16,
+      stageSprite: false
+    }
+
+    let events = {
+      stopOnCollision: false,
+      hasCollisionEvent: true
+    }
+    
+    super(props, position, dimension, game, sprite, events);
     
     this.teleportProps = teleportProps;
 
     this.xIndex = xIndex;
     this.yIndex = yIndex;
+    
   }
 
   // # Sprites
