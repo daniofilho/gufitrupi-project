@@ -4,22 +4,49 @@ class Fire extends _CanHurt {
 
   constructor(type, x0, y0, chunkSize) {
     
-    let stopOnCollision = false;
-    let hasCollisionEvent = true;
-      
-    let name = "Fire";
+    let props = {
+      name: "Fire",
+      type: type
+    }
 
-    // # Sprite
-    let spriteWidth = 50;
-    let spriteHeight = 50;
-    let stageSprite = document.getElementById('sprite_common');
+    let position = {
+      x: x0,
+      y: y0
+    }
 
-    super(type, x0, y0, chunkSize, stageSprite, spriteWidth, spriteHeight, stopOnCollision, hasCollisionEvent, name, 1);
-      
+    let dimension = {
+      width: chunkSize,
+      height: chunkSize
+    }
+
+    let game = {
+      chunkSize: chunkSize
+    }
+
+    let sprite = {
+      width: 50,
+      height: 50,
+      stageSprite: document.getElementById('sprite_common')
+    }
+
+    let events = {
+      stopOnCollision: false,
+      hasCollisionEvent: true
+    }
+    
+    let canHurtProps = {
+      amount: 1
+    }
+
+    super(props, position, dimension, game, sprite, events, canHurtProps);
+
     this.spriteAnimationCount = 1;
     this.spriteAnimationMaxCount = 3;
 
-    // Controls the player FPS Animation
+    this.collisionHeight = chunkSize * 0.4; // 80% of Chunk Size
+    this.collisionY = y0 + ( chunkSize * 0.6); // 80% of Chunk Size
+
+    // Controls the sprite FPS Animation
     this.fpsInterval = 1000 / 10; // 1000 / FPS
     this.deltaTime = Date.now();
   }
@@ -28,7 +55,11 @@ class Fire extends _CanHurt {
   setSpriteType(type) {
     switch(type) { 
       default:
+        // Sprite
         this.setSpritePropsFrame(this.spriteAnimationCount);
+        // Collision
+        this.setCollisionHeight(this.collisionHeight);
+        this.setCollisionY(this.collisionY);
         break;
     }
   }

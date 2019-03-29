@@ -1,31 +1,37 @@
 class _Collidable {
 
-  constructor(type, x0, y0, chunkSize, stageSprite, spriteWidth, spriteHeight, stopOnCollision, hasCollisionEvent, name) {
+  constructor(props, position, dimension, game, sprite, events) {
       
     // # Position
-    this.x = x0;
-    this.y = y0;
+    this.x = position.x;
+    this.y = position.y;
       
     // # Properties
-    this.width = chunkSize; //px
-    this.height = chunkSize;
+    this.width = dimension.width; //px
+    this.height = dimension.height;
 
-    this.chunkSize = chunkSize;
+    // # Collision
+    this.collisionWidth = this.width;
+    this.collisionHeight = this.height;
+    this.collisionX = this.x;
+    this.collisionY = this.y;
 
-    this.stopOnCollision = stopOnCollision;
-    this.hasCollisionEvent = hasCollisionEvent;
+    this.chunkSize = game.chunkSize;
 
-    this.name = name + "(" + this.x + "/" + this.y + ")";
-      
+    // # Eventos
+    this.stopOnCollision = events.stopOnCollision;
+    this.hasCollisionEvent = events.hasCollisionEvent;
+  
     // # Sprite
-    this.stageSprite = stageSprite;
+    this.stageSprite = sprite.stageSprite;
 
-    this.spriteWidth = spriteWidth;   
-    this.spriteHeight = spriteHeight; 
+    this.spriteWidth = sprite.width;   
+    this.spriteHeight = sprite.height; 
     this.spriteProps = new Array();
+    
+    this.name = props.name + "(" + this.x + "/" + this.y + ")";
 
-    this.run( type );
-
+    this.run( props.type );
   }
 
   // # Sets
@@ -35,6 +41,12 @@ class _Collidable {
     
   setHeight(height) { this.height = height; }
   setWidth(width) { this.width = width; }
+
+  setCollisionHeight(height) { this.collisionHeight = height; }
+  setCollisionWidth(width) { this.collisionWidth = width; }
+
+  setCollisionX(x) { this.collisionX = x; }
+  setCollisionY(y) { this.collisionY = y; }
     
   setSpriteType(type) {
     // ! Must have in childs Class
@@ -52,13 +64,14 @@ class _Collidable {
   getWidth() { return this.width; }
   getHeight() { return this.height; }
 
-  getCollisionHeight() { return this.height; }
-  getCollisionWidth() { return this.width; }
-  getCollisionX() {  return this.x; }
-  getCollisionY() {  return this.y; }
+  getCollisionHeight() { return this.collisionHeight; }
+  getCollisionWidth() { return this.collisionWidth; }
 
-  getCenterX() { return this.getCollisionX() + this.getCollisionWidth(); }
-  getCenterY() { return this.getCollisionY() + this.getCollisionHeight(); }
+  getCollisionX() { return this.collisionX; }
+  getCollisionY() { return this.collisionY; }
+
+  getCenterX() { return this.getCollisionX() + this.getCollisionWidth() /2; }
+  getCenterY() { return this.getCollisionY() + this.getCollisionHeight() /2; }
 
   // Hook to run before render
   beforeRender() { }
@@ -88,11 +101,20 @@ class _Collidable {
       
     //DEBUG Chunk Size
     if( window.debug ) {
+
+      let collision_props = {
+        w: this.getCollisionWidth(),
+        h: this.getCollisionHeight(),
+        x: this.getCollisionX(),
+        y: this.getCollisionY()
+      }
+
       ctx.fillStyle = this.stopOnCollision ? "rgba(255,0,0,0.2)" : "rgba(0,255,0,0.2)";
-      ctx.fillRect(props.x, props.y, props.w, props.h);
+      ctx.fillRect(collision_props.x, collision_props.y, collision_props.w, collision_props.h);
       ctx.strokeStyle = "rgba(0,0,0,0.2)";
       ctx.lineWidth   = 5;
-      ctx.strokeRect(props.x, props.y, props.w, props.h);
+      ctx.strokeRect(collision_props.x, collision_props.y, collision_props.w, collision_props.h);
+
     }
   
   }

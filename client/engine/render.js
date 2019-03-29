@@ -37,7 +37,7 @@ class Render {
       
     // Render items
     for (let i in this.renderItems) {
-      // Execute the render function - Include this function on every class!
+      // Execute the render function - Include this function on every class
       this.renderItems[i].render(this.ctx, deltaTime);
     }
     

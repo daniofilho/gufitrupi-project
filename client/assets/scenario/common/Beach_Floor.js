@@ -4,19 +4,37 @@ class Beach_Floor extends _Collidable {
 
 	constructor(type, x0, y0, chunkSize) {
     
-    let stopOnCollision = false;
-    let hasCollisionEvent = false;
+    let props = {
+      name: "Beach Floor",
+      type: type
+    }
+
+    let position = {
+      x: x0,
+      y: y0
+    }
+
+    let dimension = {
+      width: chunkSize,
+      height: chunkSize
+    }
+
+    let game = {
+      chunkSize: chunkSize
+    }
+
+    let sprite = {
+      width: 16,
+      height: 16,
+      stageSprite: document.getElementById('sprite_beach')
+    }
+
+    let events = {
+      stopOnCollision: false,
+      hasCollisionEvent: false
+    }
     
-    let name = "Beach Floor";
-
-    // # Sprite
-    let spriteWidth = 16;
-    let spriteHeight = 16;
-    let stageSprite = document.getElementById('sprite_beach'); // TEMPORARY
-    //this.stageSprite = new Image();
-    //this.stageSprite.src = '/assets/scenario/Prototype/sprites/prototype.png';
-
-    super(type, x0, y0, chunkSize, stageSprite, spriteWidth, spriteHeight, stopOnCollision, hasCollisionEvent, name);
+    super(props, position, dimension, game, sprite, events);
     
   }
 
