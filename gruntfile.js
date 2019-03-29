@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                 src: [
                     'client/assets/**/*.js',
                     'client/gameProperties.js',
-                    'client/game.js' 
+                    'client/main.js' 
                 ],
                 dest: 'client/bundle.js'
             }
