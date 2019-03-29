@@ -67,11 +67,11 @@ class _Collidable {
   getCollisionHeight() { return this.collisionHeight; }
   getCollisionWidth() { return this.collisionWidth; }
 
-  getCollisionX() {  return this.collisionX; }
-  getCollisionY() {  return this.collisionY; }
+  getCollisionX() { return this.collisionX; }
+  getCollisionY() { return this.collisionY; }
 
-  getCenterX() { return this.getCollisionX() + this.getCollisionWidth(); }
-  getCenterY() { return this.getCollisionY() + this.getCollisionHeight(); }
+  getCenterX() { return this.getCollisionX() + this.getCollisionWidth() /2; }
+  getCenterY() { return this.getCollisionY() + this.getCollisionHeight() /2; }
 
   // Hook to run before render
   beforeRender() { }

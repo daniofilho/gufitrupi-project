@@ -23,7 +23,7 @@ class Player {
       this.fpsInterval = 1000 / 12; // 1000 / FPS
       this.deltaTime = Date.now();
 
-      this.hideSprite = false;
+      this.chunkSize = gameProps.getProp('chunkSize');
     
     // # Position
       this.x = x0;
@@ -31,29 +31,40 @@ class Player {
       
       this.x0 = x0; // initial position
       this.y0 = y0;
-
-      this.chunkSize = gameProps.getProp('chunkSize');
-
+    
     // # Properties
       this.width = this.chunkSize; //px
       this.height = this.chunkSize * 2; //px
+      
       this.speed0 = 6;
       this.speed = this.chunkSize / this.speed0;
-
-      this.defaultLifes = 6;
-      this.lifes = this.defaultLifes;
       
-      this.isCollidable = true;
-
-      this.isMoving = false;
-
       this.name = "Player " + playerNumber;
       this.playerNumber = playerNumber;
       
+    // # Events  
+      
+      this.isCollidable = true;
+      this.isMoving = false;
+      this.hideSprite = false;
       this.hasCollisionEvent = false;
       this.stopOnCollision = true;
     
-    // Hurt
+      // # Collision
+      this.collisionWidth = this.width * 0.8;
+      this.collisionHeight = this.height * 0.3;
+      this.collisionX = x0 + this.width * 0.1;
+      this.collisionY = y0 + (this.height * 0.7);
+
+      this.collisionX0 = this.collisionX;
+      this.collisionY0 = this.collisionY;
+
+      
+    
+      // # Life
+      this.defaultLifes = 6;
+      this.lifes = this.defaultLifes;
+      
       this.canBeHurt = true;
       this.hurtCoolDownTime = 2000; //2s
 
@@ -146,24 +157,28 @@ class Player {
       this.increaseStep();
       this.setLookDirection( this.lookLeft() );
       this.setX( this.getX() - this.getSpeed()); 
+      this.setCollisionX( this.getCollisionX() - this.getSpeed()); 
     };
 			
 		movRight() { 
       this.increaseStep();
       this.setLookDirection( this.lookRight() );
       this.setX( this.getX() + this.getSpeed() ); 
+      this.setCollisionX( this.getCollisionX() + this.getSpeed()); 
     };
 			
 		movUp() { 
       this.increaseStep();
       this.setLookDirection( this.lookUp() );
       this.setY( this.getY() - this.getSpeed() ); 
+      this.setCollisionY( this.getCollisionY() - this.getSpeed() );
     };
 			
 		movDown() {  
       this.increaseStep();
       this.setLookDirection( this.lookDown() );
       this.setY( this.getY() + this.getSpeed() ); 
+      this.setCollisionY( this.getCollisionY() + this.getSpeed() );
     };
 
     handleMovement( keysDown ) {
@@ -206,7 +221,10 @@ class Player {
 	// # Sets
 		
 		setX(x) { this.x = x; }
-		setY(y) { this.y = y; }
+    setY(y) { this.y = y; }
+    
+    setCollisionX(x) { this.collisionX = x; }
+		setCollisionY(y) { this.collisionY = y; }
 			
 		setHeight(height) { this.height = height; }
 		setWidth(width) { this.width = width; }
@@ -221,7 +239,9 @@ class Player {
 
 		resetPosition() {
 			this.setX( this.x0 );
-		  this.setY( this.y0 );
+      this.setY( this.y0 );
+      this.setCollisionX( this.collisionX0 );
+      this.setCollisionY( this.collisionY0 );
     }
 
     hurtPlayer( amount ) {
@@ -245,10 +265,11 @@ class Player {
 
     checkPlayerDeath() {
       if( this.lifes < 1 ) {
-        this.canBeHurt = true;
         this.hideSprite = false;
+        this.canBeHurt = true;
         this.lifes = this.defaultLifes;
-        this.resetPosition(); // TODO: Make the game reset Scenario too!!!!
+        this.resetPosition();
+        // TODO: Make the game reset Scenario too!!!!
       }
     }
 		
@@ -263,13 +284,13 @@ class Player {
     getHeight() { return this.height; }
       
     //The collision will be just half of the player height
-    getCollisionHeight() { return this.height / 2; }
-    getCollisionWidth() { return this.width; }
-    getCollisionX() {  return this.x; }
-    getCollisionY() {  return this.y + this.getCollisionHeight(); }
+    getCollisionHeight() { return this.collisionHeight; }
+    getCollisionWidth() { return this.collisionWidth; }
+    getCollisionX() {  return this.collisionX; }
+    getCollisionY() {  return this.collisionY; }
 
-    getCenterX() { return this.getCollisionX() + this.getCollisionWidth(); }
-    getCenterY() { return this.getCollisionY() + this.getCollisionHeight(); }
+    getCenterX() { return this.getCollisionX() + this.getCollisionWidth() / 2; }
+    getCenterY() { return this.getCollisionY() + this.getCollisionHeight() / 2; }
 			
 		getColor() { return this.color; }
 		getSpeed() { return this.speed; }
@@ -334,7 +355,7 @@ class Player {
       // DEBUG COLLISION
       if( window.debug ) {
         ctx.fillStyle = "rgba(0,0,255, 0.4)";
-        ctx.fillRect( props.x, this.getCollisionY(), props.w, this.getCollisionHeight() );
+        ctx.fillRect( this.getCollisionX(), this.getCollisionY(), this.getCollisionWidth(), this.getCollisionHeight() );
       }
       
 		};
@@ -361,5 +382,4 @@ class Player {
   }
 		
 }//class
-
 module.exports = Player;

@@ -170,21 +170,27 @@ class Beach_wall extends _Collidable {
         this.setStopOnCollision(false);
         break;
       case "tree_bottom_left":
+        // Sprite
         this.spriteProps = { 
           clip_x: 625, clip_y: 11, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
         }
-        // Modify collision
-        this.setCollisionWidth( this.chunkSize * 0.7 );
-        this.setCollisionX( this.chunkSize * 0.3 );
-        
-        console.log( this.name, this.getCenterX(), this.getCenterY() );
+        // Collision Size
+        this.setCollisionWidth( this.chunkSize * 0.3 );
+        this.setCollisionX(this.x + this.chunkSize * 0.7);
+        this.setCollisionHeight( this.chunkSize * 0.5 );
+        this.setCollisionY(this.y + this.chunkSize * 0.5);
         break;
       case "tree_bottom_right":
+        // Sprite
         this.spriteProps = { 
           clip_x: 744, clip_y: 11, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
         }
+        // Collision Size
+        this.setCollisionWidth( this.chunkSize * 0.3 );
+        this.setCollisionHeight( this.chunkSize * 0.5 );
+        this.setCollisionY(this.y + this.chunkSize * 0.5);
         break;
     }
 

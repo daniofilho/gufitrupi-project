@@ -34,42 +34,40 @@ class Collision {
 
     var sumHalfWidth = ( r1.getCollisionWidth() / 2 ) + ( r2.getCollisionWidth() / 2 );
     var sumHalfHeight = ( r1.getCollisionHeight() / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
-      
+    
     if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
       
       var overlapX = sumHalfWidth - Math.abs(catX);
       var overlapY = sumHalfHeight - Math.abs(catY);
-      var collisionDirection = false;
 
       if( r2.stopIfCollision() ) {
         if(overlapX >= overlapY ){ // Direction of collision - Up/Down
           if(catY > 0){ // Up
             r1.setY( r1.getY() + overlapY );
-            collisionDirection = "up";
+            r1.setCollisionY( r1.getCollisionY() + overlapY );
           } else {
             r1.setY( r1.getY() - overlapY );
-            collisionDirection = "down";
+            r1.setCollisionY( r1.getCollisionY() - overlapY );
           }
         } else {// Direction of collision - Left/Right
           if(catX > 0){ // Left
             r1.setX( r1.getX() + overlapX );
-            collisionDirection = "left";
+            r1.setCollisionX( r1.getCollisionX() + overlapX );
           } else {
             r1.setX( r1.getX() - overlapX );
-            collisionDirection = "right";
+            r1.setCollisionX( r1.getCollisionX() - overlapX );
           }
         }
-        
       }
 
       // Triggers Collision event
-      r1.collision(r2, r1, collisionDirection);
-      r2.collision(r1, r2, collisionDirection);
+      r1.collision(r2, r1);
+      r2.collision(r1, r2);
 
     } else {
       // Triggers not in collision event
-      r1.noCollision(r2, r2, collisionDirection); 
-      r2.noCollision(r1, r2, collisionDirection); 
+      r1.noCollision(r2, r2); 
+      r2.noCollision(r1, r2); 
     }
 
   }

@@ -34,13 +34,17 @@ class Fire extends _CanHurt {
       hasCollisionEvent: true
     }
     
-    super(props, position, dimension, game, sprite, events);
+    let canHurtProps = {
+      amount: 1
+    }
+
+    super(props, position, dimension, game, sprite, events, canHurtProps);
 
     this.spriteAnimationCount = 1;
     this.spriteAnimationMaxCount = 3;
 
-    this.collisionHeight = chunkSize * 0.5; // 80% of Chunk Size
-    this.collisionY = y0 + ( chunkSize * 0.5); // 80% of Chunk Size
+    this.collisionHeight = chunkSize * 0.4; // 80% of Chunk Size
+    this.collisionY = y0 + ( chunkSize * 0.6); // 80% of Chunk Size
 
     // Controls the sprite FPS Animation
     this.fpsInterval = 1000 / 10; // 1000 / FPS

@@ -13,7 +13,7 @@ class gameProperties {
     this.canvasWidth = (this.chunkSize * this.screenHorizontalChunks);
     this.canvasHeight = (this.chunkSize * this.screenVerticalChunks);// Canvas size based on "chunks" 
     
-    this.fps = 30;
+    this.fps = 20;
   }
 
   getProp(prop) {
