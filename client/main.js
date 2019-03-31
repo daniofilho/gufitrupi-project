@@ -2,8 +2,9 @@ const Game = require('./engine/Game');
 
 window.onload = function() {
 
-  let game = new Game();
-
-  game.run();
+  // # Start the game
+    let game = new Game();
+    window.game = game;
+    game.run();
 
 }

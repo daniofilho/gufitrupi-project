@@ -265,10 +265,11 @@ class Player {
 
     checkPlayerDeath() {
       if( this.lifes < 1 ) {
-        this.hideSprite = false;
+        /*this.hideSprite = false;
         this.canBeHurt = true;
         this.lifes = this.defaultLifes;
-        this.resetPosition();
+        this.resetPosition();*/
+        window.game.newGame();
         // TODO: Make the game reset Scenario too!!!!
       }
     }
