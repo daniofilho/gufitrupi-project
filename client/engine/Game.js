@@ -20,6 +20,7 @@ class Game {
 
     // Pause
     this._pause = false;
+    this.gameIsLoaded = false;
 
     // Game
       this.gameProps = null;
@@ -50,6 +51,27 @@ class Game {
       }, false);
     }
 
+    // # Keyboard Events
+    window.addEventListener('keydown', function(e) {
+      this.keysDown[e.keyCode] = true;
+    }.bind(this), false);
+
+    window.addEventListener('keyup', function(e) {
+      // Clear previous keys
+      delete this.keysDown[e.keyCode];
+      // Reset players look direction
+      if( this.players) {
+        this.players.map( (player) => {
+          player.resetStep();
+        });
+      }
+      
+      // Pause Event Listener
+      if( e.keyCode == 27 && this.gameIsLoaded ) { // ESQ
+        this.togglePause();
+      }
+    }.bind(this), false);
+
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -57,15 +79,6 @@ class Game {
   // # Start/Restart a Game
 
   startNewGame() {
-
-    // Pause Event Listener
-    window.addEventListener('keyup', function(e) {
-      if( e.keyCode == 27 ) { // Enter
-        this.togglePause();
-      }
-    }.bind(this), false);
-    
-    this.unpause();
 
     // # Init
       this.gameProps = new gameProperties();
@@ -114,27 +127,21 @@ class Game {
       // Add items to be rendered
       this.renderStatic.setScenario(this.scenario); // set the scenario
   
-    // # Keyboard Events
-      window.addEventListener('keydown', function(e) {
-        this.keysDown[e.keyCode] = true;
-      }.bind(this), false);
-      window.addEventListener('keyup', function(e) {
-        delete this.keysDown[e.keyCode];
-        this.players.map( (player) => {
-          player.resetStep();
-        });
-      }.bind(this), false);
-
-   
-    // Ok, run the game now
-    this.runGame( this.gameProps.getProp('fps') );	// GO GO GO
-
     // Hide Elements
-      document.getElementById("mainMenu").style.display = "none";
-      document.getElementById("loading").style.display = "none";
+      document.getElementById("mainMenu").classList.remove('show');
+      this.loading(false);
 
     // Show Canvas
-      document.getElementById("gameCanvas").style.display = "block";
+      document.getElementById('gameCanvas').classList.add('show');
+    
+    // Make sure the game is not paused
+      this.unpause();
+    
+    // Flag 
+      this.gameIsLoaded = true;
+
+    // Ok, run the game now
+      this.runGame( this.gameProps.getProp('fps') );	// GO GO GO
 
   }//newGame
 
@@ -152,11 +159,7 @@ class Game {
       this.collision.addArrayItem( this.scenario.getStaticItems() );
       this.collision.addArrayItem( this.scenario.getLayerItems__bottom() );
       this.collision.addArrayItem( this.scenario.getLayerItems__top() );
-      /*
-      players.map( (player) => {
-        collision.addItem(player);
-      });*/
-
+  
       // "Static" Render - Background
       this.renderStatic.clearArrayItems();
       this.renderStatic.addArrayItem(this.scenario.getStaticItems()); // Get all items from the scenario that needs to be rendered
@@ -231,10 +234,10 @@ class Game {
 
     // Set mainMenu class
     ( paused ) ? divMenu.classList.add('paused') : divMenu.classList.add('new-game');
-
+    
     // Toggle Menu
-    divMenu.style.display = (divMenu.style.display === 'none') ? 'flex' : 'none';
-
+    divMenu.classList.toggle('show');
+    
   }
     // Handle Menu Action
     menuAction(action) {
@@ -259,10 +262,10 @@ class Game {
   // # New Game
   newGame() {
     this.pause();
-    document.getElementById("loading").style.display = "flex";
+    this.loading(true);
     setTimeout( () => {
       this.startNewGame();
-    }, 2000 );
+    }, 1000 );
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -293,22 +296,32 @@ class Game {
   pause() { 
     this._pause = true; 
     this.mainMenu(true);
+    console.log('Game Paused!');
   }
   unpause() { 
-    document.getElementById("mainMenu").style.display = 'none';
+    document.getElementById('mainMenu').classList.remove('show');
     this._pause = false;  
+    console.log('Game Unpaused!');
   }
-  togglePause() { ( this.isPaused() ) ? this.unpause(): this.pause() }
+  togglePause() { ( this.isPaused() ) ? this.unpause() : this.pause() }
   
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+  // # Loading
+  loading(bool) {
+    let display = ( bool ) ? 'flex' : 'none';
+    document.getElementById('loading').style.display = display;
+  }
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
   // # Run
   run() {
 
     // Hide Elements
-    document.getElementById("mainMenu").style.display = "none";
-    document.getElementById("gameCanvas").style.display = "none";
-    document.getElementById("loading").style.display = "none";
+    document.getElementById('mainMenu').classList.remove('show');
+    document.getElementById('gameCanvas').classList.remove('show');
+    this.loading(false);
 
     // Start the event listeners
     this.defaultEventListeners();

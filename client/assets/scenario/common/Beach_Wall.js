@@ -178,8 +178,6 @@ class Beach_wall extends _Collidable {
         // Collision Size
         this.setCollisionWidth( this.chunkSize * 0.3 );
         this.setCollisionX(this.x + this.chunkSize * 0.7);
-        this.setCollisionHeight( this.chunkSize * 0.5 );
-        this.setCollisionY(this.y + this.chunkSize * 0.5);
         break;
       case "tree_bottom_right":
         // Sprite
@@ -189,8 +187,6 @@ class Beach_wall extends _Collidable {
         }
         // Collision Size
         this.setCollisionWidth( this.chunkSize * 0.3 );
-        this.setCollisionHeight( this.chunkSize * 0.5 );
-        this.setCollisionY(this.y + this.chunkSize * 0.5);
         break;
     }
 

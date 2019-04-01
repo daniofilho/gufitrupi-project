@@ -66,6 +66,7 @@ class Teleport extends _Collidable {
 
       // Make everything dark
       collidable.scenario.clearArrayItems();
+      window.game.loading(true);
 
       // Hide all players
       players.map( (player) => {
@@ -81,8 +82,8 @@ class Teleport extends _Collidable {
         let lookDirection = playerWhoActivatedTeleport.getSpriteProps().direction;
         
         players.map( (player) => {
-          player.setX(targetX);
-          player.setY(targetY);
+          player.setX(targetX, true); // true = also set collision x too
+          player.setY(targetY, true);
           player.triggerLookDirection(lookDirection);
           player.showPlayer();
         });
@@ -92,6 +93,8 @@ class Teleport extends _Collidable {
           this.teleportProps.targetStage,
           false // firstStage ?
         );
+
+        window.game.loading(false);
       }, 300);
       
     }

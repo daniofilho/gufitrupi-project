@@ -53,13 +53,14 @@ class Player {
       // # Collision
       this.collisionWidth = this.width * 0.8;
       this.collisionHeight = this.height * 0.3;
-      this.collisionX = x0 + this.width * 0.1;
-      this.collisionY = y0 + (this.height * 0.7);
+      this.CollisionXFormula = this.width * 0.1; // Used to set collision X when setting X 
+      this.CollisionYFormula = this.height * 0.7; 
+      this.collisionX = x0 + this.CollisionXFormula;
+      this.collisionY = y0 + this.CollisionYFormula;
 
       this.collisionX0 = this.collisionX;
       this.collisionY0 = this.collisionY;
 
-      
     
       // # Life
       this.defaultLifes = 6;
@@ -220,8 +221,14 @@ class Player {
 		
 	// # Sets
 		
-		setX(x) { this.x = x; }
-    setY(y) { this.y = y; }
+		setX(x, setCollision) { 
+      this.x = x; 
+      if( setCollision ) this.setCollisionX( x + this.CollisionXFormula );
+    }
+    setY(y, setCollision) { 
+      this.y = y; 
+      if( setCollision ) this.setCollisionY( y + this.CollisionYFormula );
+    }
     
     setCollisionX(x) { this.collisionX = x; }
 		setCollisionY(y) { this.collisionY = y; }
