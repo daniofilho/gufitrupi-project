@@ -1,6 +1,6 @@
 class Player {
 
-	constructor(x0, y0, gameProps, playerNumber) {
+	constructor(x0, y0, gameProps, playerNumber, playerProps) {
     // # Sprite
       if( playerNumber == 1 ) {
         this.playerSprite = document.getElementById('sprite_player_one');
@@ -68,6 +68,11 @@ class Player {
       
       this.canBeHurt = true;
       this.hurtCoolDownTime = 2000; //2s
+
+      // Player Props if has
+      if( playerProps ) {
+        this.lifes = playerProps.lifes;
+      }
 
       this.run();
   }
@@ -284,7 +289,9 @@ class Player {
 	// # Gets
     
     getLifes() { return this.lifes; }
-  
+    
+    getPlayerNumber() { return this.playerNumber; }
+
 	  getX() { return this.x; }
 		getY() { return this.y; }
 			

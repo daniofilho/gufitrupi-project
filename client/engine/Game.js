@@ -82,7 +82,7 @@ class Game {
 
   // # Start/Restart a Game
 
-  startNewGame() {
+  startNewGame( saveData ) {
 
     // # Init
       this.gameProps = new gameProperties();
@@ -100,20 +100,34 @@ class Game {
       canvasLayers.height = canvasStatic.height = canvasUI.height = this.gameProps.getProp('canvasHeight');
 
     // # Scenario
-
-      this.scenario = this.getScenario( this.defaultScenario, contextStatic, canvasStatic )
+      if( ! saveData ) {
+        this.scenario = this.getScenario( this.defaultScenario, contextStatic, canvasStatic );
+      } else {
+        this.scenario = this.getScenario( saveData.scenario.scenarioId, contextStatic, canvasStatic, saveData );
+      }
 
     // # Players
-      
-      let player = new Player( this.scenario.getPlayer1StartX(), this.scenario.getPlayer1StartY(), this.gameProps, 1 ); 
-
       this.players = new Array();
-      this.players.push(player);
 
-      this.players.map( (player) => {
-        this.scenario.addPlayer(player);
-      });
+      if( ! saveData ) {
+        let player = new Player( this.scenario.getPlayer1StartX(), this.scenario.getPlayer1StartY(), this.gameProps, 1 ); 
 
+        this.players.push(player);
+
+        this.players.map( (player) => {
+          this.scenario.addPlayer(player);
+        });
+      } else {
+        
+        saveData.players.map( (player) => {
+
+          let _player = new Player( player.x, player.y, this.gameProps, player.playerNumber, player ); 
+
+          this.players.push( _player);
+          this.scenario.addPlayer(_player);
+
+        });  
+      }
     // # UI
       
       this.UI = new UI( this.players, this.gameProps);
@@ -125,7 +139,7 @@ class Game {
     // # Render
 
       this.renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
-      this.renderLayers = new Render(contextLayers, canvasLayers); //Render with animated objects only
+      this.renderLayers = new Render(contextLayers, canvasLayers); // Render with animated objects only
       this.renderUI     = new Render(contextUI, canvasUI); 
 
       // Add items to be rendered
@@ -227,10 +241,10 @@ class Game {
 
     }
 
-    getScenario( scenario_id, contextStatic, canvasStatic ) {
+    getScenario( scenario_id, contextStatic, canvasStatic, saveData ) {
       switch(scenario_id) {
         case "prototype":
-          return new scenarioPrototype(contextStatic, canvasStatic, this.gameProps );
+          return new scenarioPrototype(contextStatic, canvasStatic, this.gameProps, saveData );
           break;
         case "sandbox":
           return false;
@@ -264,10 +278,10 @@ class Game {
           this.saveGame();
           break;
         case 'load':
-          this.saveGame();
+          this.loadGame();
           break;
         case 'new':
-          this.newGame();
+          this.newGame(false);// false = won't load saveData
           break;
       }
     }
@@ -275,11 +289,11 @@ class Game {
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
   
   // # New Game
-  newGame() {
+  newGame(saveData) {
     this.pause();
     this.loading(true);
     setTimeout( () => {
-      this.startNewGame();
+      this.startNewGame(saveData); 
     }, 1000 );
   }
 
@@ -294,14 +308,48 @@ class Game {
 
   // # Save
   saveGame() {
-    alert('Em desenvolvimento');
+    if( confirm('Salvar o jogo atual irá sobreescrever qualquer jogo salvo anteriormente. Deseja continuar?') ) {
+      
+      let saveData = new Object();
+
+      // Scenario
+      saveData.scenario = {
+        scenarioId: this.scenario.getId(),
+        stageId: this.scenario.getActualStageId()
+      }
+
+      // Players
+      saveData.players = new Array();
+      this.players.map( (player) => {
+        saveData.players.push({
+          playerNumber: player.getPlayerNumber(),
+          x: player.getX(),
+          y: player.getY(),
+          lifes: player.getLifes()
+        });
+      });
+
+      // Convert to JSON
+      saveData = JSON.stringify(saveData);
+      
+      // Save on LocalStorage
+      localStorage.setItem( 'gufitrupi__save', saveData );
+
+      alert('Jogo salvo!');
+    }
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
   // # Save
   loadGame() {
-    alert('Em desenvolvimento');
+    
+    // # Get data from localstorage and converts to json
+    let saveData = JSON.parse( localStorage.getItem('gufitrupi__save') );
+
+    // # Loads a new game with save data
+    this.newGame(saveData); 
+
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
