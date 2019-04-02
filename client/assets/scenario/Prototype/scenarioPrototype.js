@@ -13,6 +13,7 @@ class scenarioPrototype extends _Scenario {
 
   constructor(ctx, canvas, gameProps){
     super(ctx, canvas, gameProps);
+    this.scenario_id = "prototype";
     this.run();
   }
 

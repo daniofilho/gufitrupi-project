@@ -26,6 +26,7 @@ class Game {
       this.gameProps = null;
       this.players = new Array();
       this.collision = null;
+      this.defaultScenario = "prototype";
       this.scenario = null;
       this.UI = null;
 
@@ -57,8 +58,10 @@ class Game {
     }.bind(this), false);
 
     window.addEventListener('keyup', function(e) {
+      
       // Clear previous keys
       delete this.keysDown[e.keyCode];
+      
       // Reset players look direction
       if( this.players) {
         this.players.map( (player) => {
@@ -70,6 +73,7 @@ class Game {
       if( e.keyCode == 27 && this.gameIsLoaded ) { // ESQ
         this.togglePause();
       }
+
     }.bind(this), false);
 
   }
@@ -97,7 +101,7 @@ class Game {
 
     // # Scenario
 
-      this.scenario = new scenarioPrototype(contextStatic, canvasStatic, this.gameProps );
+      this.scenario = this.getScenario( this.defaultScenario, contextStatic, canvasStatic )
 
     // # Players
       
@@ -223,6 +227,17 @@ class Game {
 
     }
 
+    getScenario( scenario_id, contextStatic, canvasStatic ) {
+      switch(scenario_id) {
+        case "prototype":
+          return new scenarioPrototype(contextStatic, canvasStatic, this.gameProps );
+          break;
+        case "sandbox":
+          return false;
+          break;
+      }
+    }
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
   
   // # Menu
@@ -296,12 +311,10 @@ class Game {
   pause() { 
     this._pause = true; 
     this.mainMenu(true);
-    console.log('Game Paused!');
   }
   unpause() { 
     document.getElementById('mainMenu').classList.remove('show');
     this._pause = false;  
-    console.log('Game Unpaused!');
   }
   togglePause() { ( this.isPaused() ) ? this.unpause() : this.pause() }
   
