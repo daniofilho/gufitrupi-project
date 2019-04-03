@@ -142,10 +142,10 @@
       width: 100%;
       text-align: center;
       list-style: none;
-      padding: 10px;
+      padding: 5px;
     }
     #mainMenu ul li a {
-      font-size: 20px;
+      font-size: 14px;
       color:#E9522C;
       text-decoration: none;
       background: #FBD609;
@@ -155,5 +155,6 @@
       display: block;
       border-radius: 30px;
       text-shadow: 2px 2px #000;
+      line-height: 20px;
     }
     #mainMenu ul li a:hover { }

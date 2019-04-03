@@ -30,6 +30,8 @@ class Game {
       this.scenario = null;
       this.UI = null;
 
+      this.multiplayer = false;
+
       // Renders
       this.renderStatic = null;
       this.renderLayers = null;
@@ -114,9 +116,15 @@ class Game {
 
         this.players.push(player);
 
+        if ( this.multiplayer ) {
+          let player2 = new Player( this.scenario.getPlayer2StartX(), this.scenario.getPlayer2StartY(), this.gameProps, 2 ); 
+          this.players.push(player2);
+        }
+
         this.players.map( (player) => {
           this.scenario.addPlayer(player);
         });
+
       } else {
         
         saveData.players.map( (player) => {
@@ -134,7 +142,7 @@ class Game {
 
     // # Collision detection class
 
-      this.collision = new Collision(canvasLayers.width, canvasLayers.height );
+      this.collision = new Collision( canvasLayers.width, canvasLayers.height );
 
     // # Render
 
@@ -283,6 +291,10 @@ class Game {
         case 'new':
           this.newGame(false);// false = won't load saveData
           break;
+        case 'new-2-players':
+          this.multiplayer = true;
+          this.newGame(false);// false = won't load saveData
+          break;
       }
     }
 
@@ -311,6 +323,9 @@ class Game {
     if( confirm('Salvar o jogo atual irá sobreescrever qualquer jogo salvo anteriormente. Deseja continuar?') ) {
       
       let saveData = new Object();
+
+      // Multiplayer
+      saveData.multiplayer = this.multiplayer;
 
       // Scenario
       saveData.scenario = {
@@ -346,6 +361,9 @@ class Game {
     
     // # Get data from localstorage and converts to json
     let saveData = JSON.parse( localStorage.getItem('gufitrupi__save') );
+
+    // Will be  multiplayer game?
+    this.multiplayer = saveData.multiplayer;
 
     // # Loads a new game with save data
     this.newGame(saveData); 
