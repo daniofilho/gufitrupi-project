@@ -1,5 +1,6 @@
 const gameProperties = require('../gameProperties');
 const scenarioPrototype = require('../assets/scenario/Prototype/scenarioPrototype');
+const scenarioSandbox = require('../assets/scenario/Sandbox/scenarioSandbox');
 const Player = require('../assets/Player');
 const Collision = require('./Collision');
 const Render = require('./Render');
@@ -26,7 +27,7 @@ class Game {
       this.gameProps = null;
       this.players = new Array();
       this.collision = null;
-      this.defaultScenario = "prototype";
+      this.defaultScenario = "sandbox";
       this.scenario = null;
       this.UI = null;
 
@@ -255,7 +256,7 @@ class Game {
           return new scenarioPrototype(contextStatic, canvasStatic, this.gameProps, saveData );
           break;
         case "sandbox":
-          return false;
+          return new scenarioSandbox(contextStatic, canvasStatic, this.gameProps, saveData );
           break;
       }
     }
