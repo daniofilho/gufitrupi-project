@@ -13,7 +13,7 @@ class gameProperties {
     this.canvasWidth = (this.chunkSize * this.screenHorizontalChunks);
     this.canvasHeight = (this.chunkSize * this.screenVerticalChunks);// Canvas size based on "chunks" 
     
-    this.fps = 20;
+    this.fps = 24;
   }
 
   getProp(prop) {
@@ -26,17 +26,4 @@ module.exports = gameProperties;
 // Global values
 
   // Debug
-  window.debug = true;
-
-  // Pause
-  window._pause = false;
-  window.isPaused = function() { return _pause; }
-  window.pause = function() { window._pause = true; console.log('Game Paused!'); }
-  window.unpause = function() { window._pause = false; console.log('Game Unpaused!'); }
-  window.togglePause = function() { 
-    if( window._pause ) {
-      window.unpause();
-    } else {
-      window.pause();
-    }
-  }
+  window.debug = false;

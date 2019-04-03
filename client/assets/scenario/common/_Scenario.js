@@ -1,6 +1,6 @@
 class _Scenario {
 
-  constructor(ctx, canvas, gameProps){
+  constructor(ctx, canvas, gameProps, scenario_id, saveData){
     this.ctx = ctx;
     this.canvas = canvas;
         
@@ -14,11 +14,14 @@ class _Scenario {
     this.playerStartX = 0; 
     this.playerStartY = 0; 
 
-    this.stage = 0;
-
+    this.stage = null;
+    this.stageId = "";
+    
     this.chunkSize = gameProps.getProp('chunkSize');
 
     this.players = new Array();
+
+    this.scenario_id = scenario_id;
   }
 
   // # Add Items to the render
@@ -49,6 +52,9 @@ class _Scenario {
   // # Gets
   getCtx() { return this.ctx; }
   getCanvas() { return this.canvas; }	
+
+  getId() { return this.scenario_id; }
+  getActualStageId() { return this.stageId; }
               
   getStaticItems() { return this.renderItems; }
   getLayerItems() { return this.renderLayerItems; }
@@ -67,6 +73,47 @@ class _Scenario {
 
   setPlayer2StartX(x) { this.player2StartX = x; }
   setPlayer2StartY(y) { this.player2StartY = y; }
+
+  setActualStageId(id){ this.stageId = id; }
+
+  // Functions to load selected stage
+  loadStage(stage, firstStage) {
+    
+    this.stage = stage;
+
+    // Clear previous render items
+    this.renderItems = new Array();
+    this.renderItemsAnimated = new Array();
+
+    // Add the Static Items
+    this.stage.getStaticItems().map( (item) => { 
+      item.scenario = this; // Pass this scenario class as an argument, so other functions can refer to this
+      this.addStaticItem(item);
+    });
+
+    // Add the Animated Items - Bottom
+    this.stage.getLayerItems__bottom().map( (item) => { 
+      item.scenario = this;
+      this.addRenderLayerItem__bottom(item);
+    });
+    
+    this.stage.getLayerItems__top().map( (item) => { 
+      item.scenario = this;
+      this.addRenderLayerItem__top(item);
+    });
+
+    // Set Actual Stage ID
+    this.setActualStageId( this.stage.getStageId() );
+
+    // Only set player start at first load
+    if(firstStage) {
+      this.setPlayer1StartX( this.stage.getPlayer1StartX() );
+      this.setPlayer1StartY( this.stage.getPlayer1StartY() );
+      this.setPlayer2StartX( this.stage.getPlayer2StartX() );
+      this.setPlayer2StartY( this.stage.getPlayer2StartY() );
+    }
+    
+  }
 
   render() { }
 

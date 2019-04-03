@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                 src: [
                     'client/assets/**/*.js',
                     'client/gameProperties.js',
-                    'client/game.js' 
+                    'client/main.js' 
                 ],
                 dest: 'client/bundle.js'
             }
@@ -46,12 +46,13 @@ module.exports = function(grunt) {
             },
             includes: {
                 files: [
+                    'client/main.css',
                     'client/*.html', 
                     'client/**/*.html', 
                     'client/*.html', 
                     'client/assets/**/*.js', 
                     'client/engine/**/*.js', 
-                    'client/game.js', 
+                    'client/main.js', 
                     'client/gameProperties.js', 
                 ],
                 tasks: ['browserify']

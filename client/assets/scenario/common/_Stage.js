@@ -1,6 +1,6 @@
 class _Stage {
 
-  constructor(chunkSize) {
+  constructor(chunkSize, stageId) {
     
     this.renderItems = new Array();
     
@@ -16,6 +16,8 @@ class _Stage {
     this.player2StartX = 0;
     this.player2StartY = 0;
 
+    this.stageId = stageId;
+
     this.run();
   }
   
@@ -30,6 +32,8 @@ class _Stage {
   
   getPlayer2StartX() { return this.player2StartX; }
   getPlayer2StartY() { return this.player2StartY; }
+
+  getStageId() { return this.stageId; }
   
   // # Sets
   setPlayer1StartX(x) { this.player1StartX = x; }
