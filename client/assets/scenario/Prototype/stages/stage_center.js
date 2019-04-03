@@ -6,10 +6,10 @@ const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
 const Fire = require('../../common/Fire');
 
-class Prototype_Stage_1 extends _Stage{
+class Prototype_Stage_Center extends _Stage{
 
   constructor(chunkSize) {
-    super(chunkSize);
+    super(chunkSize, "center");
 
     let player1StartX = chunkSize * 7;
     let player1StartY = chunkSize * 6;
@@ -97,10 +97,10 @@ class Prototype_Stage_1 extends _Stage{
   scenarioDesignLayer__bottom() {
 
     // Teleport
-    let tp_02 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "top",        targetStage: 2 };
-    let tp_03 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "right",      targetStage: 3 };
-    let tp_04 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "bottom",     targetStage: 4 };
-    let tp_05 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "left",       targetStage: 5 };
+    let tp_02 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "top",        targetStage: 'up' };
+    let tp_03 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "right",      targetStage: 'right' };
+    let tp_04 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "bottom",     targetStage: 'bottom' };
+    let tp_05 = { name: "teleport", type: "", teleportType: "relative", cameFrom: "left",       targetStage: 'left' };
     
     let fire = { name: "fire", type: "01"}; 
 
@@ -183,4 +183,4 @@ class Prototype_Stage_1 extends _Stage{
   }
 
 } // class
-module.exports = Prototype_Stage_1;
+module.exports = Prototype_Stage_Center;

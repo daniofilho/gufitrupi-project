@@ -1,6 +1,6 @@
 class Player {
 
-	constructor(x0, y0, gameProps, playerNumber) {
+	constructor(x0, y0, gameProps, playerNumber, playerProps) {
     // # Sprite
       if( playerNumber == 1 ) {
         this.playerSprite = document.getElementById('sprite_player_one');
@@ -53,13 +53,14 @@ class Player {
       // # Collision
       this.collisionWidth = this.width * 0.8;
       this.collisionHeight = this.height * 0.3;
-      this.collisionX = x0 + this.width * 0.1;
-      this.collisionY = y0 + (this.height * 0.7);
+      this.CollisionXFormula = this.width * 0.1; // Used to set collision X when setting X 
+      this.CollisionYFormula = this.height * 0.7; 
+      this.collisionX = x0 + this.CollisionXFormula;
+      this.collisionY = y0 + this.CollisionYFormula;
 
       this.collisionX0 = this.collisionX;
       this.collisionY0 = this.collisionY;
 
-      
     
       // # Life
       this.defaultLifes = 6;
@@ -67,6 +68,11 @@ class Player {
       
       this.canBeHurt = true;
       this.hurtCoolDownTime = 2000; //2s
+
+      // Player Props if has
+      if( playerProps ) {
+        this.lifes = playerProps.lifes;
+      }
 
       this.run();
   }
@@ -220,8 +226,14 @@ class Player {
 		
 	// # Sets
 		
-		setX(x) { this.x = x; }
-    setY(y) { this.y = y; }
+		setX(x, setCollision) { 
+      this.x = x; 
+      if( setCollision ) this.setCollisionX( x + this.CollisionXFormula );
+    }
+    setY(y, setCollision) { 
+      this.y = y; 
+      if( setCollision ) this.setCollisionY( y + this.CollisionYFormula );
+    }
     
     setCollisionX(x) { this.collisionX = x; }
 		setCollisionY(y) { this.collisionY = y; }
@@ -265,10 +277,11 @@ class Player {
 
     checkPlayerDeath() {
       if( this.lifes < 1 ) {
-        this.hideSprite = false;
+        /*this.hideSprite = false;
         this.canBeHurt = true;
         this.lifes = this.defaultLifes;
-        this.resetPosition();
+        this.resetPosition();*/
+        window.game.newGame();
         // TODO: Make the game reset Scenario too!!!!
       }
     }
@@ -276,7 +289,9 @@ class Player {
 	// # Gets
     
     getLifes() { return this.lifes; }
-  
+    
+    getPlayerNumber() { return this.playerNumber; }
+
 	  getX() { return this.x; }
 		getY() { return this.y; }
 			
