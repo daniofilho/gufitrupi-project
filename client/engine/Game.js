@@ -409,6 +409,11 @@ class Game {
     // Shows Menu
     this.mainMenu(false);
 
+    // Auto load a game - debug mode
+    if( window.autoload ) {
+      this.loadGame();
+    }
+
   }
 
 }

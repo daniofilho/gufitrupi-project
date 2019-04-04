@@ -26,4 +26,6 @@ module.exports = gameProperties;
 // Global values
 
   // Debug
-  window.debug = false;
+  window.debug = false; // Show debug squares
+  window.autoload = true; // auto load a saved game
+  window.god_mode = true; // Players won't die

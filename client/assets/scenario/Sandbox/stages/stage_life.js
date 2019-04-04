@@ -4,6 +4,7 @@ const _Stage = require('../../common/_Stage');
 const Beach_Wall = require('../../common/Beach_Wall');
 const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
+const Fire = require('../../common/Fire');
 
 class Prototype_Stage_Life extends _Stage{
 
@@ -30,6 +31,9 @@ class Prototype_Stage_Life extends _Stage{
         break;
       case "teleport":
         return new Teleport(item.type, x, y, xIndex, yIndex, this.chunkSize, item );
+        break;
+      case "fire":
+        return new Fire(item.type, x, y, this.chunkSize);
         break;
     }
   }
@@ -92,16 +96,18 @@ class Prototype_Stage_Life extends _Stage{
   // # Scenario Layer - Bottom
   scenarioDesignLayer__bottom() {
     
+    let fire = { name: 'fire', type: '01'}; 
+
     let tp_c = { name: 'teleport', type: '', teleportType: 'relative', cameFrom: 'bottom',        targetStage: 'center' };
 
     let scenarioDesign = [
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   fire,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   fire,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   fire,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   fire,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],

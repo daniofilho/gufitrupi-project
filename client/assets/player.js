@@ -189,38 +189,23 @@ class Player {
 
     handleMovement( keysDown ) {
       
-      if ( this.hideSprite ) return;
+      // if ( this.hideSprite ) return; // I think I've made a mistake using this line here, but will keep until I remeber why I did it
 
       // Player 1 Controls
       if( this.playerNumber == 1 ) {
-        if (37 in keysDown) // Left
-          this.movLeft();
-          
-        if (38 in keysDown) // Up  
-          this.movUp();
-          
-        if (39 in keysDown) // Right
-          this.movRight();
-
-        if (40 in keysDown) // Down
-          this.movDown();
+        if (37 in keysDown) this.movLeft();  // Left
+        if (38 in keysDown) this.movUp();    // Up  
+        if (39 in keysDown) this.movRight(); // Right
+        if (40 in keysDown) this.movDown();  // Down
       }
       
       // Player 2 Controls
       if( this.playerNumber == 2 ) {
-        if (65 in keysDown) // Left
-          this.movLeft();
-          
-        if (87 in keysDown) // Up  
-          this.movUp();
-          
-        if (68 in keysDown) // Right
-          this.movRight();
-
-        if (83 in keysDown) // Down
-          this.movDown();
+        if (65 in keysDown) this.movLeft();  // Left
+        if (87 in keysDown) this.movUp();    // Up 
+        if (68 in keysDown) this.movRight(); // Right
+        if (83 in keysDown) this.movDown();  // Down
       }
-      
 
     }
 		
@@ -267,7 +252,7 @@ class Player {
         this.canBeHurt = false;
         setTimeout( () => {
           this.canBeHurt = true;
-          this.hideSprite = false; // avoid problems that
+          this.hideSprite = false;
         }, this.hurtCoolDownTime);
 
         // Check if player died
@@ -276,13 +261,8 @@ class Player {
     }
 
     checkPlayerDeath() {
-      if( this.lifes < 1 ) {
-        /*this.hideSprite = false;
-        this.canBeHurt = true;
-        this.lifes = this.defaultLifes;
-        this.resetPosition();*/
-        window.game.newGame();
-        // TODO: Make the game reset Scenario too!!!!
+      if( this.lifes < 1 && !window.god_mode ) {
+       window.game.newGame();
       }
     }
 		
@@ -366,7 +346,7 @@ class Player {
         this.spriteProps.sprite_width, this.spriteProps.sprite_height, 
         props.x, props.y, props.w, props.h
       );	
-      
+
       // DEBUG COLLISION
       if( window.debug ) {
         ctx.fillStyle = "rgba(0,0,255, 0.4)";

@@ -1,4 +1,5 @@
 const UIitem = require('./_UIitem');
+const UIitem_text = require('./_UIitem_text');
 
 class UI {
 
@@ -45,6 +46,7 @@ class UI {
 
       // # Player 01
         if( this.players[0] ) {
+          
           // # Avatar
           this.addItem( new UIitem(
             'sprite_ui', this.chunkSize,
@@ -72,6 +74,17 @@ class UI {
               _1x = 120;
               _1y = 60;
             }
+          }
+
+          // Debug Position
+          if( window.debug ) {
+            this.addItem( 
+              new UIitem_text(
+                "X: " + Math.round(this.players[0].getX())+ " \nY: " + Math.round(this.players[0].getY()), // Text 
+                5, 145, // X, Y
+                {  color: "#FFFFFF", size: "30px"  } // font props
+              ) 
+            );
           }
         }
         
