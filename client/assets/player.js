@@ -260,6 +260,11 @@ class Player {
       }
     }
 
+    healPlayer( amount ) {
+      this.lifes += amount;
+      if( this.lifes > this.defaultLifes ) this.lifes = this.defaultLifes;
+    }
+
     checkPlayerDeath() {
       if( this.lifes < 1 && !window.god_mode ) {
        window.game.newGame();

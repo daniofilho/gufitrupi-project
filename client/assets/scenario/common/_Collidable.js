@@ -24,12 +24,15 @@ class _Collidable {
   
     // # Sprite
     this.stageSprite = sprite.stageSprite;
+    this.hideSprite = false;
 
     this.spriteWidth = sprite.width;   
     this.spriteHeight = sprite.height; 
     this.spriteProps = new Array();
     
     this.name = props.name + "(" + this.x + "/" + this.y + ")";
+
+    this.hideSprite
 
     this.run( props.type );
   }
@@ -55,6 +58,9 @@ class _Collidable {
   setStopOnCollision(bool){
     this.stopOnCollision = bool;
   }
+
+  hideSprite() { this.hideSprite = true; }
+  showSprite() { this.hideSprite = false; }
 			
 	// # Gets
 			
@@ -80,6 +86,8 @@ class _Collidable {
   render(ctx) {
 
     this.beforeRender();
+
+    if ( this.hideSprite ) return;
       
     let props = {
       x: this.getX(),
