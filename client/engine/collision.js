@@ -60,6 +60,10 @@ class Collision {
         }
       }
 
+      if( window.debugCollision ) {
+        console.log('Collision between', r1.name + "(" + r1.getX() + "/" + r1.getY() + ")", r2.name);
+      }
+
       // Triggers Collision event
       r1.collision(r2, r1);
       r2.collision(r1, r2);

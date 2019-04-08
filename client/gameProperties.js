@@ -27,5 +27,6 @@ module.exports = gameProperties;
 
   // Debug
   window.debug = false; // Show debug squares
+  window.debugCollision = false; // Show when objects collide
   window.autoload = true; // auto load a saved game
   window.god_mode = true; // Players won't die

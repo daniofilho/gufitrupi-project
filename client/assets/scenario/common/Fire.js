@@ -47,7 +47,7 @@ class Fire extends _CanHurt {
     this.collisionY = y0 + ( chunkSize * 0.6); // 80% of Chunk Size
 
     // Controls the sprite FPS Animation
-    this.fpsInterval = 1000 / 8; // 1000 / FPS
+    this.fpsInterval = 1000 / 5; // 1000 / FPS
     this.deltaTime = Date.now();
   }
 

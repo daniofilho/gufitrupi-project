@@ -5,7 +5,7 @@ const Beach_Wall = require('../../common/Beach_Wall');
 const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
 const Fire = require('../../common/Fire');
-const Potion = require('../../common/Potion');
+const Heal = require('../../common/Heal');
 
 class Prototype_Stage_Life extends _Stage{
 
@@ -36,8 +36,8 @@ class Prototype_Stage_Life extends _Stage{
       case "fire":
         return new Fire(item.type, x, y, this.chunkSize);
         break;
-      case "potion":
-        return new Potion(item.type, x, y, this.chunkSize);
+      case "heal":
+        return new Heal(item.type, x, y, this.chunkSize);
         break;
     }
   }
@@ -101,7 +101,7 @@ class Prototype_Stage_Life extends _Stage{
   scenarioDesignLayer__bottom() {
     
     let fire = { name: 'fire', type: '01'}; 
-    let bnna = { name: 'potion', type: 'banana'}; 
+    let bnna = { name: 'heal', type: 'banana'}; 
 
     let tp_c = { name: 'teleport', type: '', teleportType: 'relative', cameFrom: 'bottom',        targetStage: 'center' };
 

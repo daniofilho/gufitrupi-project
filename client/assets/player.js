@@ -10,7 +10,7 @@ class Player {
       }
       
       this.spriteProps = {
-        sprite_width: 20, // Player size inside sprite
+        sprite_width: 18, // Player size inside sprite
         sprite_height: 40
       }
       this.step = [];
@@ -261,7 +261,7 @@ class Player {
     }
 
     healPlayer( amount ) {
-      this.lifes += amount;
+      this.lifes += parseInt(amount);
       if( this.lifes > this.defaultLifes ) this.lifes = this.defaultLifes;
     }
 

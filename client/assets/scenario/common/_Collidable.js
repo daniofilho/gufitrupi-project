@@ -59,8 +59,8 @@ class _Collidable {
     this.stopOnCollision = bool;
   }
 
-  hideSprite() { this.hideSprite = true; }
-  showSprite() { this.hideSprite = false; }
+  hide() { this.hideSprite = true; }
+  show() { this.hideSprite = false; }
 			
 	// # Gets
 			

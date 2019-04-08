@@ -7,11 +7,10 @@ class _CanCollect extends _Collidable {
     
     this.collected = false;
     this.canRespawn = canCollectProps.canRespawn;
-    this.name = canCollectProps.name;
   }
 
   isCollected() { return this.collected; }
-  Collect(){ this.collected = true; }
+  collect(){ this.collected = true; }
 
   setCanRespawn(bool){ this.canRespawn = bool; }
   

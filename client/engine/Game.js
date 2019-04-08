@@ -175,6 +175,8 @@ class Game {
     // # The Game Loop
     updateGame(deltaTime) {
 
+      //console.log(  );
+
       if( this.isPaused() ) return;
       
       this.renderStatic.start( deltaTime );  // Static can also change, because it is the scenario... maybe will change this names to layers
