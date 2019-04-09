@@ -17,8 +17,6 @@ class _Stage {
     this.player2StartY = 0;
 
     this.stageId = stageId;
-
-    this.run();
   }
   
   // # Gets

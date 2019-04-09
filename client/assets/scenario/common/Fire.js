@@ -40,14 +40,15 @@ class Fire extends _CanHurt {
 
     super(props, position, dimension, game, sprite, events, canHurtProps);
 
-    this.spriteAnimationCount = 1;
     this.spriteAnimationMaxCount = 3;
-
+    this.spriteAnimationCount = Math.floor(Math.random() * this.spriteAnimationMaxCount) + 1; // Generate a rand initial number to randomize animation in case of multiple Fires
+    
     this.collisionHeight = chunkSize * 0.4; // 80% of Chunk Size
     this.collisionY = y0 + ( chunkSize * 0.6); // 80% of Chunk Size
 
     // Controls the sprite FPS Animation
-    this.fpsInterval = 1000 / 5; // 1000 / FPS
+    let randFPS = Math.floor(Math.random() * 7) + 5; // Generate a random FPS, so multiple Fires on page don't animate the same way 
+    this.fpsInterval = 1000 / randFPS; // 1000 / FPS
     this.deltaTime = Date.now();
   }
 

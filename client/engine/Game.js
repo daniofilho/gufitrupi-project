@@ -207,7 +207,7 @@ class Game {
         // # Top
         this.renderLayers.addArrayItem( this.scenario.getLayerItems__top() );
 
-        console.log( this.renderLayers.getArrayItems() );
+        //console.log( this.renderLayers.getArrayItems() );
         
       // UI Render
       this.renderUI.clearArrayItems();
