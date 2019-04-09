@@ -207,6 +207,8 @@ class Game {
         // # Top
         this.renderLayers.addArrayItem( this.scenario.getLayerItems__top() );
 
+        console.log( this.renderLayers.getArrayItems() );
+        
       // UI Render
       this.renderUI.clearArrayItems();
       this.renderUI.addArrayItem( this.UI.getNewRenderItems());
@@ -292,6 +294,7 @@ class Game {
           this.loadGame();
           break;
         case 'new':
+          this.multiplayer = false;
           this.newGame(false);// false = won't load saveData
           break;
         case 'new-2-players':

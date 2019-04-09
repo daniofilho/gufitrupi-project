@@ -62,7 +62,6 @@ class Heal extends _CanCollect {
     }
   }
 
-  // If it's not colliding to any teleport chunk anymore, make it ready to teleport again
   collision(player){ 
     if( ! this.isCollected() ) {
       this.collect();

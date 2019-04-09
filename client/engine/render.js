@@ -7,7 +7,9 @@ class Render {
     this.player = player;
     this.renderItems = new Array(); 
   }
-            
+  
+  getArrayItems(){ return this.renderItems; }
+  
   // Add items to the vector
   addItem(object){
     this.renderItems.push(object);

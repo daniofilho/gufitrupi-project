@@ -37,10 +37,10 @@ class scenarioSandbox extends _Scenario {
       case 'life':
         _stage = s_life;
         break;
-      }
+    }
 
-      // Load the stage defined
-      this.loadStage(_stage, firstStage);
+    // Load the stage defined
+    this.loadStage(_stage, firstStage);
   }
  
   // Set Default Stage
