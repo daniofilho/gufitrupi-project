@@ -6,13 +6,15 @@ class _CanCollect extends _Collidable {
     super(props, position, dimension, game, sprite, events);
     
     this.collected = false;
-    this.canRespawn = canCollectProps.canRespawn;
+    this._canRespawn = canCollectProps.canRespawn;
   }
 
   isCollected() { return this.collected; }
   collect(){ this.collected = true; }
+  setCollect(bool) { this.collect = bool; }
 
-  setCanRespawn(bool){ this.canRespawn = bool; }
+  setCanRespawn(bool){ this._canRespawn = bool; }
+  canRespawn() { return this._canRespawn; }
   
   setName(name) { this.name = name; }
 

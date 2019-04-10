@@ -37,7 +37,7 @@ class Prototype_Stage_Life extends _Stage{
         return new Fire(item.type, x, y, this.chunkSize);
         break;
       case "heal":
-        return new Heal(item.type, x, y, this.chunkSize);
+        return new Heal(item.type, x, y, this.chunkSize, this.getStageId());
         break;
     }
   }

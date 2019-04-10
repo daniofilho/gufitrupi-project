@@ -84,7 +84,7 @@ class _Scenario {
       if( item.willNeedSaveState() ) {
         window.game.addItemState(
           {
-            'name_id': this.stage.getStageId() + "_" + item.getName(),
+            'name_id': item.getName(),
             'collected': item.isCollected()
           }
         );
@@ -96,7 +96,7 @@ class _Scenario {
       if( item.willNeedSaveState() ) {
         window.game.addItemState(
           {
-            'name_id': this.stage.getStageId() + "_" + item.getName(),
+            'name_id': item.getName(),
             'collected': item.isCollected()
           }
         );

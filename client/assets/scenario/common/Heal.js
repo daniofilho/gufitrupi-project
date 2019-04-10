@@ -2,10 +2,10 @@ const _CanCollect = require('./_CanCollect');
 
 class Heal extends _CanCollect {
 
-  constructor(type, x0, y0, chunkSize) {
+  constructor(type, x0, y0, chunkSize, stage_id) {
     
     let props = {
-      name: "Potion",
+      name: stage_id + "_potion",
       type: type
     }
 
@@ -42,6 +42,19 @@ class Heal extends _CanCollect {
     
   }
 
+  // Check if this item has some save state
+  checkSavedItemState() {
+    let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
+    if( savedItemsState ) {
+      let itemSavedState = savedItemsState[this.getName()];
+      console.log(itemSavedState);
+      if( itemSavedState && ! this.canRespawn() ){ // Check if has saved state and can't respawn
+        this.setCollect( itemSavedState.collected );
+        this.hide();
+      }
+    }  
+  }
+
   setHealAmout(amount) { this.healAmout = amount; }
   getHealAmount() { return this.healAmout; }
 
@@ -68,6 +81,9 @@ class Heal extends _CanCollect {
         }
         break;
     }
+
+    // Check if this item was saved before and change it props
+    this.checkSavedItemState();
   }
 
   collision(player){ 

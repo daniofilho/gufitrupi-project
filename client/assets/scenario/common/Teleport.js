@@ -63,7 +63,7 @@ class Teleport extends _Collidable {
 
     // If the player teleports, then change stage
     if( this.teleport( playerWhoActivatedTeleport ) ) {
-
+      console.clear();
       // Make everything dark
       collidable.scenario.clearArrayItems();
       window.game.loading(true);
