@@ -30,9 +30,12 @@ class _Collidable {
     this.spriteHeight = sprite.height; 
     this.spriteProps = new Array();
     
-    this.name = props.name + "(" + this.x + "/" + this.y + ")";
+    this.name = props.name.replace(/\s/g,'') + "_" + this.x + "x" + this.y;
+    this.name = this.name.toLowerCase();
+    
+    this.hideSprite = false;
 
-    this.hideSprite
+    this.needSaveState = false;
 
     this.run( props.type );
   }
@@ -59,11 +62,18 @@ class _Collidable {
     this.stopOnCollision = bool;
   }
 
+  // # Visibility
   hide() { this.hideSprite = true; }
   show() { this.hideSprite = false; }
+
+  // #  State
+  willNeedSaveState() {  return this.needSaveState; }
+  setNeedSaveState(bool){ this.needSaveState = bool; }
 			
 	// # Gets
-			
+  
+  getName() { return this.name; }
+
   getX() { return this.x; }
   getY() { return this.y; }
   

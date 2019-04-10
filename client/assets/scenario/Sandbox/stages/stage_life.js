@@ -102,6 +102,7 @@ class Prototype_Stage_Life extends _Stage{
     
     let fire = { name: 'fire', type: '01'}; 
     let bnna = { name: 'heal', type: 'banana'}; 
+    let berry = { name: 'heal', type: 'berry'}; 
 
     let tp_c = { name: 'teleport', type: '', teleportType: 'relative', cameFrom: 'bottom',        targetStage: 'center' };
 
@@ -110,15 +111,15 @@ class Prototype_Stage_Life extends _Stage{
       [ false,   false,  false,   false,   false,   false,   false,   false,   fire,   false,   false,   bnna,   false,   false,   false,   false ],
       [ false,   false,  false,   fire,   false,   false,   false,   fire,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  fire,   bnna,    fire,   false,   false,   false,   false,   fire,   false,   fire,    false,   false,   false,   false ],
-      [ false,   fire,  false,   false,   false,   fire,   fire,   false,   false,   fire,   bnna,   fire,    false,   false,   false,   false ],
+      [ false,   fire,  false,   false,   false,   fire,   fire,   false,   false,   fire,   berry,   fire,    false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   fire,   fire,   fire,    false,   false,   false,   false ],
-      [ false,   false,  bnna,    false,   false,   false,   false,   false,   false,   false,   false,   fire,    false,   false,   false,   false ],
+      [ false,   false,  berry,    false,   false,   false,   false,   false,   false,   false,   false,   fire,    false,   false,   false,   false ],
       [ false,   fire,  false,   false,   bnna,    false,   false,   false,   false,   false,   false,   fire,   false,   false,   false,   false ],
       [ false,   fire,  fire,   fire,   fire,   fire,   false,   false,   fire,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   fire,   false,   false,   fire,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   fire,   false,   false,   fire,   false,   false,   false,   bnna,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   fire,   false,   false,   fire,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   fire,   fire,   false,   fire,   false,   false,   false,   bnna,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   fire,   fire,   false,   fire,   false,   false,   false,   berry,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   tp_c,    false,   false,   false,   false,   false,   false,   false,   false ],
     ];
     // # Proccess scenario design

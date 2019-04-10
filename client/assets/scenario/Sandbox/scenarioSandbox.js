@@ -22,6 +22,10 @@ class scenarioSandbox extends _Scenario {
   setStage(stage_id, firstStage) {
     
     this.clearArrayItems();
+
+    if( !firstStage ) {
+      this.saveItemsState();
+    }
     
     let s_center = new _S_center( this.chunkSize );
     let s_life = new _S_life( this.chunkSize );

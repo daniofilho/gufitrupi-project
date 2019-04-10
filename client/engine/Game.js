@@ -23,6 +23,9 @@ class Game {
     this._pause = false;
     this.gameIsLoaded = false;
 
+    // Items
+    this.itemsState = new Object();
+
     // Game
       this.gameProps = null;
       this.players = new Array();
@@ -206,8 +209,6 @@ class Game {
 
         // # Top
         this.renderLayers.addArrayItem( this.scenario.getLayerItems__top() );
-
-        //console.log( this.renderLayers.getArrayItems() );
         
       // UI Render
       this.renderUI.clearArrayItems();
@@ -336,7 +337,8 @@ class Game {
       // Scenario
       saveData.scenario = {
         scenarioId: this.scenario.getId(),
-        stageId: this.scenario.getActualStageId()
+        stageId: this.scenario.getActualStageId(),
+        items: this.getItemsState()
       }
 
       // Players
@@ -369,7 +371,7 @@ class Game {
     let saveData = JSON.parse( localStorage.getItem('gufitrupi__save') );
 
     // Will be  multiplayer game?
-    this.multiplayer = saveData.multiplayer;
+    this.multiplayer = ( saveData ) ? saveData.multiplayer : false;
 
     // # Loads a new game with save data
     this.newGame(saveData); 
@@ -397,6 +399,23 @@ class Game {
     let display = ( bool ) ? 'flex' : 'none';
     document.getElementById('loading').style.display = display;
   }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+  /*
+    Items State
+    - This are functions that handles items states between changing of stages. This will make an item to not respawn if it was collected before
+  */
+  
+    getItemsState() { return this.itemsState; }
+    addItemState( item ) { 
+      this.itemsState[item.name_id] = item;  
+    }
+
+    saveItemsState() {
+      let itemsState = JSON.stringify( this.getItemsState() );
+      localStorage.setItem( 'gufitrupi__itemsState', itemsState );
+    }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

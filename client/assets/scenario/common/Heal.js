@@ -40,8 +40,6 @@ class Heal extends _CanCollect {
 
     super(props, position, dimension, game, sprite, events, canCollectProps);
     
-    this.healAmout = 1;
-    this.itemUsed = false;
   }
 
   setHealAmout(amount) { this.healAmout = amount; }
@@ -52,10 +50,20 @@ class Heal extends _CanCollect {
     switch(type) { 
       default:
       case 'banana':
+        this.setNeedSaveState(true); // DEBUG
         this.setHealAmout(1);
-        this.setCanRespawn(false);
+        this.setCanRespawn(true);
         this.spriteProps = { 
           clip_x: 0, clip_y: 50, 
+          sprite_width: this.spriteWidth, sprite_height: this.spriteWidth
+        }
+        break;
+      case 'berry':
+        this.setNeedSaveState(true); // Make this item able to save state
+        this.setHealAmout(2);
+        this.setCanRespawn(false); // It can't respawn if used
+        this.spriteProps = { 
+          clip_x: 50, clip_y: 50, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteWidth
         }
         break;

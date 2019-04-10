@@ -76,6 +76,37 @@ class _Scenario {
 
   setActualStageId(id){ this.stageId = id; }
 
+  // # Save the State of items
+  saveItemsState() {
+
+    // Bottom Layer
+    this.stage.getLayerItems__bottom().map( (item) => { 
+      if( item.willNeedSaveState() ) {
+        window.game.addItemState(
+          {
+            'name_id': this.stage.getStageId() + "_" + item.getName(),
+            'collected': item.isCollected()
+          }
+        );
+      }
+    });
+
+    // Top Layer
+    this.stage.getLayerItems__top().map( (item) => { 
+      if( item.willNeedSaveState() ) {
+        window.game.addItemState(
+          {
+            'name_id': this.stage.getStageId() + "_" + item.getName(),
+            'collected': item.isCollected()
+          }
+        );
+      }
+    });
+
+    window.game.saveItemsState();
+
+  }
+
   // Functions to load selected stage
   loadStage(stage, firstStage) {
     
