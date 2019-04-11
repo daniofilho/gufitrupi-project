@@ -39,7 +39,8 @@ class Heal extends _CanCollect {
     }
 
     super(props, position, dimension, game, sprite, events, canCollectProps);
-    
+
+    this.handleProps();
   }
 
   // Check if this item has some save state
@@ -47,9 +48,8 @@ class Heal extends _CanCollect {
     let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
     if( savedItemsState ) {
       let itemSavedState = savedItemsState[this.getName()];
-      console.log(itemSavedState);
-      if( itemSavedState && ! this.canRespawn() ){ // Check if has saved state and can't respawn
-        this.setCollect( itemSavedState.collected );
+      if( itemSavedState && ! this.canRespawn() && itemSavedState.collected === true ){ // Check if has saved state and can't respawn
+        this.collect();
         this.hide();
       }
     }  
@@ -63,36 +63,47 @@ class Heal extends _CanCollect {
     switch(type) { 
       default:
       case 'banana':
-        this.setNeedSaveState(true); // DEBUG
-        this.setHealAmout(1);
-        this.setCanRespawn(true);
         this.spriteProps = { 
           clip_x: 0, clip_y: 50, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteWidth
         }
         break;
       case 'berry':
-        this.setNeedSaveState(true); // Make this item able to save state
-        this.setHealAmout(2);
-        this.setCanRespawn(false); // It can't respawn if used
         this.spriteProps = { 
           clip_x: 50, clip_y: 50, 
           sprite_width: this.spriteWidth, sprite_height: this.spriteWidth
         }
         break;
     }
-
-    // Check if this item was saved before and change it props
-    this.checkSavedItemState();
   }
 
   collision(player){ 
-    if( ! this.isCollected() ) {
+    if( !this.isCollected() ) {
       this.collect();
       this.hide();
       player.healPlayer( this.getHealAmount() );
     }
     return true; 
+  }
+
+  // Handle props when load
+  handleProps() {
+    
+    // Set Props based on type
+    switch( this.getType() ) { 
+      default:
+      case 'banana':
+        this.setHealAmout(1);
+        break;
+      case 'berry':
+        this.setNeedSaveState(true); // Make this item able to save state
+        this.setHealAmout(2);
+        this.setCanRespawn(false); // It can't respawn if used
+        break;
+    }
+
+    // Check if this item was saved before and change it props
+    this.checkSavedItemState();
   }
 
 }//class

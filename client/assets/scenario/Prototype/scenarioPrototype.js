@@ -26,30 +26,29 @@ class scenarioPrototype extends _Scenario {
     
     this.clearArrayItems();
     
-    let s_center = new _S_center( this.chunkSize );
-    let s_up = new _S_up( this.chunkSize );
-    let s_right = new _S_right( this.chunkSize );
-    let s_bottom = new _S_bottom( this.chunkSize );
-    let s_left = new _S_left( this.chunkSize );
-    
     let _stage = null;
 
     // Check which stage will load
     switch(stage_id) {
       default:
       case 'center':
+        let s_center = new _S_center( this.chunkSize );
         _stage = s_center;
         break;
       case 'up':
+        let s_up = new _S_up( this.chunkSize );
         _stage = s_up;
         break;
       case 'left':
+        let s_left = new _S_left( this.chunkSize );
         _stage = s_left;
         break;
       case 'right':
+        let s_right = new _S_right( this.chunkSize );
         _stage = s_right;
         break;
       case 'bottom':
+        let s_bottom = new _S_bottom( this.chunkSize );
         _stage = s_bottom;
         break;
       }

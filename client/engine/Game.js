@@ -373,6 +373,9 @@ class Game {
     // Will be  multiplayer game?
     this.multiplayer = ( saveData ) ? saveData.multiplayer : false;
 
+    // Replace items state on local storage with saved states
+    localStorage.setItem( 'gufitrupi__itemsState', JSON.stringify( saveData.scenario.items ) );
+
     // # Loads a new game with save data
     this.newGame(saveData); 
 

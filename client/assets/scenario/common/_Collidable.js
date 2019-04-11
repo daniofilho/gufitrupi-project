@@ -37,6 +37,8 @@ class _Collidable {
 
     this.needSaveState = false;
 
+    this.type = props.type;
+
     this.run( props.type );
   }
 
@@ -74,6 +76,8 @@ class _Collidable {
   
   getName() { return this.name; }
 
+  getType() { return this.type; }
+  
   getX() { return this.x; }
   getY() { return this.y; }
   
