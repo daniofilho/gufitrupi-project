@@ -3,8 +3,9 @@
 */
 const _Scenario = require('../common/_Scenario');
 
-const _S_center = require('./stages/stage_center');
-const _S_life = require('./stages/stage_life');
+const Stage_Center = require('./stages/stage_center');
+const Stage_Life = require('./stages/stage_life');
+const Stage_Enemy = require('./stages/stage_enemy');
 
 class scenarioSandbox extends _Scenario {
 
@@ -34,12 +35,13 @@ class scenarioSandbox extends _Scenario {
     switch(stage_id) {
       default:
       case 'center':
-        let s_center = new _S_center( this.chunkSize );
-        _stage = s_center;
+        _stage = new Stage_Center( this.chunkSize );
         break;
       case 'life':
-        let s_life = new _S_life( this.chunkSize );
-        _stage = s_life;
+        _stage = new Stage_Life( this.chunkSize );
+        break;
+      case 'enemy':
+        _stage = new Stage_Enemy( this.chunkSize );
         break;
     }
 
