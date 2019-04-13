@@ -82,7 +82,6 @@ class _Scenario {
     // Bottom Layer
     this.stage.getLayerItems__bottom().map( (item) => { 
       if( item.willNeedSaveState() ) {
-        console.log( item.getName(), item.isCollected() );
         window.game.addItemState(
           {
             'name_id': item.getName(),

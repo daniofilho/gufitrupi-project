@@ -34,6 +34,8 @@ class Game {
       this.scenario = null;
       this.UI = null;
 
+      this.gameReady = false;
+
       this.multiplayer = false;
 
       // Renders
@@ -42,6 +44,12 @@ class Game {
       this.renderUI     = null;
 
   }
+
+  // Gets
+  isGameReady() { return this.gameReady; }
+
+  // Sets
+  setGameReady(bool) { this.gameReady = bool; }
   
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -169,8 +177,9 @@ class Game {
     
     // Flag 
       this.gameIsLoaded = true;
-
+    
     // Ok, run the game now
+      this.setGameReady(true);
       this.runGame( this.gameProps.getProp('fps') );	// GO GO GO
 
   }//newGame
@@ -422,6 +431,14 @@ class Game {
       let itemsState = JSON.stringify( this.getItemsState() );
       localStorage.setItem( 'gufitrupi__itemsState', itemsState );
     }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+  
+  // Helpers for classes to check if an object is colliding 
+  checkCollision( object ) {
+    if( this.isGameReady() )
+      return this.collision.check(object);
+  }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

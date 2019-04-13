@@ -8,9 +8,23 @@ class _CanHurt extends _Collidable {
   }
   
   // If it's not colliding to any teleport chunk anymore, make it ready to teleport again
-  collision(player){ 
-    player.hurtPlayer(this.hurtAmount);
+  collision(obj){ 
+    if( obj.type == "player" ) obj.hurtPlayer(this.hurtAmount);
+    if( obj.type == "enemy" ) obj.hurt(this.hurtAmount);
     return true; 
+  }
+
+  beforeRender(ctx) {
+    // debug position
+    if( window.debug ) {
+      let x = Math.round(this.getCollisionX());
+      let y = Math.round(this.getCollisionY());
+      let text = "X: " + x + " Y: " + y;
+      console.log(text);
+      ctx.font = "25px 'Press Start 2P'";
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText( text, this.getX() - 20 , this.getY()); 
+    }
   }
 
 }//class

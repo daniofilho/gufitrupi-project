@@ -6,6 +6,7 @@ const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
 const Heal = require('../../common/Heal');
 const Enemy = require('../../common/Enemy');
+const Fire = require('../../common/Fire');
 
 class Prototype_Stage_Enemy extends _Stage{
 
@@ -35,6 +36,9 @@ class Prototype_Stage_Enemy extends _Stage{
         break;
       case "enemy":
         return new Enemy(item.type, x, y, this.chunkSize);
+        break;
+      case "fire":
+        return new Fire(item.type, x, y, this.chunkSize);
         break;
       case "heal":
         return new Heal(item.type, x, y, this.chunkSize, this.getStageId());
@@ -72,12 +76,12 @@ class Prototype_Stage_Enemy extends _Stage{
     let scenarioDesign = [
       [ wc_tl,    wt,    wt,    wt,    wt,    wt,     wt,        wt,    wt,        wt,     wt,     wt,     wt,     wt,     wt,     wc_tr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
+      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     ob,     ob,     ob,     ob,     wr ],
+      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     ob,     ob,     wr ],
+      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     ob,     f1,     f1,     ob,     ob,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ iwc_br,   f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ f1,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
+      [ f1,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     ob,     f1,     f1,     f1,     wr ],
       [ iwc_tr,   f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
@@ -100,18 +104,20 @@ class Prototype_Stage_Enemy extends _Stage{
   // # Scenario Layer - Bottom
   scenarioDesignLayer__bottom() {
     
+    let fire = { name: 'fire', type: '01'}; 
+
     let enemy = { name: 'enemy', type: '01'}; 
     let bnna = { name: 'heal', type: 'banana'}; 
     let berry = { name: 'heal', type: 'berry'}; 
 
-    let tp_c = { name: 'teleport', type: '', teleportType: 'relative', cameFrom: 'bottom',        targetStage: 'center' };
+    let tp_c = { name: 'teleport', type: '', teleportType: 'relative', cameFrom: 'left',        targetStage: 'center' };
 
     let itemsBottom = [
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   enemy,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   fire,   false,   false,   false,   enemy,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   fire,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   fire,   false,   false,   false,   false,   enemy,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ tp_c,    false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],

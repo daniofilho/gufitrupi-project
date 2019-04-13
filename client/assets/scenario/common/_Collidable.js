@@ -94,12 +94,12 @@ class _Collidable {
   getCenterY() { return this.getCollisionY() + this.getCollisionHeight() /2; }
 
   // Hook to run before render
-  beforeRender() { }
+  beforeRender(ctx) {   }
 		
 	// # Render
   render(ctx) {
 
-    this.beforeRender();
+    this.beforeRender(ctx);
 
     if ( this.hideSprite ) return;
       

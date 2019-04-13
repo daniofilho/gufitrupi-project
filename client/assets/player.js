@@ -10,12 +10,12 @@ class Player {
       }
       
       this.spriteProps = {
-        sprite_width: 18, // Player size inside sprite
+        sprite_width: 20, // Player size inside sprite
         sprite_height: 40
       }
       this.step = [];
       this.defaultStep = 1;
-      this.initialStep = 3;
+      this.initialStep = 2;
       this.stepCount = this.defaultStep;
       this.maxSteps = 8;
 
@@ -36,11 +36,12 @@ class Player {
       this.width = this.chunkSize; //px
       this.height = this.chunkSize * 2; //px
       
-      this.speed0 = 6;
-      this.speed = this.chunkSize / this.speed0;
+      this.speed0 = 0.17;
+      this.speed = this.chunkSize * this.speed0;
       
-      this.name = "Player " + playerNumber;
+      this.name = "player_" + playerNumber;
       this.playerNumber = playerNumber;
+      this.type = "player";
       
     // # Events  
       
@@ -190,7 +191,7 @@ class Player {
     handleMovement( keysDown ) {
       
       // if ( this.hideSprite ) return; // I think I've made a mistake using this line here, but will keep until I remeber why I did it
-
+      
       // Player 1 Controls
       if( this.playerNumber == 1 ) {
         if (37 in keysDown) this.movLeft();  // Left
@@ -226,7 +227,7 @@ class Player {
 		setHeight(height) { this.height = height; }
 		setWidth(width) { this.width = width; }
 			
-		setSpeed(speed) { this.speed = this.chunkSize / speed; }
+		setSpeed(speed) { this.speed = this.chunkSize * speed; }
 
 		setLookDirection(lookDirection) { this.lookDirection = lookDirection; }
 		triggerLookDirection(direction) { 
@@ -356,6 +357,11 @@ class Player {
       if( window.debug ) {
         ctx.fillStyle = "rgba(0,0,255, 0.4)";
         ctx.fillRect( this.getCollisionX(), this.getCollisionY(), this.getCollisionWidth(), this.getCollisionHeight() );
+
+        let text = "X: " + Math.round(this.getX()) + " Y:" + Math.round(this.getY());
+        ctx.font =  "25px 'Press Start 2P'";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText( text, this.getX() - 20, this.getY() - 20);
       }
       
 		};

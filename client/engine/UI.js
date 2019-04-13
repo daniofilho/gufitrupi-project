@@ -76,16 +76,6 @@ class UI {
             }
           }
 
-          // Debug Position
-          if( window.debug ) {
-            this.addItem( 
-              new UIitem_text(
-                "X: " + Math.round(this.players[0].getX())+ " \nY: " + Math.round(this.players[0].getY()), // Text 
-                5, 145, // X, Y
-                {  color: "#FFFFFF", size: "30px"  } // font props
-              ) 
-            );
-          }
         }
         
       // - - - - - - - - - - - - - - - - - - - - 
