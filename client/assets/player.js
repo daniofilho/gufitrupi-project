@@ -1,3 +1,5 @@
+const Sprite = require('./engine/Sprite');
+
 class Player {
 
 	constructor(x0, y0, gameProps, playerNumber, playerProps) {
@@ -8,11 +10,15 @@ class Player {
       if( playerNumber == 2 ) {
         this.playerSprite = document.getElementById('sprite_player_two');
       }
+
+      this.sprite = new Sprite( this.playerSprite, 300, 960, 20, 40);
       
+      /*
       this.spriteProps = {
         sprite_width: 20, // Player size inside sprite
         sprite_height: 40
       }
+      */
       this.step = [];
       this.defaultStep = 1;
       this.initialStep = 2;

@@ -1,5 +1,4 @@
 const Game = require('./engine/Game');
-const Sprite = require('./engine/Sprite');
 
 window.onload = function() {
 
@@ -11,10 +10,8 @@ window.onload = function() {
   // # Start the game
     let game = new Game();
     window.game = game;
-    //game.run();
+    game.run();
   
-  let sprite = new Sprite("", 20, 25, 5, 5);
-
 }
 
 /*
