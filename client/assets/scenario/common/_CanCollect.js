@@ -2,8 +2,8 @@ const _Collidable = require('./_Collidable');
 
 class _CanCollect extends _Collidable {
 
-  constructor(props, position, dimension, game, sprite, events, canCollectProps) {
-    super(props, position, dimension, game, sprite, events);
+  constructor(props, position, dimension, sprite, events, canCollectProps) {
+    super(props, position, dimension, sprite, events);
     
     this.collected = false;
     this._canRespawn = canCollectProps.canRespawn;

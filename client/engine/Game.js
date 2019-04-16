@@ -47,6 +47,7 @@ class Game {
 
   // Gets
   isGameReady() { return this.gameReady; }
+  getChunkSize() { return this.gameProps.chunkSize; }
 
   // Sets
   setGameReady(bool) { this.gameReady = bool; }
@@ -267,10 +268,10 @@ class Game {
     getScenario( scenario_id, contextStatic, canvasStatic, saveData ) {
       switch(scenario_id) {
         case "prototype":
-          return new scenarioPrototype(contextStatic, canvasStatic, this.gameProps, saveData );
+          return new scenarioPrototype(contextStatic, canvasStatic, saveData );
           break;
         case "sandbox":
-          return new scenarioSandbox(contextStatic, canvasStatic, this.gameProps, saveData );
+          return new scenarioSandbox(contextStatic, canvasStatic, saveData );
           break;
       }
     }

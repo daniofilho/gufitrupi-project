@@ -3,7 +3,7 @@ const gameProperties = require('../../../gameProperties');
 
 class Teleport extends _Collidable {
 
-	constructor(type, x0, y0, xIndex, yIndex, chunkSize, teleportProps) {
+	constructor(type, x0, y0, xIndex, yIndex, teleportProps) {
     
     let props = {
       name: "Teleport",
@@ -16,12 +16,8 @@ class Teleport extends _Collidable {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
-    }
-
-    let game = {
-      chunkSize: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
     let sprite = {
@@ -35,7 +31,7 @@ class Teleport extends _Collidable {
       hasCollisionEvent: true
     }
     
-    super(props, position, dimension, game, sprite, events);
+    super(props, position, dimension, sprite, events);
     
     this.teleportProps = teleportProps;
 

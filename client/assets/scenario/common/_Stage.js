@@ -1,6 +1,6 @@
 class _Stage {
 
-  constructor(chunkSize, stageId) {
+  constructor(stageId) {
     
     this.renderItems = new Array();
     
@@ -8,7 +8,7 @@ class _Stage {
     this.renderLayerItems__top = new Array();
     this.renderLayerItems__bottom = new Array();
 
-    this.chunkSize = chunkSize;
+    this.chunkSize = window.game.getChunkSize();
 
     this.player1StartX = 0;
     this.player1StartY = 0;

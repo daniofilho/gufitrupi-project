@@ -24,6 +24,7 @@ class Sprite {
     }
 
     // # Gets
+    getSprite() { return this.sprite; }
     getFrame(num)  { return this.frames[num]; }
     getKeyWidth()  { return this.keyWidth;    }
     getKeyHeight() { return this.keyHeight;   }

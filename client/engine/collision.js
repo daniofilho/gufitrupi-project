@@ -43,19 +43,28 @@ class Collision {
       if( r2.stopIfCollision() ) {
         if(overlapX >= overlapY ){ // Direction of collision - Up/Down
           if(catY > 0){ // Up
-            r1.setY( r1.getY() + overlapY );
-            r1.setCollisionY( r1.getCollisionY() + overlapY );
+            // Only moves if it wont collide
+            //if( !this.willCollideInFuture(r1, r1.getCollisionX(), r1.getCollisionY() + overlapY ) ) {
+              r1.setY( r1.getY() + overlapY );
+              r1.setCollisionY( r1.getCollisionY() + overlapY );
+            //}
           } else {
-            r1.setY( r1.getY() - overlapY );
-            r1.setCollisionY( r1.getCollisionY() - overlapY );
+            //if( !this.willCollideInFuture(r1, r1.getCollisionX(), r1.getCollisionY() - overlapY ) ) {
+              r1.setY( r1.getY() - overlapY );
+              r1.setCollisionY( r1.getCollisionY() - overlapY );
+            //}
           }
         } else {// Direction of collision - Left/Right
           if(catX > 0){ // Left
-            r1.setX( r1.getX() + overlapX );
-            r1.setCollisionX( r1.getCollisionX() + overlapX );
+            //if( !this.willCollideInFuture(r1, r1.getCollisionX() + overlapX, r1.getCollisionY() ) ) {
+              r1.setX( r1.getX() + overlapX );
+              r1.setCollisionX( r1.getCollisionX() + overlapX );
+            //}
           } else {
-            r1.setX( r1.getX() - overlapX );
-            r1.setCollisionX( r1.getCollisionX() - overlapX );
+            //if( !this.willCollideInFuture(r1, r1.getCollisionX() - overlapX, r1.getCollisionY() ) ) {
+              r1.setX( r1.getX() - overlapX );
+              r1.setCollisionX( r1.getCollisionX() - overlapX );
+            //}
           }
         }
       }
@@ -75,6 +84,40 @@ class Collision {
     }
 
   }
+  
+  /*
+  // Check a future movement
+  willCollideInFuture(object, x, y) {
+    let willCollide = false;
+    for (let i in this.colItens) {
+      let r1 = object;
+      let r2 = this.colItens[i];
+      willCollide = this.willCollide(r1, r2, x, y);
+    } 
+    return willCollide;
+  }
+  willCollide(r1, r2, x, y) {
+
+    // Don't check collision between same object
+    if( r1.name == r2.name ) return;
+    
+    // Only checks objects that needs to be checked
+    if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) return false;
+
+    // stores the distance between the objects (must be rectangle)
+    var catX = r1.getCenterX(x) - r2.getCenterX();
+    var catY = r1.getCenterY(y) - r2.getCenterY();
+
+    var sumHalfWidth = ( r1.getCollisionWidth() / 2 ) + ( r2.getCollisionWidth() / 2 );
+    var sumHalfHeight = ( r1.getCollisionHeight() / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
+    
+    if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
+      return true; // will collide
+    } else {
+      return false; // no collision
+    }
+
+  }*/
 			
 	// Add items to check for collision
 	addItem(object) {

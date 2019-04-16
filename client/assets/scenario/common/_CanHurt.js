@@ -2,8 +2,8 @@ const _Collidable = require('./_Collidable');
 
 class _CanHurt extends _Collidable {
 
-  constructor(props, position, dimension, game, sprite, events,canHurtProps) {
-    super(props, position, dimension, game, sprite, events);
+  constructor(props, position, dimension, sprite, events,canHurtProps) {
+    super(props, position, dimension, sprite, events);
     this.hurtAmount = canHurtProps.amount;
   }
   

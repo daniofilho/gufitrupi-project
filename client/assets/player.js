@@ -1,4 +1,4 @@
-const Sprite = require('./engine/Sprite');
+const Sprite = require('../engine/Sprite');
 
 class Player {
 
@@ -13,12 +13,8 @@ class Player {
 
       this.sprite = new Sprite( this.playerSprite, 300, 960, 20, 40);
       
-      /*
-      this.spriteProps = {
-        sprite_width: 20, // Player size inside sprite
-        sprite_height: 40
-      }
-      */
+      this.spriteProps = {};
+      
       this.step = [];
       this.defaultStep = 1;
       this.initialStep = 2;
@@ -90,14 +86,14 @@ class Player {
       this.spriteProps.direction = 'down';
       
       // Steps
-      this.step[1] = { x: 0, y: 0 };
-      this.step[2] = { x: 20, y: 0 };
-      this.step[3] = { x: 40, y: 0 };
-      this.step[4] = { x: 60, y: 0 };
-      this.step[5] = { x: 80, y: 0 };
-      this.step[6] = { x: 100, y: 0 };
-      this.step[7] = { x: 120, y: 0 };
-      this.step[8] = { x: 140, y: 0 };
+      this.step[1] = this.sprite.getFrame( 0 );
+      this.step[2] = this.sprite.getFrame( 1 );
+      this.step[3] = this.sprite.getFrame( 2 );
+      this.step[4] = this.sprite.getFrame( 3 );
+      this.step[5] = this.sprite.getFrame( 4 );
+      this.step[6] = this.sprite.getFrame( 5 );
+      this.step[7] = this.sprite.getFrame( 6 );
+      this.step[8] = this.sprite.getFrame( 7 );
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -107,14 +103,14 @@ class Player {
     lookUp(){
       this.spriteProps.direction = 'up';
       
-      this.step[1] = { x: 0, y: 40 };
-      this.step[2] = { x: 0, y: 40 };
-      this.step[3] = { x: 40, y: 40 };
-      this.step[4] = { x: 60, y: 40 };
-      this.step[5] = { x: 80, y: 40 };
-      this.step[6] = { x: 100, y: 40 };
-      this.step[7] = { x: 120, y: 40 };
-      this.step[8] = { x: 140, y: 40 };
+      this.step[1] = this.sprite.getFrame( 15 );
+      this.step[2] = this.sprite.getFrame( 15 );
+      this.step[3] = this.sprite.getFrame( 17 );
+      this.step[4] = this.sprite.getFrame( 18 );
+      this.step[5] = this.sprite.getFrame( 19 );
+      this.step[6] = this.sprite.getFrame( 20 );
+      this.step[7] = this.sprite.getFrame( 21 );
+      this.step[8] = this.sprite.getFrame( 22 );
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -123,14 +119,14 @@ class Player {
     lookRight(){
       this.spriteProps.direction = 'right';
       
-      this.step[1] = { x: 0, y: 80 };
-      this.step[2] = { x: 20, y: 80 };
-      this.step[3] = { x: 40, y: 80 };
-      this.step[4] = { x: 60, y: 80 };
-      this.step[5] = { x: 80, y: 80 };
-      this.step[6] = { x: 100, y: 80 };
-      this.step[7] = { x: 120, y: 80 };
-      this.step[8] = { x: 140, y: 80 };
+      this.step[1] = this.sprite.getFrame( 30 );
+      this.step[2] = this.sprite.getFrame( 31 );
+      this.step[3] = this.sprite.getFrame( 32 );
+      this.step[4] = this.sprite.getFrame( 33 );
+      this.step[5] = this.sprite.getFrame( 34 );
+      this.step[6] = this.sprite.getFrame( 35 );
+      this.step[7] = this.sprite.getFrame( 36 );
+      this.step[8] = this.sprite.getFrame( 37 );
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -139,14 +135,14 @@ class Player {
 		lookLeft(){
       this.spriteProps.direction = 'left';
           
-      this.step[1] = { x: 0, y: 120 };
-      this.step[2] = { x: 20, y: 120 };
-      this.step[3] = { x: 40, y: 120 };
-      this.step[4] = { x: 60, y: 120 };
-      this.step[5] = { x: 80, y: 120 };
-      this.step[6] = { x: 100, y: 120 };
-      this.step[7] = { x: 120, y: 120 };
-      this.step[8] = { x: 140, y: 120 };
+      this.step[1] = this.sprite.getFrame( 45 );
+      this.step[2] = this.sprite.getFrame( 46 );
+      this.step[3] = this.sprite.getFrame( 47 );
+      this.step[4] = this.sprite.getFrame( 48 );
+      this.step[5] = this.sprite.getFrame( 49 );
+      this.step[6] = this.sprite.getFrame( 50 );
+      this.step[7] = this.sprite.getFrame( 51 );
+      this.step[8] = this.sprite.getFrame( 52 );
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -296,8 +292,14 @@ class Player {
     getCollisionX() {  return this.collisionX; }
     getCollisionY() {  return this.collisionY; }
 
-    getCenterX() { return this.getCollisionX() + this.getCollisionWidth() / 2; }
-    getCenterY() { return this.getCollisionY() + this.getCollisionHeight() / 2; }
+    getCenterX( _x ) { // May get a custom centerX, used to check a future collision
+      let x = ( _x ) ? _x : this.getCollisionX();
+      return x + this.getCollisionWidth() / 2; 
+    }
+    getCenterY( _y ) { 
+      let y = ( _y ) ? _y : this.getCollisionY();
+      return y + this.getCollisionHeight() / 2; 
+    }
 			
 		getColor() { return this.color; }
 		getSpeed() { return this.speed; }
@@ -353,9 +355,9 @@ class Player {
       
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(
-        this.playerSprite,  
+        this.sprite.getSprite(),  
         this.spriteProps.clip_x, this.spriteProps.clip_y, 
-        this.spriteProps.sprite_width, this.spriteProps.sprite_height, 
+        this.sprite.getKeyWidth(), this.sprite.getKeyHeight(), 
         props.x, props.y, props.w, props.h
       );	
 

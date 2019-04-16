@@ -9,8 +9,8 @@ const Stage_Enemy = require('./stages/stage_enemy');
 
 class scenarioSandbox extends _Scenario {
 
-  constructor(ctx, canvas, gameProps, saveData){
-    super(ctx, canvas, gameProps, "sandbox");
+  constructor(ctx, canvas, saveData){
+    super(ctx, canvas, "sandbox");
     this.defaultStageId = "center";
     
     // Define which stage will load on first run
@@ -35,13 +35,13 @@ class scenarioSandbox extends _Scenario {
     switch(stage_id) {
       default:
       case 'center':
-        _stage = new Stage_Center( this.chunkSize );
+        _stage = new Stage_Center();
         break;
       case 'life':
-        _stage = new Stage_Life( this.chunkSize );
+        _stage = new Stage_Life();
         break;
       case 'enemy':
-        _stage = new Stage_Enemy( this.chunkSize );
+        _stage = new Stage_Enemy();
         break;
     }
 

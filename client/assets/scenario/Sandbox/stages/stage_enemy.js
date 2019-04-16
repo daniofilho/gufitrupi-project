@@ -10,14 +10,14 @@ const Fire = require('../../common/Fire');
 
 class Prototype_Stage_Enemy extends _Stage{
 
-  constructor(chunkSize) {
-    super(chunkSize, "enemy");
+  constructor() {
+    super("enemy");
 
-    let player1StartX = chunkSize * 7;
-    let player1StartY = chunkSize * 6;
+    let player1StartX = window.game.getChunkSize() * 7;
+    let player1StartY = window.game.getChunkSize() * 6;
     
-    let player2StartX = chunkSize * 8;
-    let player2StartY = chunkSize * 6;
+    let player2StartX = window.game.getChunkSize() * 8;
+    let player2StartY = window.game.getChunkSize() * 6;
 
     this.run(player1StartX, player1StartY, player2StartX, player2StartY);
   }
@@ -26,22 +26,22 @@ class Prototype_Stage_Enemy extends _Stage{
   getScenarioAssetItem(item, x, y, xIndex, yIndex){
     switch(item.name) {
       case "wall":
-        return new Beach_Wall(item.type, x, y, this.chunkSize);
+        return new Beach_Wall(item.type, x, y);
         break;
       case "floor":
-        return new Beach_Floor(item.type, x, y, this.chunkSize);
+        return new Beach_Floor(item.type, x, y);
         break;
       case "teleport":
-        return new Teleport(item.type, x, y, xIndex, yIndex, this.chunkSize, item );
+        return new Teleport(item.type, x, y, xIndex, yIndex, item );
         break;
       case "enemy":
-        return new Enemy(item.type, x, y, this.chunkSize);
+        return new Enemy(item.type, x, y);
         break;
       case "fire":
-        return new Fire(item.type, x, y, this.chunkSize);
+        return new Fire(item.type, x, y);
         break;
       case "heal":
-        return new Heal(item.type, x, y, this.chunkSize, this.getStageId());
+        return new Heal(item.type, x, y, this.getStageId());
         break;
     }
   }

@@ -1,6 +1,6 @@
 class _Scenario {
 
-  constructor(ctx, canvas, gameProps, scenario_id, saveData){
+  constructor(ctx, canvas, scenario_id){
     this.ctx = ctx;
     this.canvas = canvas;
         
@@ -17,7 +17,7 @@ class _Scenario {
     this.stage = null;
     this.stageId = "";
     
-    this.chunkSize = gameProps.getProp('chunkSize');
+    this.chunkSize = window.game.getChunkSize();
 
     this.players = new Array();
 

@@ -1,8 +1,9 @@
 const _CanHurt = require('./_CanHurt');
+const Sprite = require('../../../engine/Sprite');
 
 class Enemy extends _CanHurt {
 
-  constructor(type, x0, y0, chunkSize) {
+  constructor(type, x0, y0) {
     
     let props = {
       name: "enemy",
@@ -15,18 +16,8 @@ class Enemy extends _CanHurt {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize * 2
-    }
-
-    let game = {
-      chunkSize: chunkSize
-    }
-
-    let sprite = {
-      width: 18,
-      height: 40,
-      stageSprite: document.getElementById('sprite_enemy')
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize() * 2
     }
 
     let events = {
@@ -38,29 +29,27 @@ class Enemy extends _CanHurt {
       amount: 1
     }
 
-    super(props, position, dimension, game, sprite, events, canHurtProps);
+    super(props, position, dimension, {}, events, canHurtProps);
 
     this.spriteAnimationMaxCount = 1;
     this.spriteAnimationCount = 1;
     
-    this.collisionHeight = chunkSize; // 80% of Chunk Size
-    this.collisionY = y0 + chunkSize; // 80% of Chunk Size
+    this.collisionHeight = window.game.getChunkSize(); // 80% of Chunk Size
+    this.collisionY = y0 + window.game.getChunkSize(); // 80% of Chunk Size
 
     this.collisionCount = 0;
 
     // Controls the sprite FPS Animation
-    this.fpsInterval = 1000 / window.game.gameProps.fps; // 1000 / FPS
+    this.fpsInterval = 1000 / ( window.game.gameProps.fps / 2 ); // 1000 / FPS
     this.deltaTime = Date.now();
 
-    this.spriteProps = {
-      sprite_width: 20, // size inside sprite
-      sprite_height: 40
-    }
+    this.sprite = new Sprite( document.getElementById('sprite_enemy'), 300, 960, 20, 40);
+
     this.step = new Object();
     this.defaultStep = 1;
     this.initialStep = 2;
     this.stepCount = this.defaultStep;
-    this.maxSteps = 8;
+    this.maxSteps = 4;
 
     this.directionCountdown = 0;
     this.randDirection = 1;
@@ -73,7 +62,7 @@ class Enemy extends _CanHurt {
     this.y0 = y0;
   
     // # Properties
-    this.speed0 = 0.1;
+    this.speed0 = 0.2;
     this.speed = this.chunkSize * this.speed0;
     this.type = "enemy";
     
@@ -86,7 +75,8 @@ class Enemy extends _CanHurt {
     this.canBeHurt = true;
     this.hurtCoolDownTime = 1000; //2s
 
-    this.playerAwareChunksDistance = 5;
+    this.playerAwareChunksDistance0 = 5;
+    this.playerAwareChunksDistance = this.playerAwareChunksDistance0;
     this.playerAwareDistance = this.chunkSize * this.playerAwareChunksDistance;
 
     this.awareOfPlayer = false;
@@ -123,7 +113,7 @@ class Enemy extends _CanHurt {
       case 1:
         this.spriteProps = { 
           clip_x: 0, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
+          sprite_width: this.sprite.getKeyWidth(), sprite_height: this.sprite.getKeyHeight() 
         }
         break;
     }
@@ -134,14 +124,10 @@ class Enemy extends _CanHurt {
     this.spriteProps.direction = 'down';
     
     // Steps
-    this.step[1] = { x: 0, y: 0 };
-    this.step[2] = { x: 0, y: 0 };
-    this.step[3] = { x: 20, y: 0 };
-    this.step[4] = { x: 20, y: 0 };
-    this.step[5] = { x: 40, y: 0 };
-    this.step[6] = { x: 40, y: 0 };
-    this.step[7] = { x: 60, y: 0 };
-    this.step[8] = { x: 60, y: 0 };
+    this.step[1] = this.sprite.getFrame(0);
+    this.step[2] = this.sprite.getFrame(1);
+    this.step[3] = this.sprite.getFrame(2);
+    this.step[4] = this.sprite.getFrame(3);
     
     this.spriteProps.clip_x = this.step[this.stepCount].x;
     this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -151,14 +137,10 @@ class Enemy extends _CanHurt {
   lookUp(){
     this.spriteProps.direction = 'up';
     
-    this.step[1] = { x: 0,  y: 40 };
-    this.step[2] = { x: 0,  y: 40 };
-    this.step[3] = { x: 20, y: 40 };
-    this.step[4] = { x: 20, y: 40 };
-    this.step[5] = { x: 40, y: 40 };
-    this.step[6] = { x: 40, y: 40 };
-    this.step[7] = { x: 60, y: 40 };
-    this.step[8] = { x: 60, y: 40 };
+    this.step[1] = this.sprite.getFrame(15);
+    this.step[2] = this.sprite.getFrame(16);
+    this.step[3] = this.sprite.getFrame(17);
+    this.step[4] = this.sprite.getFrame(18);
     
     this.spriteProps.clip_x = this.step[this.stepCount].x;
     this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -167,14 +149,10 @@ class Enemy extends _CanHurt {
   lookRight(){
     this.spriteProps.direction = 'right';
     
-    this.step[1] = { x: 0, y: 80 };
-    this.step[2] = { x: 0, y: 80 };
-    this.step[3] = { x: 20, y: 80 };
-    this.step[4] = { x: 20, y: 80 };
-    this.step[5] = { x: 40, y: 80 };
-    this.step[6] = { x: 40, y: 80 };
-    this.step[7] = { x: 60, y: 80 };
-    this.step[8] = { x: 60, y: 80 };
+    this.step[1] = this.sprite.getFrame(30);
+    this.step[2] = this.sprite.getFrame(31);
+    this.step[3] = this.sprite.getFrame(32);
+    this.step[4] = this.sprite.getFrame(33);
     
     this.spriteProps.clip_x = this.step[this.stepCount].x;
     this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -183,14 +161,10 @@ class Enemy extends _CanHurt {
   lookLeft(){
     this.spriteProps.direction = 'left';
         
-    this.step[1] = { x: 80, y: 80 };
-    this.step[2] = { x: 80, y: 80 };
-    this.step[3] = { x: 100, y: 80 };
-    this.step[4] = { x: 100, y: 80 };
-    this.step[5] = { x: 120, y: 80 };
-    this.step[6] = { x: 120, y: 80 };
-    this.step[7] = { x: 140, y: 80 };
-    this.step[8] = { x: 140, y: 80 };
+    this.step[1] = this.sprite.getFrame(34);
+    this.step[2] = this.sprite.getFrame(35);
+    this.step[3] = this.sprite.getFrame(36);
+    this.step[4] = this.sprite.getFrame(37);
     
     this.spriteProps.clip_x = this.step[this.stepCount].x;
     this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -314,8 +288,14 @@ class Enemy extends _CanHurt {
   getCollisionX() {  return this.collisionX; }
   getCollisionY() {  return this.collisionY; }
 
-  getCenterX() { return this.getCollisionX() + this.getCollisionWidth() / 2; }
-  getCenterY() { return this.getCollisionY() + this.getCollisionHeight() / 2; }
+  getCenterX( _x ) { // May get a custom centerX, used to check a future collision
+    let x = ( _x ) ? _x : this.getCollisionX();
+    return x + this.getCollisionWidth() / 2; 
+  }
+  getCenterY( _y ) { 
+    let y = ( _y ) ? _y : this.getCollisionY();
+    return y + this.getCollisionHeight() / 2; 
+  }
     
   getColor() { return this.color; }
   getSpeed() { return this.speed; }
@@ -370,9 +350,9 @@ class Enemy extends _CanHurt {
     
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(
-      this.stageSprite,  
+      this.sprite.getSprite(),   
       this.spriteProps.clip_x, this.spriteProps.clip_y, 
-      this.spriteProps.sprite_width, this.spriteProps.sprite_height, 
+      this.sprite.getKeyWidth(), this.sprite.getKeyHeight(), 
       props.x, props.y, props.w, props.h
     );	
 

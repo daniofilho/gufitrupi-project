@@ -2,7 +2,7 @@ const _Collidable = require('./_Collidable');
 
 class Beach_Floor extends _Collidable {
 
-	constructor(type, x0, y0, chunkSize) {
+	constructor(type, x0, y0) {
     
     let props = {
       name: "Beach Floor",
@@ -15,12 +15,8 @@ class Beach_Floor extends _Collidable {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
-    }
-
-    let game = {
-      chunkSize: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
     let sprite = {
@@ -34,7 +30,7 @@ class Beach_Floor extends _Collidable {
       hasCollisionEvent: false
     }
     
-    super(props, position, dimension, game, sprite, events);
+    super(props, position, dimension, sprite, events);
     
   }
 

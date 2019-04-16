@@ -2,7 +2,7 @@ const _CanCollect = require('./_CanCollect');
 
 class Heal extends _CanCollect {
 
-  constructor(type, x0, y0, chunkSize, stage_id) {
+  constructor(type, x0, y0, stage_id) {
     
     let props = {
       name: stage_id + "_potion",
@@ -15,12 +15,8 @@ class Heal extends _CanCollect {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
-    }
-
-    let game = {
-      chunkSize: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
     let sprite = {
@@ -38,7 +34,7 @@ class Heal extends _CanCollect {
       canRespawn: true
     }
 
-    super(props, position, dimension, game, sprite, events, canCollectProps);
+    super(props, position, dimension, sprite, events, canCollectProps);
 
     this.handleProps();
   }

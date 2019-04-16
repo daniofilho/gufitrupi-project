@@ -1,6 +1,6 @@
 class _Collidable {
 
-  constructor(props, position, dimension, game, sprite, events) {
+  constructor(props, position, dimension, sprite, events) {
       
     // # Position
     this.x = position.x;
@@ -16,7 +16,7 @@ class _Collidable {
     this.collisionX = this.x;
     this.collisionY = this.y;
 
-    this.chunkSize = game.chunkSize;
+    this.chunkSize = window.game.getChunkSize();
 
     // # Eventos
     this.stopOnCollision = events.stopOnCollision;
@@ -90,8 +90,14 @@ class _Collidable {
   getCollisionX() { return this.collisionX; }
   getCollisionY() { return this.collisionY; }
 
-  getCenterX() { return this.getCollisionX() + this.getCollisionWidth() /2; }
-  getCenterY() { return this.getCollisionY() + this.getCollisionHeight() /2; }
+  getCenterX( _x ) { // May get a custom centerX, used to check a future collision
+    let x = ( _x ) ? _x : this.getCollisionX();
+    return x + this.getCollisionWidth() / 2; 
+  }
+  getCenterY( _y ) { 
+    let y = ( _y ) ? _y : this.getCollisionY();
+    return y + this.getCollisionHeight() / 2; 
+  }
 
   // Hook to run before render
   beforeRender(ctx) {   }

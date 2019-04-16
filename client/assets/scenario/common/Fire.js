@@ -2,7 +2,7 @@ const _CanHurt = require('./_CanHurt');
 
 class Fire extends _CanHurt {
 
-  constructor(type, x0, y0, chunkSize) {
+  constructor(type, x0, y0) {
     
     let props = {
       name: "Fire",
@@ -15,12 +15,8 @@ class Fire extends _CanHurt {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
-    }
-
-    let game = {
-      chunkSize: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
     let sprite = {
@@ -38,13 +34,13 @@ class Fire extends _CanHurt {
       amount: 1
     }
 
-    super(props, position, dimension, game, sprite, events, canHurtProps);
+    super(props, position, dimension, sprite, events, canHurtProps);
 
     this.spriteAnimationMaxCount = 3;
     this.spriteAnimationCount = Math.floor(Math.random() * this.spriteAnimationMaxCount) + 1; // Generate a rand initial number to randomize animation in case of multiple Fires
     
-    this.collisionHeight = chunkSize * 0.4; // 80% of Chunk Size
-    this.collisionY = y0 + ( chunkSize * 0.6); // 80% of Chunk Size
+    this.collisionHeight = window.game.getChunkSize() * 0.4; // 80% of Chunk Size
+    this.collisionY = y0 + ( window.game.getChunkSize() * 0.6); // 80% of Chunk Size
 
     // Controls the sprite FPS Animation
     let randFPS = Math.floor(Math.random() * 7) + 5; // Generate a random FPS, so multiple Fires on page don't animate the same way 
