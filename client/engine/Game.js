@@ -27,7 +27,7 @@ class Game {
     this.itemsState = new Object();
 
     // Game
-      this.gameProps = null;
+      this.gameProps = new gameProperties();
       this.players = new Array();
       this.collision = null;
       this.defaultScenario = "sandbox";
@@ -48,6 +48,9 @@ class Game {
   // Gets
   isGameReady() { return this.gameReady; }
   getChunkSize() { return this.gameProps.chunkSize; }
+
+  getCanvasWidth()  { return this.gameProps.canvasWidth;  }
+  getCanvasHeight() { return this.gameProps.canvasHeight; }
 
   // Sets
   setGameReady(bool) { this.gameReady = bool; }
@@ -100,8 +103,7 @@ class Game {
   startNewGame( saveData ) {
 
     // # Init
-      this.gameProps = new gameProperties();
-
+      
       let canvasStatic = document.getElementById('canvas_static');
       let contextStatic = canvasStatic.getContext('2d');
 
@@ -443,6 +445,43 @@ class Game {
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+  /*
+    Fit Screen div on window size 
+    // reference: https://stackoverflow.com/questions/31237634/auto-scale-contents-based-on-width-and-height-of-an-iframe
+  */
+  adjustScreenDiv() {
+
+    let basePage = {
+      width: game.getCanvasWidth(),
+      height: game.getCanvasHeight(),
+      scale: 1,
+      scaleX: 1,
+      scaleY: 1
+    };
+
+    
+    let page = document.getElementById('screen');
+    
+    let maxWidth = window.innerWidth;
+    let maxHeight = window.innerHeight;
+    console.log(basePage,maxWidth, maxHeight);
+    let scaleX = 1, scaleY = 1;                      
+    scaleX = maxWidth / basePage.width;
+    scaleY = maxHeight / basePage.height;
+    basePage.scaleX = scaleX;
+    basePage.scaleY = scaleY;
+    basePage.scale = (scaleX > scaleY) ? scaleY : scaleX;
+
+    var newLeftPos = Math.abs(Math.floor(((basePage.width * basePage.scale) - maxWidth)/2));
+    var newTopPos = Math.abs(Math.floor(((basePage.height * basePage.scale) - maxHeight)/2));
+
+    page.style.transform = 'scale(' + basePage.scale + ')';
+    page.style.left = newLeftPos + 'px';
+    page.style.top = newTopPos + 'px';
+  }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
   // # Run
   run() {
 
@@ -461,6 +500,9 @@ class Game {
     if( window.autoload ) {
       this.loadGame();
     }
+
+    // Fit menu on screen
+    this.adjustScreenDiv();
 
   }
 
