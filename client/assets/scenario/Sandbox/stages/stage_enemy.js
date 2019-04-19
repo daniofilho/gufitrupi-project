@@ -115,9 +115,9 @@ class Prototype_Stage_Enemy extends _Stage{
     let itemsBottom = [
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   fire,   false,   false,   false,   enemy,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   fire,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   fire,   false,   false,   false,   false,   enemy,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   fire,    fire,    fire,    false,   enemy,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   fire,    fire,    fire,    false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   fire,    fire,    fire,    false,   false,   enemy,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ tp_c,    false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],

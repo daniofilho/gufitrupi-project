@@ -170,6 +170,20 @@ class Enemy extends _CanHurt {
     this.spriteProps.clip_y = this.step[this.stepCount].y;
   }
 
+  dying(){
+    this.spriteProps.direction = 'dying';
+        
+    this.step[1] = this.sprite.getFrame(40);
+    this.step[2] = this.sprite.getFrame(41);
+    this.step[3] = this.sprite.getFrame(42);
+    this.step[4] = this.sprite.getFrame(43);
+    this.step[5] = this.sprite.getFrame(44);
+    this.step[6] = this.sprite.getFrame(29); // empty frame
+    
+    this.spriteProps.clip_x = this.step[this.stepCount].x;
+    this.spriteProps.clip_y = this.step[this.stepCount].y;
+  }
+
   // # Movement
   movLeft(ignoreCollision) { 
     this.increaseStep();
@@ -202,6 +216,13 @@ class Enemy extends _CanHurt {
     this.setCollisionY( this.getCollisionY() + this.getSpeed() );
     if( !ignoreCollision ) window.game.checkCollision( this );
   };
+  movToDeath(ignoreCollision) {
+    this.increaseStep();
+    this.setLookDirection( this.dying() );
+    this.setX( this.getX() + this.getSpeed() ); 
+    this.setCollisionX( this.getCollisionX() + this.getSpeed());
+    if( !ignoreCollision ) window.game.checkCollision( this );
+  }
 
   // # Controls the Fire FPS Movement independent of game FPS
   canRenderNextFrame() {
@@ -269,6 +290,13 @@ class Enemy extends _CanHurt {
   checkMyDeath() {
     if( this.lifes < 1 ) {
       this.setDead(true);
+
+      if( this.spriteProps.direction != "dying") this.stepCount = 1; // If it's not dying, reset animation step
+      this.setSpeed(1.3); // Increase speed
+      this.hasCollisionEvent = false; // Prevent enemy hurting player when in death animation
+      this.maxSteps = 6;
+      this.setAwareOfPlayer(false);
+      this.fpsInterval = 1000 / 8;
     }
   }
 
@@ -305,7 +333,12 @@ class Enemy extends _CanHurt {
   increaseStep() {
     this.stepCount++;
     if( this.stepCount > this.maxSteps ) {
-      this.stepCount = this.initialStep;
+      //Don't reset if it's in death animation
+      if( this.spriteProps.direction == "dying" ) {
+        this.stepCount = this.maxSteps;
+      } else {
+        this.stepCount = this.initialStep;
+      }
     }
   }
   resetStep() {
@@ -330,7 +363,7 @@ class Enemy extends _CanHurt {
   
   // # Enemy Render    
   render(ctx) {
-
+    
     if( this.needStopRenderingMe() ) return;
 
     // Blink Enemy if it can't be hurt
@@ -338,7 +371,7 @@ class Enemy extends _CanHurt {
       this.hideSprite = !this.hideSprite;
     }
     
-    if ( this.hideSprite ) return;
+    if ( this.hideSprite && this.spriteProps.direction != "dying"  ) return;
 
     // What to do every frame in terms of render? Draw the player
     let props = {
@@ -391,15 +424,11 @@ class Enemy extends _CanHurt {
       // Check Dead behavior/animation
       if( this.isDead() ) {
         
-        this.setSpeed(1.5); // Increase speed
-        this.hasCollisionEvent = false; // Prevent enemy hurting player when in death animation
-
         //While not out of screen
         if( this.getX() < window.game.gameProps.canvasWidth ) {
           
           // Start moving out of screen
-            // ... CHANGE ANIMATION SPRITE
-            this.movRight(true); // true = ignore collision check
+          this.movToDeath(true); // true = ignore collision check
           
         } else {
           // Ok, the enemy is dead, stop rendering now
@@ -448,9 +477,7 @@ class Enemy extends _CanHurt {
           // If has collided a lot, change direction to avoid getting stuck
           if( this.collisionCount > 20 ) {
             // Stop going on that direction
-            /*goToDirection = ( goToDirection == Xdistance ) ? Ydistance : Xdistance;
-            this.collisionCount = 0;//reset counter
-            console.log('changed direction');
+            /*
             TODO: Think about it!!
             */
           }
