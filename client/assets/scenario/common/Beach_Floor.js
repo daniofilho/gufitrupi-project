@@ -1,4 +1,5 @@
 const _Collidable = require('./_Collidable');
+const Sprite = require('../../../engine/Sprite');
 
 class Beach_Floor extends _Collidable {
 
@@ -19,11 +20,7 @@ class Beach_Floor extends _Collidable {
       height: window.game.getChunkSize()
     }
 
-    let sprite = {
-      width: 16,
-      height: 16,
-      stageSprite: document.getElementById('sprite_beach')
-    }
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: false,
@@ -40,17 +37,11 @@ class Beach_Floor extends _Collidable {
     switch(type) {
       
       case "01":
-        this.spriteProps = { 
-          clip_x: 214, clip_y: 9, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(249);
         break;
       
       case "02":
-        this.spriteProps = { 
-          clip_x: 214, clip_y: 94, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(255);
         break;
 
     }

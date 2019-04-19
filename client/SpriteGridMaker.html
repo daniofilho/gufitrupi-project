@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Gufitrupi - Grid</title>
+        <meta charset="utf-8">
+        <style></style>
+    </head>
+    <body>
+       
+       	<canvas id="grid"></canvas>
+
+		<!-- Bundle -->
+        <script type="text/javascript">
+            window.onload = function() {
+
+                /* - - Start editing here - - */
+
+                let imgWidth = 1980;  // CHANGE HERE
+                let imgHeight = 1055; // CHANGE HERE
+
+                let keyWidth = 32; // CHANGE HERE
+                let keyHeight = 32; // CHANGE HERE
+
+                /* - - Stop editing here - - */
+               
+                cols = parseInt( imgWidth / keyWidth );
+                rows = parseInt( imgHeight / keyHeight );
+
+                let grid = document.getElementById("grid");
+                let ctx = grid.getContext("2d");
+
+                grid.width = imgWidth;
+                grid.height = imgHeight;
+
+                let aux = true;
+                let index = 0;
+                for( let r=0; r<=rows;r++ ) {
+                    for( let c=0; c<=cols;c++ ) {
+
+                        let _x = keyWidth * c;
+                        let _y = keyHeight * r;
+
+                        let _h = keyHeight;
+                        let _w = keyWidth;
+                        
+                        ctx.fillStyle =  ( aux ) ? "rgba(0,255,0,0.1)" : "rgba(0,0,255,0.1)";
+                        ctx.fillRect(_x, _y, keyWidth, keyHeight);
+
+                        aux = !aux;
+
+                        ctx.fillStyle = "#333333";
+                        ctx.font = "10px sans-serif";
+                        ctx.fillText( index, _x, _y+_h );
+
+                        //console.log(_x, _y);
+                        
+                        index++;
+                    }
+                    if( cols%2 == 0 ) aux = !aux;
+                }
+
+            }
+        </script>
+               
+    </body>
+</html>

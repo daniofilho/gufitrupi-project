@@ -1,5 +1,6 @@
 const _Collidable = require('./_Collidable');
 const gameProperties = require('../../../gameProperties'); 
+const Sprite = require('../../../engine/Sprite');
 
 class Teleport extends _Collidable {
 
@@ -20,11 +21,7 @@ class Teleport extends _Collidable {
       height: window.game.getChunkSize()
     }
 
-    let sprite = {
-      width: 16,
-      height: 16,
-      stageSprite: false
-    }
+    let sprite = new Sprite(false, 0, 0, 0, 0);
 
     let events = {
       stopOnCollision: false,

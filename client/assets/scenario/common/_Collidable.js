@@ -23,11 +23,13 @@ class _Collidable {
     this.hasCollisionEvent = events.hasCollisionEvent;
   
     // # Sprite
-    this.stageSprite = sprite.stageSprite;
+    this.sprite = sprite;
+
+    //this.stageSprite = sprite.stageSprite;
     this.hideSprite = false;
 
-    this.spriteWidth = sprite.width;   
-    this.spriteHeight = sprite.height; 
+    //this.spriteWidth = sprite.width;   
+    //this.spriteHeight = sprite.height; 
     this.spriteProps = new Array();
     
     this.name = props.name.replace(/\s/g,'') + "_" + this.x + "x" + this.y;
@@ -117,10 +119,10 @@ class _Collidable {
     } 
     let spriteProps = this.spriteProps;
     
-    if( this.stageSprite ) { // Only render texture if have it set
+    if( this.sprite.getSprite() ) { // Only render texture if it was set before
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(
-        this.stageSprite,  
+        this.sprite.getSprite(),  
         spriteProps.clip_x, spriteProps.clip_y, 
         spriteProps.sprite_width, spriteProps.sprite_height, 
         props.x, props.y, props.w, props.h

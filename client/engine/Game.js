@@ -18,6 +18,7 @@ class Game {
 
     // Events
     this.keysDown = {};
+    this.keysPress = {};
 
     // Pause
     this._pause = false;
@@ -90,6 +91,13 @@ class Game {
       // Pause Event Listener
       if( e.keyCode == 27 && this.gameIsLoaded ) { // ESQ
         this.togglePause();
+      }
+
+      // Player handle keyup
+      if( this.players) {
+        this.players.map( (player) => {
+          player.handleKeyUp(e.keyCode);
+        });
       }
 
     }.bind(this), false);
@@ -190,8 +198,6 @@ class Game {
     // # The Game Loop
     updateGame(deltaTime) {
 
-      //console.log(  );
-
       if( this.isPaused() ) return;
       
       this.renderStatic.start( deltaTime );  // Static can also change, because it is the scenario... maybe will change this names to layers
@@ -230,7 +236,7 @@ class Game {
       this.players.map( (player) => {
         player.handleMovement( this.keysDown );
       });
-      
+
       // # Check if player is colliding
       this.players.map( (player) => {
         this.collision.check(player);

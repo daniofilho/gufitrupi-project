@@ -1,4 +1,5 @@
 const _CanCollect = require('./_CanCollect');
+const Sprite = require('../../../engine/Sprite');
 
 class Heal extends _CanCollect {
 
@@ -19,11 +20,7 @@ class Heal extends _CanCollect {
       height: window.game.getChunkSize()
     }
 
-    let sprite = {
-      width: 50,
-      height: 50,
-      stageSprite: document.getElementById('sprite_common')
-    }
+    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
 
     let events = {
       stopOnCollision: false,
@@ -59,16 +56,10 @@ class Heal extends _CanCollect {
     switch(type) { 
       default:
       case 'banana':
-        this.spriteProps = { 
-          clip_x: 0, clip_y: 50, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteWidth
-        }
+        this.spriteProps = this.sprite.getSpriteProps(19);
         break;
       case 'berry':
-        this.spriteProps = { 
-          clip_x: 50, clip_y: 50, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteWidth
-        }
+        this.spriteProps = this.sprite.getSpriteProps(20);
         break;
     }
   }

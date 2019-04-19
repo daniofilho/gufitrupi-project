@@ -44,6 +44,8 @@ class Player {
       this.name = "player_" + playerNumber;
       this.playerNumber = playerNumber;
       this.type = "player";
+
+      this.grabing = false;
       
     // # Events  
       
@@ -64,7 +66,6 @@ class Player {
       this.collisionX0 = this.collisionX;
       this.collisionY0 = this.collisionY;
 
-    
       // # Life
       this.defaultLifes = 6;
       this.lifes = this.defaultLifes;
@@ -86,14 +87,25 @@ class Player {
       this.spriteProps.direction = 'down';
       
       // Steps
-      this.step[1] = this.sprite.getFrame( 0 );
-      this.step[2] = this.sprite.getFrame( 1 );
-      this.step[3] = this.sprite.getFrame( 2 );
-      this.step[4] = this.sprite.getFrame( 3 );
-      this.step[5] = this.sprite.getFrame( 4 );
-      this.step[6] = this.sprite.getFrame( 5 );
-      this.step[7] = this.sprite.getFrame( 6 );
-      this.step[8] = this.sprite.getFrame( 7 );
+      if( this.isGrabing() ) {
+        this.step[1] = this.sprite.getFrame( 60 );
+        this.step[2] = this.sprite.getFrame( 61 );
+        this.step[3] = this.sprite.getFrame( 62 );
+        this.step[4] = this.sprite.getFrame( 63 );
+        this.step[5] = this.sprite.getFrame( 64 );
+        this.step[6] = this.sprite.getFrame( 65 );
+        this.step[7] = this.sprite.getFrame( 66 );
+        this.step[8] = this.sprite.getFrame( 67 );
+      } else {
+        this.step[1] = this.sprite.getFrame( 0 );
+        this.step[2] = this.sprite.getFrame( 1 );
+        this.step[3] = this.sprite.getFrame( 2 );
+        this.step[4] = this.sprite.getFrame( 3 );
+        this.step[5] = this.sprite.getFrame( 4 );
+        this.step[6] = this.sprite.getFrame( 5 );
+        this.step[7] = this.sprite.getFrame( 6 );
+        this.step[8] = this.sprite.getFrame( 7 );
+      }
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -103,15 +115,26 @@ class Player {
     lookUp(){
       this.spriteProps.direction = 'up';
       
-      this.step[1] = this.sprite.getFrame( 15 );
-      this.step[2] = this.sprite.getFrame( 15 );
-      this.step[3] = this.sprite.getFrame( 17 );
-      this.step[4] = this.sprite.getFrame( 18 );
-      this.step[5] = this.sprite.getFrame( 19 );
-      this.step[6] = this.sprite.getFrame( 20 );
-      this.step[7] = this.sprite.getFrame( 21 );
-      this.step[8] = this.sprite.getFrame( 22 );
-      
+      if( this.isGrabing() ) {
+        this.step[1] = this.sprite.getFrame( 105 );
+        this.step[2] = this.sprite.getFrame( 105 );
+        this.step[3] = this.sprite.getFrame( 107 );
+        this.step[4] = this.sprite.getFrame( 108 );
+        this.step[5] = this.sprite.getFrame( 109 );
+        this.step[6] = this.sprite.getFrame( 110 );
+        this.step[7] = this.sprite.getFrame( 111 );
+        this.step[8] = this.sprite.getFrame( 112 );
+      } else {
+        this.step[1] = this.sprite.getFrame( 15 );
+        this.step[2] = this.sprite.getFrame( 15 );
+        this.step[3] = this.sprite.getFrame( 17 );
+        this.step[4] = this.sprite.getFrame( 18 );
+        this.step[5] = this.sprite.getFrame( 19 );
+        this.step[6] = this.sprite.getFrame( 20 );
+        this.step[7] = this.sprite.getFrame( 21 );
+        this.step[8] = this.sprite.getFrame( 22 );
+      }
+            
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
     }
@@ -119,14 +142,25 @@ class Player {
     lookRight(){
       this.spriteProps.direction = 'right';
       
-      this.step[1] = this.sprite.getFrame( 30 );
-      this.step[2] = this.sprite.getFrame( 31 );
-      this.step[3] = this.sprite.getFrame( 32 );
-      this.step[4] = this.sprite.getFrame( 33 );
-      this.step[5] = this.sprite.getFrame( 34 );
-      this.step[6] = this.sprite.getFrame( 35 );
-      this.step[7] = this.sprite.getFrame( 36 );
-      this.step[8] = this.sprite.getFrame( 37 );
+      if( this.isGrabing() ) {
+        this.step[1] = this.sprite.getFrame( 75 );
+        this.step[2] = this.sprite.getFrame( 76 );
+        this.step[3] = this.sprite.getFrame( 77 );
+        this.step[4] = this.sprite.getFrame( 78 );
+        this.step[5] = this.sprite.getFrame( 79 );
+        this.step[6] = this.sprite.getFrame( 80 );
+        this.step[7] = this.sprite.getFrame( 81 );
+        this.step[8] = this.sprite.getFrame( 82 );
+      } else {
+        this.step[1] = this.sprite.getFrame( 30 );
+        this.step[2] = this.sprite.getFrame( 31 );
+        this.step[3] = this.sprite.getFrame( 32 );
+        this.step[4] = this.sprite.getFrame( 33 );
+        this.step[5] = this.sprite.getFrame( 34 );
+        this.step[6] = this.sprite.getFrame( 35 );
+        this.step[7] = this.sprite.getFrame( 36 );
+        this.step[8] = this.sprite.getFrame( 37 );
+      }
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -134,15 +168,26 @@ class Player {
         
 		lookLeft(){
       this.spriteProps.direction = 'left';
-          
-      this.step[1] = this.sprite.getFrame( 45 );
-      this.step[2] = this.sprite.getFrame( 46 );
-      this.step[3] = this.sprite.getFrame( 47 );
-      this.step[4] = this.sprite.getFrame( 48 );
-      this.step[5] = this.sprite.getFrame( 49 );
-      this.step[6] = this.sprite.getFrame( 50 );
-      this.step[7] = this.sprite.getFrame( 51 );
-      this.step[8] = this.sprite.getFrame( 52 );
+      
+      if( this.isGrabing() ) {
+        this.step[1] = this.sprite.getFrame( 90 );
+        this.step[2] = this.sprite.getFrame( 91 );
+        this.step[3] = this.sprite.getFrame( 92 );
+        this.step[4] = this.sprite.getFrame( 93 );
+        this.step[5] = this.sprite.getFrame( 94 );
+        this.step[6] = this.sprite.getFrame( 95 );
+        this.step[7] = this.sprite.getFrame( 96 );
+        this.step[8] = this.sprite.getFrame( 97 );
+      } else {
+        this.step[1] = this.sprite.getFrame( 45 );
+        this.step[2] = this.sprite.getFrame( 46 );
+        this.step[3] = this.sprite.getFrame( 47 );
+        this.step[4] = this.sprite.getFrame( 48 );
+        this.step[5] = this.sprite.getFrame( 49 );
+        this.step[6] = this.sprite.getFrame( 50 );
+        this.step[7] = this.sprite.getFrame( 51 );
+        this.step[8] = this.sprite.getFrame( 52 );
+      }
       
       this.spriteProps.clip_x = this.step[this.stepCount].x;
       this.spriteProps.clip_y = this.step[this.stepCount].y;
@@ -192,8 +237,6 @@ class Player {
 
     handleMovement( keysDown ) {
       
-      // if ( this.hideSprite ) return; // I think I've made a mistake using this line here, but will keep until I remeber why I did it
-      
       // Player 1 Controls
       if( this.playerNumber == 1 ) {
         if (37 in keysDown) this.movLeft();  // Left
@@ -204,10 +247,24 @@ class Player {
       
       // Player 2 Controls
       if( this.playerNumber == 2 ) {
-        if (65 in keysDown) this.movLeft();  // Left
-        if (87 in keysDown) this.movUp();    // Up 
-        if (68 in keysDown) this.movRight(); // Right
-        if (83 in keysDown) this.movDown();  // Down
+        if (65 in keysDown) this.movLeft();  // Left  => A
+        if (87 in keysDown) this.movUp();    // Up    => W
+        if (68 in keysDown) this.movRight(); // Right => D
+        if (83 in keysDown) this.movDown();  // Down  => S
+      }
+
+    }
+
+    handleKeyUp(keyUp) {
+      
+      // Player 1
+      if( this.playerNumber == 1 ) {
+        if (keyUp == 17) this.triggerGrab();  // Grab => CTRL
+      }
+
+      // Player 2
+      if( this.playerNumber == 2 ) {
+        if (keyUp == 70) this.triggerGrab();  // Grab => F
       }
 
     }
@@ -333,11 +390,18 @@ class Player {
     }
 		hidePlayer() { this.hideSprite = true; }
     showPlayer() { this.hideSprite = false; }
-    
+  
+  // # Grab
+    isGrabing() { return this.grabing; }
+    triggerGrab(){
+      this.grabing = !this.grabing;
+      this.resetStep();
+    }
+
 	// # Player Render
 				
 	  render(ctx) {
-
+      
       // Blink player if it can't be hurt
       if( ! this.canBeHurt ) {
         this.hideSprite = !this.hideSprite;

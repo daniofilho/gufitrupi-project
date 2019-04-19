@@ -1,4 +1,5 @@
 const _CanHurt = require('./_CanHurt');
+const Sprite = require('../../../engine/Sprite');
 
 class Fire extends _CanHurt {
 
@@ -19,11 +20,7 @@ class Fire extends _CanHurt {
       height: window.game.getChunkSize()
     }
 
-    let sprite = {
-      width: 50,
-      height: 50,
-      stageSprite: document.getElementById('sprite_common')
-    }
+    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
 
     let events = {
       stopOnCollision: false,
@@ -63,22 +60,13 @@ class Fire extends _CanHurt {
   setSpritePropsFrame(spriteAnimationCount){
     switch(spriteAnimationCount) { 
       case 1:
-        this.spriteProps = { 
-          clip_x: 0, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(0);
         break;
       case 2:
-        this.spriteProps = { 
-          clip_x: 50, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(1);
         break;
       case 3:
-        this.spriteProps = { 
-          clip_x: 100, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(2);
         break;
     }
   }

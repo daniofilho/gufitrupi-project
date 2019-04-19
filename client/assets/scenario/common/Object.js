@@ -1,0 +1,52 @@
+const _CanThrow = require('./_CanThrow');
+const Sprite = require('../../../engine/Sprite');
+
+class Object extends _CanThrow {
+
+	constructor(type, x0, y0) {
+    
+    let props = {
+      name: "object",
+      type: type
+    }
+
+    let position = {
+      x: x0,
+      y: y0
+    }
+
+    let dimension = {
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
+    }
+
+    let sprite = new Sprite(document.getElementById('sprite_common'), 100, 980, 50, 50);
+
+    let events = {
+      stopOnCollision: true,
+      hasCollisionEvent: true
+    }
+    
+    let canThrow = {
+      canRespawn: true
+    }
+
+    super(props, position, dimension, sprite, events, canThrow);
+    
+  }
+
+  // # Sprites  
+  setSpriteType(type) {
+    switch(type) {
+      case "barrel":
+        this.spriteProps = this.sprite.getSpriteProps(21);
+        break;
+    }
+  }
+
+  collision(player){ 
+    return true; 
+  }
+
+}//class
+module.exports = Object;
