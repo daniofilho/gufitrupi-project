@@ -56,10 +56,10 @@ class Heal extends _CanCollect {
     switch(type) { 
       default:
       case 'banana':
-        this.spriteProps = this.sprite.getSpriteProps(19);
+        this.spriteProps = this.sprite.getSpriteProps(20);
         break;
       case 'berry':
-        this.spriteProps = this.sprite.getSpriteProps(20);
+        this.spriteProps = this.sprite.getSpriteProps(21);
         break;
     }
   }

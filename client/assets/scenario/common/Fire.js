@@ -20,7 +20,7 @@ class Fire extends _CanHurt {
       height: window.game.getChunkSize()
     }
 
-    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 49);
 
     let events = {
       stopOnCollision: false,

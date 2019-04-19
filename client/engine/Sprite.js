@@ -14,8 +14,8 @@ class Sprite {
         this.keyHeight = kH;
 
         // Rows and Collumns quantity
-        this.cols = parseInt( this.width / this.keyWidth );
-        this.rows = parseInt( this.height / this.keyHeight );
+        this.cols = Math.ceil( this.width / this.keyWidth );
+        this.rows = Math.ceil( this.height / this.keyHeight );
 
         // The frames
         this.frames = new Object();
@@ -39,8 +39,8 @@ class Sprite {
     run() {
         // Gen each frame based on sizes 
         let index = 0;
-        for( let r=0; r<=this.rows;r++ ) {
-            for( let c=0; c<=this.cols;c++ ) {
+        for( let r=0; r<this.rows;r++ ) {
+            for( let c=0; c<this.cols;c++ ) {
                 this.frames[index] = { 
                     x: this.keyWidth * c,
                     y: this.keyHeight * r

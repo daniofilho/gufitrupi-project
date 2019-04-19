@@ -114,7 +114,7 @@ class Prototype_Stage_Enemy extends _Stage{
     let bnna = { name: 'heal', type: 'banana'}; 
     let berry = { name: 'heal', type: 'berry'}; 
 
-    let obj = { name: 'object', type: 'barrel'}; 
+    let brrl = { name: 'object', type: 'barrel'}; 
 
     let tp_c = { name: 'teleport', type: '', teleportType: 'relative', cameFrom: 'left',        targetStage: 'center' };
 
@@ -125,7 +125,7 @@ class Prototype_Stage_Enemy extends _Stage{
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   enemy,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   obj,     false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   brrl,     false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ tp_c,    false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],

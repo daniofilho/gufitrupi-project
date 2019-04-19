@@ -14,16 +14,16 @@
 
                 /* - - Start editing here - - */
 
-                let imgWidth = 1980;  // CHANGE HERE
-                let imgHeight = 1055; // CHANGE HERE
+                let imgWidth = 1000;  // CHANGE HERE
+                let imgHeight = 980; // CHANGE HERE
 
-                let keyWidth = 32; // CHANGE HERE
-                let keyHeight = 32; // CHANGE HERE
+                let keyWidth = 50; // CHANGE HERE
+                let keyHeight = 49; // CHANGE HERE
 
                 /* - - Stop editing here - - */
                
-                cols = parseInt( imgWidth / keyWidth );
-                rows = parseInt( imgHeight / keyHeight );
+                cols = Math.ceil( imgWidth / keyWidth );
+                rows = Math.ceil( imgHeight / keyHeight );
 
                 let grid = document.getElementById("grid");
                 let ctx = grid.getContext("2d");
@@ -33,8 +33,8 @@
 
                 let aux = true;
                 let index = 0;
-                for( let r=0; r<=rows;r++ ) {
-                    for( let c=0; c<=cols;c++ ) {
+                for( let r=0; r<rows;r++ ) {
+                    for( let c=0; c<cols;c++ ) {
 
                         let _x = keyWidth * c;
                         let _y = keyHeight * r;
