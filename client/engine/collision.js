@@ -47,11 +47,13 @@ class Collision {
             //if( !this.willCollideInFuture(r1, r1.getCollisionX(), r1.getCollisionY() + overlapY ) ) {
               r1.setY( r1.getY() + overlapY );
               r1.setCollisionY( r1.getCollisionY() + overlapY );
+              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
             //}
           } else {
             //if( !this.willCollideInFuture(r1, r1.getCollisionX(), r1.getCollisionY() - overlapY ) ) {
               r1.setY( r1.getY() - overlapY );
               r1.setCollisionY( r1.getCollisionY() - overlapY );
+              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
             //}
           }
         } else {// Direction of collision - Left/Right
@@ -59,11 +61,13 @@ class Collision {
             //if( !this.willCollideInFuture(r1, r1.getCollisionX() + overlapX, r1.getCollisionY() ) ) {
               r1.setX( r1.getX() + overlapX );
               r1.setCollisionX( r1.getCollisionX() + overlapX );
+              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
             //}
           } else {
             //if( !this.willCollideInFuture(r1, r1.getCollisionX() - overlapX, r1.getCollisionY() ) ) {
               r1.setX( r1.getX() - overlapX );
               r1.setCollisionX( r1.getCollisionX() - overlapX );
+              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
             //}
           }
         }

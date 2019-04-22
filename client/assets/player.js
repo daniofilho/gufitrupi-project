@@ -66,6 +66,12 @@ class Player {
       this.collisionX0 = this.collisionX;
       this.collisionY0 = this.collisionY;
 
+      // Grab/Pick Items Collision Box
+      this.grabCollisionWidth = 0;
+      this.grabCollisionHeight = 0;
+      this.grabCollisionX = 0;
+      this.grabCollisionY = 0;
+
       // # Life
       this.defaultLifes = 6;
       this.lifes = this.defaultLifes;
@@ -80,6 +86,50 @@ class Player {
 
       this.run();
   }
+
+  // # Grab/Pick Items Collision Box
+
+    getGrabCollisionHeight() { return this.grabCollisionHeight; }
+    getGrabCollisionWidth() { return this.grabCollisionWidth; }
+    getGrabCollisionX() {  return this.grabCollisionX; }
+    getGrabCollisionY() {  return this.grabCollisionY; }
+
+    // Set GrabCollision X and Y considering player look direction
+    updateGrabCollisionXY() {
+      switch(this.spriteProps.direction) {
+        case 'down':
+          this.grabCollisionWidth = this.collisionWidth;
+          this.grabCollisionHeight = this.collisionHeight / 2;
+
+          this.grabCollisionX = this.collisionX;
+          this.grabCollisionY = this.collisionY + this.collisionHeight;
+          break;
+
+        case  'up':
+          this.grabCollisionWidth = this.collisionWidth;
+          this.grabCollisionHeight = this.collisionHeight / 2;
+
+          this.grabCollisionX = this.collisionX;
+          this.grabCollisionY = this.collisionY - this.grabCollisionHeight;
+          break;
+        
+        case 'left':
+          this.grabCollisionWidth = this.collisionWidth / 2;
+          this.grabCollisionHeight = this.collisionHeight;
+
+          this.grabCollisionX = this.collisionX - this.grabCollisionWidth;
+          this.grabCollisionY = this.collisionY;
+          break;
+        
+        case 'right':
+          this.grabCollisionWidth = this.collisionWidth / 2;
+          this.grabCollisionHeight = this.collisionHeight;
+
+          this.grabCollisionX = this.collisionX + this.collisionWidth;
+          this.grabCollisionY = this.collisionY;
+          break;
+      }
+    }
         
   // # Sprites state for player direction
     
@@ -212,6 +262,7 @@ class Player {
       this.setLookDirection( this.lookLeft() );
       this.setX( this.getX() - this.getSpeed()); 
       this.setCollisionX( this.getCollisionX() - this.getSpeed()); 
+      this.updateGrabCollisionXY();
     };
 			
 		movRight() { 
@@ -219,6 +270,7 @@ class Player {
       this.setLookDirection( this.lookRight() );
       this.setX( this.getX() + this.getSpeed() ); 
       this.setCollisionX( this.getCollisionX() + this.getSpeed()); 
+      this.updateGrabCollisionXY();
     };
 			
 		movUp() { 
@@ -226,6 +278,7 @@ class Player {
       this.setLookDirection( this.lookUp() );
       this.setY( this.getY() - this.getSpeed() ); 
       this.setCollisionY( this.getCollisionY() - this.getSpeed() );
+      this.updateGrabCollisionXY();
     };
 			
 		movDown() {  
@@ -233,6 +286,7 @@ class Player {
       this.setLookDirection( this.lookDown() );
       this.setY( this.getY() + this.getSpeed() ); 
       this.setCollisionY( this.getCollisionY() + this.getSpeed() );
+      this.updateGrabCollisionXY();
     };
 
     handleMovement( keysDown ) {
@@ -396,6 +450,9 @@ class Player {
     triggerGrab(){
       this.grabing = !this.grabing;
       this.resetStep();
+
+      // Check if has a "_CanGrab" item colliding with grab hit box and "pick" item
+        // . . . 
     }
 
 	// # Player Render
@@ -434,6 +491,10 @@ class Player {
         ctx.font =  "25px 'Press Start 2P'";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText( text, this.getX() - 20, this.getY() - 20);
+
+        // Grab collision
+        ctx.fillStyle = "rgba(255,0,0, 0.4)";
+        ctx.fillRect( this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight() );
       }
       
 		};
@@ -457,6 +518,7 @@ class Player {
 
   run() {
     this.lookDirection = this.lookDown();
+    this.updateGrabCollisionXY();
   }
 		
 }//class
