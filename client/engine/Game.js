@@ -210,6 +210,9 @@ class Game {
       this.collision.addArrayItem( this.scenario.getStaticItems() );
       this.collision.addArrayItem( this.scenario.getLayerItems__bottom() );
       this.collision.addArrayItem( this.scenario.getLayerItems__top() );
+      /*this.players.map( (player) => {
+        this.collision.addArrayItem(player);
+      });*/
   
       // "Static" Render - Background
       this.renderStatic.clearArrayItems();

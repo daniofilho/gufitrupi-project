@@ -91,15 +91,12 @@ class Collision {
 
   // Just check for a specific collision and return the firt object collided
   justCheck(r1, _x, _y, _w, _h) {
-    let _r = false;
     for (let i in this.colItens) {
       let r2 = this.colItens[i];
-      _r = this.justCheckCollision(r1, r2, _x, _y, _w, _h);
-      if( _r ) {
-
-      }
+      let r = this.justCheckCollision(r1, r2, _x, _y, _w, _h);
+      if( r ) return r; // if has something, return and stop loop
     } 
-    return _r;
+    return false;
   }
 
   justCheckCollision(r1, r2, _x, _y, _w, _h) {
@@ -108,23 +105,18 @@ class Collision {
     if( r1.name == r2.name ) return;
     
     // Only checks objects that needs to be checked
-    if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) return false;
+    if( ! r2.triggersCollisionEvent() ) return false;
+
+    console.log(r2.name);
  
     // stores the distance between the objects (must be rectangle)
-    var catX = ( _x / 2 ) - r2.getCenterX();
-    var catY = ( _y / 2 ) - r2.getCenterY();
+    var catX = ( _x + _w / 2 ) - r2.getCenterX();
+    var catY = ( _y + _h / 2 ) - r2.getCenterY();
  
     var sumHalfWidth = ( _w / 2 ) + ( r2.getCollisionWidth() / 2 );
     var sumHalfHeight = ( _h / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
-    //if( r2.name == "object_500x600" ) {
-      //console.log( Math.abs(catX), sumHalfWidth, Math.abs(catY), sumHalfHeight);
-    //}
+    
     if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
-      //if( window.debugCollision ) {
-        console.log('Collision between', r1.name + "(" + r1.getX() + "/" + r1.getY() + ")", r2.name);
-        console.log( Math.abs(catX), sumHalfWidth, Math.abs(catY), sumHalfHeight);
-        console.log(_x, _y, _w, _h);
-      //}
       return r2;
     } else {
       return false;  

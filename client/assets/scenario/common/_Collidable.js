@@ -45,6 +45,15 @@ class _Collidable {
   }
 
   // # Sets
+
+  updateX(x) {
+    this.setX(x);
+    this.setCollisionX(x);
+  }
+  updateY(y) {
+    this.setY(y);
+    this.setCollisionY(y);
+  }
     
   setX(x) { this.x = x; }
   setY(y) { this.y = y; }

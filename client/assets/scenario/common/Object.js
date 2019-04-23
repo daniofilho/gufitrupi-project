@@ -28,7 +28,9 @@ class Object extends _CanThrow {
     }
     
     let canThrow = {
-      canRespawn: true
+      canRespawn: true,
+      chuncksThrowDistance: 5,
+      hurtAmount: 2
     }
 
     super(props, position, dimension, sprite, events, canThrow);
@@ -44,9 +46,6 @@ class Object extends _CanThrow {
     }
   }
 
-  collision(player){ 
-    return true; 
-  }
 
 }//class
 module.exports = Object;

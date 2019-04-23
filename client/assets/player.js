@@ -52,7 +52,7 @@ class Player {
       this.isCollidable = true;
       this.isMoving = false;
       this.hideSprite = false;
-      this.hasCollisionEvent = false;
+      this.hasCollisionEvent = true;
       this.stopOnCollision = true;
     
       // # Collision
@@ -72,6 +72,8 @@ class Player {
       this.grabCollisionX = 0;
       this.grabCollisionY = 0;
 
+      this.objectGrabbed = null;
+
       // # Life
       this.defaultLifes = 6;
       this.lifes = this.defaultLifes;
@@ -87,26 +89,43 @@ class Player {
       this.run();
   }
 
-  // # Grab/Pick Items Collision Box
-
+  /* 
+      Grab/Pick Items Collision Box
+  */
+    
     isGrabing() { return this.grabing; }
     triggerGrab(){
+      
+      // Check if has a "_CanGrab" item colliding with grab hit box and "pick" item
+      if( ! this.isGrabing() ) {
+        let object = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
+        if( object && object.canGrab ) {
+          if( object.isGrabbed() ) return; // avoid players grabbing the same object
+          object.grabHandler();
+          this.grabObject( object );
+        }
+      } else {
+        if( this.objectGrabbed ) {
+          this.objectGrabbed.throw( this.spriteProps.direction ); // Throw away object
+          this.objectGrabbed = false; // remove grabbed
+        }
+      }
+
       this.grabing = !this.grabing;
       this.resetStep();
 
-      // Check if has a "_CanGrab" item colliding with grab hit box and "pick" item
-        let item = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
-        if( item ) {
-          console.log(item);
-        }
-
-        console.log('grab!');
     }
 
     getGrabCollisionHeight() { return this.grabCollisionHeight; }
     getGrabCollisionWidth() { return this.grabCollisionWidth; }
     getGrabCollisionX() {  return this.grabCollisionX; }
     getGrabCollisionY() {  return this.grabCollisionY; }
+
+    // Attach an item to player
+    grabObject( object ) {
+      this.objectGrabbed = object;
+      this.updateGrabbedObjectPosition();
+    }
 
     // Set GrabCollision X and Y considering player look direction
     updateGrabCollisionXY() {
@@ -143,9 +162,29 @@ class Player {
           this.grabCollisionY = this.collisionY;
           break;
       }
+
+      // If has some object grabbed, update position
+      if( this.objectGrabbed ) {
+        this.updateGrabbedObjectPosition();
+      }
     }
+
+    updateGrabbedObjectPosition() {
+      this.objectGrabbed.updateX( this.getX() );
+      this.objectGrabbed.updateY( this.getY() - this.objectGrabbed.getHeight() +  ( this.getHeight() * 0.1 )  );
+    }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
         
-  // # Sprites state for player direction
+  /*
+    Sprite / Animation
+  */
+
+    getSpriteProps() { return this.spriteProps; }
+
+    
+		hidePlayer() { this.hideSprite = true; }
+    showPlayer() { this.hideSprite = false; }
     
     lookDown(){
       this.spriteProps.direction = 'down';
@@ -268,9 +307,66 @@ class Player {
         return false;
       }
     }  
+    increaseStep() {
+      if(this.canRenderNextFrame()) {
+        this.stepCount++;
+        if( this.stepCount > this.maxSteps ) {
+          this.stepCount = this.initialStep;
+        }
+      }
+    }
+    resetStep() {
+      this.stepCount = this.defaultStep;
+      switch ( this.spriteProps.direction ) {
+        case 'left': 
+          this.setLookDirection( this.lookLeft() );
+          break;
+        case 'right': 
+          this.setLookDirection( this.lookRight() );
+          break;
+        case 'up': 
+          this.setLookDirection( this.lookUp() );
+          break;
+        case 'down': 
+          this.setLookDirection( this.lookDown() );
+          break;
+      }
+    }
     
-	// # Player Movement
-		
+    setLookDirection(lookDirection) { this.lookDirection = lookDirection; }
+		triggerLookDirection(direction) { 
+      this.spriteProps.direction = direction;
+      this.resetStep();
+    }
+		resetPosition() {
+			this.setX( this.x0 );
+      this.setY( this.y0 );
+      this.setCollisionX( this.collisionX0 );
+      this.setCollisionY( this.collisionY0 );
+    }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    
+  /*
+    Movement
+  */
+    
+    getX() { return this.x; }
+    getY() { return this.y; }
+    
+    getSpeed() { return this.speed; }
+
+    setX(x, setCollision) { 
+      this.x = x; 
+      if( setCollision ) this.setCollisionX( x + this.CollisionXFormula );
+    }
+    setY(y, setCollision) { 
+      this.y = y; 
+      if( setCollision ) this.setCollisionY( y + this.CollisionYFormula );
+    }
+    
+    setSpeed(speed) { this.speed = this.chunkSize * speed; }
+    
 		movLeft() { 
       this.increaseStep();
       this.setLookDirection( this.lookLeft() );
@@ -336,38 +432,51 @@ class Player {
       }
 
     }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 		
-	// # Sets
-		
-		setX(x, setCollision) { 
-      this.x = x; 
-      if( setCollision ) this.setCollisionX( x + this.CollisionXFormula );
+  /*
+    Collision
+  */
+    setCollisionX(x) { this.collisionX = x; }
+    setCollisionY(y) { this.collisionY = y; }
+
+    //The collision will be just half of the player height
+    getCollisionHeight() { return this.collisionHeight; }
+    getCollisionWidth() { return this.collisionWidth; }
+    getCollisionX() {  return this.collisionX; }
+    getCollisionY() {  return this.collisionY; }
+
+    getCenterX( _x ) { // May get a custom centerX, used to check a future collision
+      let x = ( _x ) ? _x : this.getCollisionX();
+      return x + this.getCollisionWidth() / 2; 
     }
-    setY(y, setCollision) { 
-      this.y = y; 
-      if( setCollision ) this.setCollisionY( y + this.CollisionYFormula );
+    getCenterY( _y ) { 
+      let y = ( _y ) ? _y : this.getCollisionY();
+      return y + this.getCollisionHeight() / 2; 
     }
     
-    setCollisionX(x) { this.collisionX = x; }
-		setCollisionY(y) { this.collisionY = y; }
-			
-		setHeight(height) { this.height = height; }
-		setWidth(width) { this.width = width; }
-			
-		setSpeed(speed) { this.speed = this.chunkSize * speed; }
+    // Has a collision Event?
+    triggersCollisionEvent() { return this.hasCollisionEvent; }
 
-		setLookDirection(lookDirection) { this.lookDirection = lookDirection; }
-		triggerLookDirection(direction) { 
-      this.spriteProps.direction = direction;
-      this.resetStep();
-    }
+    // Will it Stop the other object if collides?
+    stopIfCollision() { return this.stopOnCollision; }
 
-		resetPosition() {
-			this.setX( this.x0 );
-      this.setY( this.y0 );
-      this.setCollisionX( this.collisionX0 );
-      this.setCollisionY( this.collisionY0 );
+		noCollision() {
+			// What happens if the player is not colliding?
+			this.setSpeed(this.speed0); // Reset speed
     }
+      
+    collision(object) {
+      return this.isCollidable;
+    };
+		
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
+	/*
+    Life / Heal / Death
+  */	
+    getLifes() { return this.lifes; }
 
     hurtPlayer( amount ) {
       if( this.canBeHurt ) {
@@ -398,69 +507,29 @@ class Player {
        window.game.newGame();
       }
     }
-		
-	// # Gets
-    
-    getLifes() { return this.lifes; }
-    
-    getPlayerNumber() { return this.playerNumber; }
-
-	  getX() { return this.x; }
-		getY() { return this.y; }
-			
-	  getWidth() { return this.width; }
-    getHeight() { return this.height; }
-      
-    //The collision will be just half of the player height
-    getCollisionHeight() { return this.collisionHeight; }
-    getCollisionWidth() { return this.collisionWidth; }
-    getCollisionX() {  return this.collisionX; }
-    getCollisionY() {  return this.collisionY; }
-
-    getCenterX( _x ) { // May get a custom centerX, used to check a future collision
-      let x = ( _x ) ? _x : this.getCollisionX();
-      return x + this.getCollisionWidth() / 2; 
-    }
-    getCenterY( _y ) { 
-      let y = ( _y ) ? _y : this.getCollisionY();
-      return y + this.getCollisionHeight() / 2; 
-    }
-			
-		getColor() { return this.color; }
-		getSpeed() { return this.speed; }
-      
-    getSpriteProps() { return this.spriteProps; }
-      
-    increaseStep() {
-      if(this.canRenderNextFrame()) {
-        this.stepCount++;
-        if( this.stepCount > this.maxSteps ) {
-          this.stepCount = this.initialStep;
-        }
-      }
-    }
-    resetStep() {
-      this.stepCount = this.defaultStep;
-      switch ( this.spriteProps.direction ) {
-        case 'left': 
-          this.setLookDirection( this.lookLeft() );
-          break;
-        case 'right': 
-          this.setLookDirection( this.lookRight() );
-          break;
-        case 'up': 
-          this.setLookDirection( this.lookUp() );
-          break;
-        case 'down': 
-          this.setLookDirection( this.lookDown() );
-          break;
-      }
-    }
-		hidePlayer() { this.hideSprite = true; }
-    showPlayer() { this.hideSprite = false; }
   
-	// # Player Render
-				
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+		
+    /*
+      General
+    */
+        
+      setHeight(height) { this.height = height; }
+      setWidth(width) { this.width = width; }
+      
+      getPlayerNumber() { return this.playerNumber; }
+
+      getColor() { return this.color; }
+        
+      getWidth() { return this.width; }
+      getHeight() { return this.height; }
+    
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+	
+  /*  
+    Render
+  */
+  		
 	  render(ctx) {
       
       // Blink player if it can't be hurt
@@ -502,28 +571,12 @@ class Player {
       }
       
 		};
-  
-  // # Collision
-    
-    // Has a collision Event?
-    triggersCollisionEvent() { return this.hasCollisionEvent; }
 
-    // Will it Stop the other object if collides?
-    stopIfCollision() { return this.stopOnCollision; }
 
-		noCollision() {
-			// What happens if the player is not colliding?
-			this.setSpeed(this.speed0); // Reset speed
+    run() {
+      this.lookDirection = this.lookDown();
+      this.updateGrabCollisionXY();
     }
-      
-    collision(object) {
-      return this.isCollidable;
-    };
-
-  run() {
-    this.lookDirection = this.lookDown();
-    this.updateGrabCollisionXY();
-  }
 		
 }//class
 module.exports = Player;
