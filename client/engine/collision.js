@@ -88,41 +88,50 @@ class Collision {
     }
 
   }
-  
-  /*
-  // Check a future movement
-  willCollideInFuture(object, x, y) {
-    let willCollide = false;
+
+  // Just check for a specific collision and return the firt object collided
+  justCheck(r1, _x, _y, _w, _h) {
+    let _r = false;
     for (let i in this.colItens) {
-      let r1 = object;
       let r2 = this.colItens[i];
-      willCollide = this.willCollide(r1, r2, x, y);
+      _r = this.justCheckCollision(r1, r2, _x, _y, _w, _h);
+      if( _r ) {
+
+      }
     } 
-    return willCollide;
+    return _r;
   }
-  willCollide(r1, r2, x, y) {
+
+  justCheckCollision(r1, r2, _x, _y, _w, _h) {
 
     // Don't check collision between same object
     if( r1.name == r2.name ) return;
     
     // Only checks objects that needs to be checked
     if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) return false;
-
+ 
     // stores the distance between the objects (must be rectangle)
-    var catX = r1.getCenterX(x) - r2.getCenterX();
-    var catY = r1.getCenterY(y) - r2.getCenterY();
-
-    var sumHalfWidth = ( r1.getCollisionWidth() / 2 ) + ( r2.getCollisionWidth() / 2 );
-    var sumHalfHeight = ( r1.getCollisionHeight() / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
-    
+    var catX = ( _x / 2 ) - r2.getCenterX();
+    var catY = ( _y / 2 ) - r2.getCenterY();
+ 
+    var sumHalfWidth = ( _w / 2 ) + ( r2.getCollisionWidth() / 2 );
+    var sumHalfHeight = ( _h / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
+    //if( r2.name == "object_500x600" ) {
+      //console.log( Math.abs(catX), sumHalfWidth, Math.abs(catY), sumHalfHeight);
+    //}
     if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
-      return true; // will collide
+      //if( window.debugCollision ) {
+        console.log('Collision between', r1.name + "(" + r1.getX() + "/" + r1.getY() + ")", r2.name);
+        console.log( Math.abs(catX), sumHalfWidth, Math.abs(catY), sumHalfHeight);
+        console.log(_x, _y, _w, _h);
+      //}
+      return r2;
     } else {
-      return false; // no collision
+      return false;  
     }
 
-  }*/
-			
+  }
+  		
 	// Add items to check for collision
 	addItem(object) {
 		this.colItens.push(object);

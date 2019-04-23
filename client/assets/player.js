@@ -89,6 +89,20 @@ class Player {
 
   // # Grab/Pick Items Collision Box
 
+    isGrabing() { return this.grabing; }
+    triggerGrab(){
+      this.grabing = !this.grabing;
+      this.resetStep();
+
+      // Check if has a "_CanGrab" item colliding with grab hit box and "pick" item
+        let item = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
+        if( item ) {
+          console.log(item);
+        }
+
+        console.log('grab!');
+    }
+
     getGrabCollisionHeight() { return this.grabCollisionHeight; }
     getGrabCollisionWidth() { return this.grabCollisionWidth; }
     getGrabCollisionX() {  return this.grabCollisionX; }
@@ -445,16 +459,6 @@ class Player {
 		hidePlayer() { this.hideSprite = true; }
     showPlayer() { this.hideSprite = false; }
   
-  // # Grab
-    isGrabing() { return this.grabing; }
-    triggerGrab(){
-      this.grabing = !this.grabing;
-      this.resetStep();
-
-      // Check if has a "_CanGrab" item colliding with grab hit box and "pick" item
-        // . . . 
-    }
-
 	// # Player Render
 				
 	  render(ctx) {

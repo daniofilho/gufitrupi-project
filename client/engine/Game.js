@@ -53,6 +53,7 @@ class Game {
   getCanvasWidth()  { return this.gameProps.canvasWidth;  }
   getCanvasHeight() { return this.gameProps.canvasHeight; }
 
+  
   // Sets
   setGameReady(bool) { this.gameReady = bool; }
   
