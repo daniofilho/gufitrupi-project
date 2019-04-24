@@ -107,8 +107,6 @@ class Collision {
     // Only checks objects that needs to be checked
     if( ! r2.triggersCollisionEvent() ) return false;
 
-    console.log(r2.name);
- 
     // stores the distance between the objects (must be rectangle)
     var catX = ( _x + _w / 2 ) - r2.getCenterX();
     var catY = ( _y + _h / 2 ) - r2.getCenterY();
