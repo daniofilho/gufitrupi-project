@@ -106,7 +106,7 @@ class Player {
         }
       } else {
         if( this.objectGrabbed ) {
-          this.objectGrabbed.throw( this.spriteProps.direction ); // Throw away object
+          this.objectGrabbed.throw( this.spriteProps.direction, this.getHeight() ); // Throw away object
           this.objectGrabbed = false; // remove grabbed
         }
       }
