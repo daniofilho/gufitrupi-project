@@ -11,7 +11,7 @@ class _CanThrow extends _Collidable {
     this.hurtAmount = canCollectProps.hurtAmount;
     
     this.throwDistance = canCollectProps.chuncksThrowDistance * window.game.getChunkSize();
-    this.throwSpeed = 0.6;
+    this.throwSpeed = 0.8;
     this.throwDistanceTravelled = 0;
     this.throwingMovement = false;
     this.throwDirection = false;
@@ -36,20 +36,17 @@ class _CanThrow extends _Collidable {
         break;
       case 'down':
         this.targetX = this.getX();  
-        this.targetY = this.getY() + this.throwDistance; 
+        this.targetY = this.getY() + this.throwDistance + this.getHeight() * 2; 
         break;
       case 'right':
         this.targetX = this.getX() + this.throwDistance;  
-        this.targetY = this.getY() - playerHeight;
+        this.targetY = this.getY() + playerHeight;
         break;
       case 'left':
         this.targetX = this.getX() - this.throwDistance;  
-        this.targetY = this.getY() - playerHeight;
+        this.targetY = this.getY() + playerHeight;
         break;
     }
-
-    console.log( this.getX(), "=>",this.targetX );
-    console.log( this.getY(), "=>",this.targetY );
   }
 
   setCanRespawn(bool){ this._canRespawn = bool; }
@@ -75,27 +72,37 @@ class _CanThrow extends _Collidable {
   }
 
   moveToThrowDirection() {
-    
     switch( this.throwDirection ) {
       case 'up':
         // Y
         if ( this.getY() > this.targetY ) this.updateY( this.getY() - this.getThrowSpeed() );
+        //Adjust if passes from target value
+        if (this.getY() < this.targetY ) this.updateY( this.targetY );
         break;
       case 'left':
         // Y
-        if ( this.getY() < this.targetY ) this.updateY( this.getY() + this.getThrowSpeed() );
+        if ( this.getY() < this.targetY ) this.updateY( this.getY() + this.getThrowSpeed() / 3 ); // Slow the movement
         // X
         if ( this.getX() > this.targetX ) this.updateX( this.getX() - this.getThrowSpeed() );
+
+        //Adjust if passes from target value
+        if (this.getY() > this.targetY ) this.updateY( this.targetY );
+        if (this.getX() < this.targetX ) this.updateX( this.targetX );
         break;
       case 'down':
        // Y
        if ( this.getY() < this.targetY ) this.updateY( this.getY() + this.getThrowSpeed() );
+       //Adjust if passes from target value
+       if ( this.getY() > this.targetY ) this.updateY( this.targetY );
        break;
       case 'right':
         // Y
-        if ( this.getY() < this.targetY ) this.updateY( this.getY() + this.getThrowSpeed() );
+        if ( this.getY() < this.targetY ) this.updateY( this.getY() + this.getThrowSpeed() / 3 );
         // X
         if ( this.getX() < this.targetX ) this.updateX( this.getX() + this.getThrowSpeed() );
+         //Adjust if passes from target value
+         if (this.getY() > this.targetY ) this.updateY( this.targetY );
+         if (this.getX() > this.targetX ) this.updateX( this.targetX );
         break;
     }
     this.throwDistanceTravelled += this.getThrowSpeed();
@@ -122,15 +129,14 @@ class _CanThrow extends _Collidable {
   }
  
 
-  beforeRender() {
+  beforeRender(ctx) {
     if( this.isThrowing() ) {
-      if( this.getX() != this.targetX && this.getY() != this.targetY ) {
-        console.log(this.getX(), this.getY());
+      if( this.getX() != this.targetX || this.getY() != this.targetY ) {
         this.moveToThrowDirection();
       } else {
-        //this.breakObject();
+        this.breakObject();
       }
-    }
+    }       
   }
 
 }//class
