@@ -1,4 +1,5 @@
 const _Collidable = require('./_Collidable');
+const Sprite = require('../../../engine/Sprite');
 
 class _CanThrow extends _Collidable {
 
@@ -18,7 +19,34 @@ class _CanThrow extends _Collidable {
     
     this.targetX = 0;
     this.targetY = 0;
+
+    // Controls the sprite FPS Animation
+    this.fpsInterval = 1000 / ( window.game.gameProps.fps * 2 ); // 1000 / FPS
+    this.deltaTime = Date.now();
+
+    // Destroy animation props
+    this.destroying = false;
+    this.destroySprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    this.destroyFrameCount = 1;
+    this.destroyMaxFrameCount = 8;
+    this.destroyInitFrame = 3;
+
   }
+
+  // # Controls the Fire FPS Movement independent of game FPS
+  canRenderNextFrame() {
+    let now = Date.now();
+    let elapsed = now - this.deltaTime;
+    if (elapsed > this.fpsInterval) {
+      this.deltaTime = now - (elapsed % this.fpsInterval);
+      return true;
+    } else {
+      return false;
+    }
+  } 
+
+  isDestroying() { return this.destroying; }
+  setDestroying(bool) { this.destroying = bool; }
 
   isGrabbed() { return this.grabbed; }
   grab(){ this.grabbed = true; }
@@ -60,10 +88,14 @@ class _CanThrow extends _Collidable {
   }
 
   breakObject() {
+
     this.setThrowing(false);
     this.setGrab(false);
-    this.setStopOnCollision(true);
-    this.updateX(99999)//take off screen - TEMPORARY
+    this.setStopOnCollision(false);
+
+    // Start destroy animation
+    this.setDestroying(true);
+    
   }
 
   throw(direction, playerHeight) {
@@ -130,6 +162,8 @@ class _CanThrow extends _Collidable {
  
 
   beforeRender(ctx) {
+    
+    // Movement while throwing
     if( this.isThrowing() ) {
       if( this.getX() != this.targetX || this.getY() != this.targetY ) {
         this.moveToThrowDirection();
@@ -137,6 +171,20 @@ class _CanThrow extends _Collidable {
         this.breakObject();
       }
     }       
+
+    // Destroy animation
+    if( this.isDestroying() ) {
+      if( this.destroyFrameCount < this.destroyMaxFrameCount  ) {
+        if( this.canRenderNextFrame() ) {
+          this.spriteProps = this.destroySprite.getSpriteProps( this.destroyInitFrame );
+          this.destroyInitFrame++;
+          this.destroyFrameCount++;
+        }
+      } else {
+        this.hideSprite = true;
+      }
+    }
+
   }
 
 }//class

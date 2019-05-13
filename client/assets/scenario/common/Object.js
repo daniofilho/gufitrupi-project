@@ -46,6 +46,5 @@ class Object extends _CanThrow {
     }
   }
 
-
 }//class
 module.exports = Object;
