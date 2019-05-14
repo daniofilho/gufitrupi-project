@@ -8,12 +8,3 @@ window.onload = function() {
     game.run();
  
 }
-
-/**
- * 
- * TODO
- * 
- * - Remove objects grabbed from player when teleport
- * - Make players loose life when hitted by throwing object
- * 
- */

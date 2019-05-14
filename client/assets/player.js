@@ -94,6 +94,10 @@ class Player {
   */
     
     isGrabing() { return this.grabing; }
+    removeGrabedObject() { 
+      this.grabing = false;
+      this.objectGrabbed = false;
+    }
     triggerGrab(){
       
       // Check if has a "_CanGrab" item colliding with grab hit box and "pick" item
