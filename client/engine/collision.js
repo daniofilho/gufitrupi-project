@@ -43,32 +43,23 @@ class Collision {
       if( r2.stopIfCollision() ) {
         if(overlapX >= overlapY ){ // Direction of collision - Up/Down
           if(catY > 0){ // Up
-            // Only moves if it wont collide
-            //if( !this.willCollideInFuture(r1, r1.getCollisionX(), r1.getCollisionY() + overlapY ) ) {
-              r1.setY( r1.getY() + overlapY );
-              r1.setCollisionY( r1.getCollisionY() + overlapY );
-              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
-            //}
+            r1.setY( r1.getY() + overlapY );
+            r1.setCollisionY( r1.getCollisionY() + overlapY );
+            if( r1.type == 'player' ) r1.updateGrabCollisionXY();
           } else {
-            //if( !this.willCollideInFuture(r1, r1.getCollisionX(), r1.getCollisionY() - overlapY ) ) {
-              r1.setY( r1.getY() - overlapY );
-              r1.setCollisionY( r1.getCollisionY() - overlapY );
-              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
-            //}
+            r1.setY( r1.getY() - overlapY );
+            r1.setCollisionY( r1.getCollisionY() - overlapY );
+            if( r1.type == 'player' ) r1.updateGrabCollisionXY();
           }
         } else {// Direction of collision - Left/Right
           if(catX > 0){ // Left
-            //if( !this.willCollideInFuture(r1, r1.getCollisionX() + overlapX, r1.getCollisionY() ) ) {
-              r1.setX( r1.getX() + overlapX );
-              r1.setCollisionX( r1.getCollisionX() + overlapX );
-              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
-            //}
+            r1.setX( r1.getX() + overlapX );
+            r1.setCollisionX( r1.getCollisionX() + overlapX );
+            if( r1.type == 'player' ) r1.updateGrabCollisionXY();
           } else {
-            //if( !this.willCollideInFuture(r1, r1.getCollisionX() - overlapX, r1.getCollisionY() ) ) {
-              r1.setX( r1.getX() - overlapX );
-              r1.setCollisionX( r1.getCollisionX() - overlapX );
-              if( r1.type == 'player' ) r1.updateGrabCollisionXY();
-            //}
+            r1.setX( r1.getX() - overlapX );
+            r1.setCollisionX( r1.getCollisionX() - overlapX );
+            if( r1.type == 'player' ) r1.updateGrabCollisionXY();
           }
         }
       }
@@ -115,6 +106,58 @@ class Collision {
     var sumHalfHeight = ( _h / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
     
     if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
+      return r2;
+    } else {
+      return false;  
+    }
+
+  }
+
+  // Just check for a specific collision and return the firt object collided
+  justCheckAll(r1, _x, _y, _w, _h) {
+    for (let i in this.colItens) {
+      let r2 = this.colItens[i];
+      let r = this.justCheckCollisionAll(r1, r2, _x, _y, _w, _h);
+      if( r ) return r; // if has something, return and stop loop
+    } 
+    return false;
+  }
+
+  justCheckCollisionAll(r1, r2, _x, _y, _w, _h) {
+
+    // Don't check collision between same object
+    if( r1.name == r2.name ) return;
+    
+    // Only checks objects that needs to be checked
+    if( ! r2.triggersCollisionEvent() && ! r2.stopIfCollision() ) return false;
+
+    // stores the distance between the objects (must be rectangle)
+    var catX = ( _x + _w / 2 ) - r2.getCenterX();
+    var catY = ( _y + _h / 2 ) - r2.getCenterY();
+ 
+    var sumHalfWidth = ( _w / 2 ) + ( r2.getCollisionWidth() / 2 );
+    var sumHalfHeight = ( _h / 2 ) + ( r2.getCollisionHeight() / 2 ) ;
+    
+    if(Math.abs(catX) < sumHalfWidth && Math.abs(catY) < sumHalfHeight){
+      
+      //calculate overlap if need to stop object
+      let overlapX = sumHalfWidth - Math.abs(catX);
+      let overlapY = sumHalfHeight - Math.abs(catY);
+
+      if(overlapX >= overlapY ){ // Direction of collision - Up/Down
+        if(catY > 0){ // Up
+          r2.overlapY = r1.getY() + overlapY;
+        } else {
+          r2.overlapY = r1.getY() - overlapY;
+        }
+      } else {// Direction of collision - Left/Right
+        if(catX > 0){ // Left
+          r2.overlapX = r1.getX() + overlapX;
+        } else {
+          r2.overlapX = r1.getX() - overlapX;
+        }
+      }
+
       return r2;
     } else {
       return false;  

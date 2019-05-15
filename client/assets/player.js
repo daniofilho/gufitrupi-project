@@ -120,6 +120,14 @@ class Player {
 
     }
 
+    // Use items
+    triggerUse() {
+      let object = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
+      if( object && object.canUse ) {
+        object.useHandler( this.spriteProps.direction );
+      }
+    }
+
     getGrabCollisionHeight() { return this.grabCollisionHeight; }
     getGrabCollisionWidth() { return this.grabCollisionWidth; }
     getGrabCollisionX() {  return this.grabCollisionX; }
@@ -428,11 +436,13 @@ class Player {
       // Player 1
       if( this.playerNumber == 1 ) {
         if (keyUp == 17) this.triggerGrab();  // Grab => CTRL
+        if (keyUp == 32) this.triggerUse();   // Use => Space
       }
 
       // Player 2
       if( this.playerNumber == 2 ) {
         if (keyUp == 70) this.triggerGrab();  // Grab => F
+        if (keyUp == 69) this.triggerUse();  // Use => E
       }
 
     }

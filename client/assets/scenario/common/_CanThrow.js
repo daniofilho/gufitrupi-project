@@ -142,8 +142,6 @@ class _CanThrow extends _Collidable {
     // Check collision between player and enemy only
     this.justCheckCollision();
 
-    // TRY TO MAKE A CURVE THROW
-    // . . .
   }
 
   justCheckCollision() {
