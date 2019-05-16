@@ -92,6 +92,9 @@ class Beach_wall extends _Collidable {
       case "obstacle":
         this.spriteProps = this.sprite.getSpriteProps(250); 
         break;
+      case "fence":
+        this.spriteProps = this.sprite.getSpriteProps(1312); 
+        break;
       case "tree_top_left":
         this.spriteProps = this.sprite.getSpriteProps(24);
         this.setStopOnCollision(false);

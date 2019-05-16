@@ -114,7 +114,6 @@ class _CanBePushed extends _Collidable {
           this.stopObject();
           break;
       }
-      
     }
   }
  

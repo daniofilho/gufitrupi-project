@@ -6,6 +6,7 @@ const _Scenario = require('../common/_Scenario');
 const Stage_Center = require('./stages/stage_center');
 const Stage_Life = require('./stages/stage_life');
 const Stage_Enemy = require('./stages/stage_enemy');
+const Stage_Doors = require('./stages/stage_doors');
 
 class scenarioSandbox extends _Scenario {
 
@@ -42,6 +43,9 @@ class scenarioSandbox extends _Scenario {
         break;
       case 'enemy':
         _stage = new Stage_Enemy();
+        break;
+      case 'doors':
+        _stage = new Stage_Doors();
         break;
     }
 
