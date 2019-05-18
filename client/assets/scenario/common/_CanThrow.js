@@ -3,19 +3,23 @@ const Sprite = require('../../../engine/Sprite');
 
 class _CanThrow extends _Collidable {
 
-  constructor(props, position, dimension, sprite, events, canCollectProps) {
+  constructor(props, position, dimension, sprite, events, canThrowProps) {
     super(props, position, dimension, sprite, events);
     
     this.canGrab = true;
     this.grabbed = false;
-    this._canRespawn = canCollectProps.canRespawn;
-    this.hurtAmount = canCollectProps.hurtAmount;
+    this._canRespawn = canThrowProps.canRespawn;
+    this.hurtAmount = canThrowProps.hurtAmount;
+
+    this.useEvent = canThrowProps.useEvent;
     
-    this.throwDistance = canCollectProps.chuncksThrowDistance * window.game.getChunkSize();
+    this.throwDistance = canThrowProps.chuncksThrowDistance * window.game.getChunkSize();
     this.throwSpeed = 0.8;
     this.throwDistanceTravelled = 0;
     this.throwingMovement = false;
     this.throwDirection = false;
+
+    this.destroyOnAnimationEnd = false;
     
     this.targetX = 0;
     this.targetY = 0;
@@ -31,6 +35,18 @@ class _CanThrow extends _Collidable {
     this.destroyMaxFrameCount = 8;
     this.destroyInitFrame = 3;
 
+    this._this = null;
+
+    this.customVars = canThrowProps.customVars;
+
+  }
+
+  getCustomVars() {
+    return this.customVars;
+  }
+
+  setThis(_this) {
+    this._this = _this;
   }
 
   // # Controls the Fire FPS Movement independent of game FPS
@@ -47,6 +63,8 @@ class _CanThrow extends _Collidable {
 
   isDestroying() { return this.destroying; }
   setDestroying(bool) { this.destroying = bool; }
+  
+  setDestroyOnAnimationEnd(bool) { this.destroyOnAnimationEnd = bool; }
 
   isGrabbed() { return this.grabbed; }
   grab(){ this.grabbed = true; }
@@ -76,6 +94,27 @@ class _CanThrow extends _Collidable {
         break;
     }
   }
+  calculateDropDirection(direction, playerHeight) { 
+    this.throwDirection = direction;
+    switch( this.throwDirection ) {
+      case 'up':
+        this.targetX = this.getX();  
+        this.targetY = this.getY() - window.game.getChunkSize();
+        break;
+      case 'down':
+        this.targetX = this.getX();  
+        this.targetY = this.getY() + window.game.getChunkSize() + this.getHeight() * 2; 
+        break;
+      case 'right':
+        this.targetX = this.getX() + window.game.getChunkSize();  
+        this.targetY = this.getY() + playerHeight;
+        break;
+      case 'left':
+        this.targetX = this.getX() - window.game.getChunkSize();  
+        this.targetY = this.getY() + playerHeight;
+        break;
+    }
+  }
 
   setCanRespawn(bool){ this._canRespawn = bool; }
   canRespawn() { return this._canRespawn; }
@@ -91,17 +130,40 @@ class _CanThrow extends _Collidable {
 
     this.setThrowing(false);
     this.setGrab(false);
-    this.setStopOnCollision(false);
-
-    // Start destroy animation
-    this.setDestroying(true);
     
+    if( this.destroyOnAnimationEnd ) {
+      this.setStopOnCollision(false);
+      this.setDestroying(true); // Start destroy animation
+    } else {
+      this.setStopOnCollision(true);
+    }
+
   }
 
-  throw(direction, playerHeight) {
+  drop(direction, playerHeight) {
+    this.calculateDropDirection( direction, playerHeight );
+    this.setDestroyOnAnimationEnd(false);
     this.setThrowing(true);
-    this.calculateThrowDirection( direction, playerHeight );
   }
+
+  throw(direction, playerHeight, player) {
+    player.setNotGrabbing();
+    this.calculateThrowDirection( direction, playerHeight );
+    this.setDestroyOnAnimationEnd(true);
+    this.setThrowing(true);
+  }
+
+  use(direction, playerHeight, player) {
+
+    switch( this.useEvent ) {
+      case 'throw':
+        this.throw(direction, playerHeight, player);
+        break;
+    }
+
+  }
+
+  useHandler(direction, playerHeight, player) { console.log('ok'); }
 
   moveToThrowDirection() {
     switch( this.throwDirection ) {

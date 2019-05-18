@@ -92,8 +92,16 @@ class Player {
   /* 
       Grab/Pick Items Collision Box
   */
+
+    checkItemOnGrabCollisionBox() {
+      return window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
+    }
     
     isGrabing() { return this.grabing; }
+    setNotGrabbing(){
+      this.grabing = !this.grabing;
+      this.resetStep();
+    }
     removeGrabedObject() { 
       this.grabing = false;
       this.objectGrabbed = false;
@@ -110,21 +118,25 @@ class Player {
         }
       } else {
         if( this.objectGrabbed ) {
-          this.objectGrabbed.throw( this.spriteProps.direction, this.getHeight() ); // Throw away object
+          this.objectGrabbed.drop( this.spriteProps.direction, this.getHeight() ); // Throw away object
           this.objectGrabbed = false; // remove grabbed
         }
       }
 
-      this.grabing = !this.grabing;
-      this.resetStep();
-
+      this.setNotGrabbing();
     }
 
     // Use items
     triggerUse() {
-      let object = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
-      if( object && object.canUse ) {
-        object.useHandler( this.spriteProps.direction );
+      // If has object in hand, use it
+      if( this.objectGrabbed ) {
+        this.objectGrabbed.use( this.spriteProps.direction, this.getHeight(), this );
+      } else {
+        // If not, try to use the one on front
+        let object = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
+        if( object && object.canUse ) {
+          object.useHandler( this.spriteProps.direction );
+        }
       }
     }
 

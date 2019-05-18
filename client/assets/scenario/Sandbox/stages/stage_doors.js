@@ -5,6 +5,8 @@ const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
 const Door = require('../../common/Door');
 const Key = require('../../common/Key');
+const Object_Throw = require('../../common/Object_Throw');
+const Object_Push = require('../../common/Object_Push');
 
 class Prototype_Stage_Doors extends _Stage{
 
@@ -37,6 +39,12 @@ class Prototype_Stage_Doors extends _Stage{
         break;
       case "key":
         return new Key(item.type, x, y, xIndex, yIndex, item );
+        break;
+      case "object_throw":
+        return new Object_Throw(item.type, x, y, this.getStageId());
+        break;
+      case "object_push":
+        return new Object_Push(item.type, x, y, this.getStageId());
         break;
     }
   }
@@ -152,7 +160,7 @@ class Prototype_Stage_Doors extends _Stage{
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  k_g,     false,   false,   k_p,     false,   false,   k_r,     false,   false,   k_gr,    false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+        [ false,   false,  false,   stne,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   brrl,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
     ];
     // # Proccess scenario design

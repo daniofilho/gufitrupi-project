@@ -30,7 +30,8 @@ class Object_Throw extends _CanThrow {
     let canThrow = {
       canRespawn: true,
       chuncksThrowDistance: 5,
-      hurtAmount: 2
+      hurtAmount: 2,
+      useEvent: 'throw'
     }
 
     super(props, position, dimension, sprite, events, canThrow);
