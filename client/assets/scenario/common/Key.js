@@ -39,13 +39,9 @@ class Key extends _CanThrow {
     }
 
     super(props, position, dimension, sprite, events, canThrow, customVars);
-
-    this.code = '';
+    
   }
-
-  setCode(code) { this.code = code; }
-  getCode(){ return this.code; }
-
+  
   // # Sprites
     
   setSpriteType(type) {
@@ -71,11 +67,19 @@ class Key extends _CanThrow {
 
   }
 
+  discardKey(player) {
+    this.hide();
+    this.setStopOnCollision(false);
+    player.setNotGrabbing();
+  }
+
   use(direction, playerHeight, player) {
-    console.log(this.getCode());
     let obj = player.checkItemOnGrabCollisionBox();
     if( obj.type == 'door' ) {
-      console.log('doorCode:', obj.getDoorCode());
+      if( obj.getCode() == this.getCode() ) {
+        obj.open();
+        this.discardKey(player);
+      }
     }
   }
 

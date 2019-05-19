@@ -78,7 +78,7 @@ class Teleport extends _Collidable {
           player.setX(targetX, true); // true = also set collision x too
           player.setY(targetY, true);
           player.triggerLookDirection(lookDirection);
-          player.removeGrabedObject();
+          player.setNotGrabbing();
           player.showPlayer();
         });
 

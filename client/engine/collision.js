@@ -7,6 +7,8 @@ class Collision {
     this.scenarioHeight = scenarioHeight;
     this.player = player;
   }
+
+  getColItens() { return this.colItens; }
 			
   // # Check if the object collides with any object in vector
   // Algorithm reference: Gustavo Silveira - https://www.youtube.com/watch?v=s7qiWLBBpJw

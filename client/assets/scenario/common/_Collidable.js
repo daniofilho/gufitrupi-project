@@ -18,7 +18,7 @@ class _Collidable {
 
     this.chunkSize = window.game.getChunkSize();
 
-    // # Eventos
+    // # Events
     this.stopOnCollision = events.stopOnCollision;
     this.hasCollisionEvent = events.hasCollisionEvent;
   
@@ -40,9 +40,14 @@ class _Collidable {
     this.needSaveState = false;
 
     this.type = props.type;
+    this.code = '';
 
     this.run( props.type );
   }
+
+  // # Code
+  setCode(code) { this.code = code; }
+  getCode(){ return this.code; }
 
   // # Sets
 

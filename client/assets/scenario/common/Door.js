@@ -29,13 +29,9 @@ class Door extends _Collidable {
     
     super(props, position, dimension, sprite, events);
 
-    this.doorCode = '';
     this.type = 'door';
 
   }
-
-  setDoorCode(code) { this.doorCode = code; }
-  getDoorCode(){ return this.doorCode; }
 
   // # Sprites
     
@@ -44,74 +40,87 @@ class Door extends _Collidable {
     switch(type) {
       // Gray
       case "door_gray_bl":
-        this.setDoorCode('gray');
+        this.setCode('gray');
         this.spriteProps = this.sprite.getSpriteProps(1313);
         break;
       case "door_gray_tl":
-        this.setDoorCode('gray');
+        this.setCode('gray');
         this.spriteProps = this.sprite.getSpriteProps(1251);
         break;
       case "door_gray_br":
-        this.setDoorCode('gray');
+        this.setCode('gray');
         this.spriteProps = this.sprite.getSpriteProps(1314);
         break;
       case "door_gray_tr":
-        this.setDoorCode('gray');
+        this.setCode('gray');
         this.spriteProps = this.sprite.getSpriteProps(1252);
         break;
       // Purple
       case "door_purple_bl":
-        this.setDoorCode('purple');
+        this.setCode('purple');
         this.spriteProps = this.sprite.getSpriteProps(1315);
         break;
       case "door_purple_tl":
-        this.setDoorCode('purple');
+        this.setCode('purple');
         this.spriteProps = this.sprite.getSpriteProps(1253);
         break;
       case "door_purple_br":
-        this.setDoorCode('purple');  
+        this.setCode('purple');  
         this.spriteProps = this.sprite.getSpriteProps(1316);
         break;
       case "door_purple_tr":
-        this.setDoorCode('purple');
+        this.setCode('purple');
         this.spriteProps = this.sprite.getSpriteProps(1254);
         break;
       // Red
       case "door_red_bl":
-        this.setDoorCode('red');
+        this.setCode('red');
         this.spriteProps = this.sprite.getSpriteProps(1317);
         break;
       case "door_red_tl":
-        this.setDoorCode('red');
+        this.setCode('red');
         this.spriteProps = this.sprite.getSpriteProps(1255);
         break;
       case "door_red_br":
-        this.setDoorCode('red');
+        this.setCode('red');
         this.spriteProps = this.sprite.getSpriteProps(1318);
         break;
       case "door_red_tr":
-        this.setDoorCode('red');  
+        this.setCode('red');  
         this.spriteProps = this.sprite.getSpriteProps(1256);
         break;
       // Green
       case "door_green_bl":
-        this.setDoorCode('red');
+        this.setCode('green');
         this.spriteProps = this.sprite.getSpriteProps(1319);
         break;
       case "door_green_tl":
-        this.setDoorCode('red');  
+        this.setCode('green');  
         this.spriteProps = this.sprite.getSpriteProps(1257);
         break;
       case "door_green_br":
-        this.setDoorCode('red');  
+        this.setCode('green');  
         this.spriteProps = this.sprite.getSpriteProps(1320);
         break;
       case "door_green_tr":
-        this.setDoorCode('red');  
+        this.setCode('green');  
         this.spriteProps = this.sprite.getSpriteProps(1258);
         break;
     }
 
+  }
+
+  // Open door = hide all doors with same code 
+  open() {
+    let objs = window.game.collision.getColItens();
+    for (let i in objs) {
+      if( objs[i].type == 'door' ) {
+        if( objs[i].getCode() == this.getCode() ) {
+          objs[i].hide();
+          objs[i].setStopOnCollision(false);
+        }
+      }
+    }
   }
 
 }//class

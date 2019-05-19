@@ -116,14 +116,21 @@ class Player {
           object.grabHandler();
           this.grabObject( object );
         }
+        this.setNotGrabbing();
       } else {
         if( this.objectGrabbed ) {
-          this.objectGrabbed.drop( this.spriteProps.direction, this.getHeight() ); // Throw away object
-          this.objectGrabbed = false; // remove grabbed
+          // Drop if has nothing o player grab collision box
+          let object = window.game.collision.justCheckAll(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
+          if( !object ) {
+            this.objectGrabbed.drop( this.spriteProps.direction, this.getHeight() ); // Throw away object
+            this.objectGrabbed = false; // remove grabbed
+            this.setNotGrabbing();
+          }
+        } else {
+          this.setNotGrabbing();
         }
       }
 
-      this.setNotGrabbing();
     }
 
     // Use items
@@ -156,7 +163,7 @@ class Player {
       switch(this.spriteProps.direction) {
         case 'down':
           this.grabCollisionWidth = this.collisionWidth;
-          this.grabCollisionHeight = this.collisionHeight / 2;
+          this.grabCollisionHeight = this.collisionHeight;
 
           this.grabCollisionX = this.collisionX;
           this.grabCollisionY = this.collisionY + this.collisionHeight;
@@ -164,14 +171,14 @@ class Player {
 
         case  'up':
           this.grabCollisionWidth = this.collisionWidth;
-          this.grabCollisionHeight = this.collisionHeight / 2;
+          this.grabCollisionHeight = this.collisionHeight;
 
           this.grabCollisionX = this.collisionX;
           this.grabCollisionY = this.collisionY - this.grabCollisionHeight;
           break;
         
         case 'left':
-          this.grabCollisionWidth = this.collisionWidth / 2;
+          this.grabCollisionWidth = this.collisionWidth;
           this.grabCollisionHeight = this.collisionHeight;
 
           this.grabCollisionX = this.collisionX - this.grabCollisionWidth;
@@ -179,7 +186,7 @@ class Player {
           break;
         
         case 'right':
-          this.grabCollisionWidth = this.collisionWidth / 2;
+          this.grabCollisionWidth = this.collisionWidth;
           this.grabCollisionHeight = this.collisionHeight;
 
           this.grabCollisionX = this.collisionX + this.collisionWidth;

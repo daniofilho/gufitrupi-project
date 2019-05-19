@@ -34,19 +34,6 @@ class _CanThrow extends _Collidable {
     this.destroyFrameCount = 1;
     this.destroyMaxFrameCount = 8;
     this.destroyInitFrame = 3;
-
-    this._this = null;
-
-    this.customVars = canThrowProps.customVars;
-
-  }
-
-  getCustomVars() {
-    return this.customVars;
-  }
-
-  setThis(_this) {
-    this._this = _this;
   }
 
   // # Controls the Fire FPS Movement independent of game FPS
@@ -162,8 +149,6 @@ class _CanThrow extends _Collidable {
     }
 
   }
-
-  useHandler(direction, playerHeight, player) { console.log('ok'); }
 
   moveToThrowDirection() {
     switch( this.throwDirection ) {
