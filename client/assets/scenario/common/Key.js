@@ -40,7 +40,8 @@ class Key extends _CanThrow {
     }
 
     super(props, position, dimension, sprite, events, canThrow, customVars);
-    
+    this.setNeedSaveState(true);
+    this.handleProps();
   }
 
   // Check if this item has some save state
@@ -64,6 +65,12 @@ class Key extends _CanThrow {
       }
     }  
   }
+
+  // Handle props when load
+  handleProps() {
+    // Check if this item was saved before and change it props
+    this.checkSavedItemState();
+  }
   
   // # Sprites 
   setSpriteType(type) {
@@ -86,14 +93,14 @@ class Key extends _CanThrow {
         this.spriteProps = this.sprite.getSpriteProps(29);
         break;
     }
-    this.setNeedSaveState(true);
-    this.checkSavedItemState();
+    
   }
 
   discardKey(player) {
     this.hide();
     this.setStopOnCollision(false);
     this.setCollect(true);
+    this.setGrab(false);
     player.setNotGrabbing();
   }
 

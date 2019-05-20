@@ -35,6 +35,7 @@ class Door extends _CanCollect {
 
     this.type = 'door';
 
+    this.handleProps();
   }
 
   checkSavedItemState() {
@@ -125,6 +126,12 @@ class Door extends _CanCollect {
         break;
     }
     this.setNeedSaveState(true);
+    
+  }
+
+  // Handle props when load
+  handleProps() {
+    // Check if this item was saved before and change it props
     this.checkSavedItemState();
   }
 
