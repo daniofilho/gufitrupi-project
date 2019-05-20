@@ -5,6 +5,9 @@ class _Collidable {
     // # Position
     this.x = position.x;
     this.y = position.y;
+
+    this.x0 = position.x;
+    this.y0 = position.y;
       
     // # Properties
     this.width = dimension.width; //px
@@ -34,6 +37,7 @@ class _Collidable {
     
     this.name = props.name.replace(/\s/g,'') + "_" + this.x + "x" + this.y;
     this.name = this.name.toLowerCase();
+    this.originalName = props.name;
     
     this.hideSprite = false;
 
@@ -41,8 +45,25 @@ class _Collidable {
 
     this.type = props.type;
     this.code = '';
+    this.class = props.class;
+
+    this.grabbedByPlayer = false;
+    this.playerWhoGrabbed = null;
 
     this.run( props.type );
+  }
+
+  // # Grab
+  isGrabbedByPlayer() {
+    return this.grabbedByPlayer;
+  }
+  setPlayerWhoGrabbed(player) {
+    this.playerWhoGrabbed = player;
+    this.grabbedByPlayer = true;
+  }
+  notGrabbedAnymore() {
+    this.playerWhoGrabbed = null;
+    this.grabbedByPlayer = false;
   }
 
   // # Code
@@ -120,7 +141,7 @@ class _Collidable {
 		
 	// # Render
   render(ctx) {
-
+    
     this.beforeRender(ctx);
 
     if ( this.hideSprite ) return;

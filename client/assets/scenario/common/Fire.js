@@ -1,5 +1,5 @@
-const _CanHurt = require('./_CanHurt');
-const Sprite = require('../../../engine/Sprite');
+const _CanHurt = require('../../../engine/assets/_CanHurt');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Fire extends _CanHurt {
 

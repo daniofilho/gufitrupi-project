@@ -1,5 +1,5 @@
 // Stage 01
-const _Stage = require('../../common/_Stage');
+const _Stage = require('../../../../engine/assets/_Stage');
 
 const Beach_Wall = require('../../common/Beach_Wall');
 const Beach_Floor = require('../../common/Beach_Floor');
@@ -177,6 +177,7 @@ class Prototype_Stage_Center extends _Stage{
     this.scenarioDesign();
     this.scenarioDesignLayer__bottom();
     this.scenarioDesignLayer__top();
+    
   }
 
 } // class

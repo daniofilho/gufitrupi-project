@@ -1,7 +1,7 @@
 /*
   Sandbox Scenario
 */
-const _Scenario = require('../common/_Scenario');
+const _Scenario = require('../../../engine/assets/_Scenario');
 
 const Stage_Center = require('./stages/stage_center');
 const Stage_Life = require('./stages/stage_life');
@@ -16,7 +16,7 @@ class scenarioSandbox extends _Scenario {
     
     // Define which stage will load on first run
     this.stageToLoad = ( saveData ) ? saveData.scenario.stageId : this.defaultStageId;
-    
+
     this.run();
   }
 
@@ -55,7 +55,7 @@ class scenarioSandbox extends _Scenario {
  
   // Set Default Stage
   run() {
-    this.setStage( this.stageToLoad, true);    
+    this.setStage( this.stageToLoad, true );    
   }
 
 }//class

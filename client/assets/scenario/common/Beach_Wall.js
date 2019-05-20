@@ -1,5 +1,5 @@
-const _Collidable = require('./_Collidable');
-const Sprite = require('../../../engine/Sprite');
+const _Collidable = require('../../../engine/assets/_Collidable');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Beach_wall extends _Collidable {
 

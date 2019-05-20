@@ -1,5 +1,5 @@
-const _CanThrow = require('./_CanThrow');
-const Sprite = require('../../../engine/Sprite');
+const _CanThrow = require('../../../engine/assets/_CanThrow');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Key extends _CanThrow {
 
@@ -7,7 +7,8 @@ class Key extends _CanThrow {
     
     let props = {
       name: "key",
-      type: type
+      type: type,
+      class: 'key'
     }
 
     let position = {
@@ -28,7 +29,7 @@ class Key extends _CanThrow {
     }
     
     let canThrow = {
-      canRespawn: true,
+      canRespawn: false,
       chuncksThrowDistance: 1,
       hurtAmount: 0,
       useEvent: 'use'
@@ -41,9 +42,30 @@ class Key extends _CanThrow {
     super(props, position, dimension, sprite, events, canThrow, customVars);
     
   }
+
+  // Check if this item has some save state
+  checkSavedItemState() {
+    let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
+    if( savedItemsState ) {
+      let itemSavedState = savedItemsState[this.getName()];
+      if( itemSavedState && itemSavedState.grabbed === true ){ // Check if this item is already grabbed
+        this.hide();
+        this.setStopOnCollision(false);
+        this.canGrab = false;
+
+        // Fake Grab it, so the state will be saved when going to other stage
+        this.setGrab(true);
+        this.setStopOnCollision(false);
+      }
+      if( itemSavedState && itemSavedState.collected === true ) {
+        this.hide();
+        this.setStopOnCollision(false);
+        this.canGrab = false;
+      }
+    }  
+  }
   
-  // # Sprites
-    
+  // # Sprites 
   setSpriteType(type) {
       
     switch(type) {
@@ -64,12 +86,14 @@ class Key extends _CanThrow {
         this.spriteProps = this.sprite.getSpriteProps(29);
         break;
     }
-
+    this.setNeedSaveState(true);
+    this.checkSavedItemState();
   }
 
   discardKey(player) {
     this.hide();
     this.setStopOnCollision(false);
+    this.setCollect(true);
     player.setNotGrabbing();
   }
 

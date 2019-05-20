@@ -1,5 +1,5 @@
-const _CanBePushed = require('./_CanBePushed');
-const Sprite = require('../../../engine/Sprite');
+const _CanBePushed = require('../../../engine/assets/_CanBePushed');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Object_Push extends _CanBePushed {
 

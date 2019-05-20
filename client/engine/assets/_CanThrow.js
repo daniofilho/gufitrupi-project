@@ -1,5 +1,5 @@
 const _Collidable = require('./_Collidable');
-const Sprite = require('../../../engine/Sprite');
+const Sprite = require('../core/Sprite');
 
 class _CanThrow extends _Collidable {
 
@@ -10,6 +10,8 @@ class _CanThrow extends _Collidable {
     this.grabbed = false;
     this._canRespawn = canThrowProps.canRespawn;
     this.hurtAmount = canThrowProps.hurtAmount;
+
+    this.collected = false;
 
     this.useEvent = canThrowProps.useEvent;
     
@@ -35,6 +37,10 @@ class _CanThrow extends _Collidable {
     this.destroyMaxFrameCount = 8;
     this.destroyInitFrame = 3;
   }
+
+  isCollected() { return this.collected; }
+  collect(){ this.collected = true; }
+  setCollect(bool) { this.collect = bool; }
 
   // # Controls the Fire FPS Movement independent of game FPS
   canRenderNextFrame() {
@@ -111,6 +117,7 @@ class _CanThrow extends _Collidable {
   grabHandler( ) {
     this.setGrab(true);
     this.setStopOnCollision(false); // avoid players pushing other players with items
+    this.show();
   }
 
   breakObject() {
@@ -131,6 +138,7 @@ class _CanThrow extends _Collidable {
     this.calculateDropDirection( direction, playerHeight );
     this.setDestroyOnAnimationEnd(false);
     this.setThrowing(true);
+    this.notGrabbedAnymore();
   }
 
   throw(direction, playerHeight, player) {

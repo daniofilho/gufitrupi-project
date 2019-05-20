@@ -1,7 +1,7 @@
-const _Collidable = require('./_Collidable');
-const Sprite = require('../../../engine/Sprite');
+const _CanCollect = require('../../../engine/assets/_CanCollect');
+const Sprite = require('../../../engine/core/Sprite');
 
-class Door extends _Collidable {
+class Door extends _CanCollect {
 
 	constructor(type, x0, y0) {
     
@@ -26,11 +26,28 @@ class Door extends _Collidable {
       stopOnCollision: true,
       hasCollisionEvent: true
     }
+
+    let canCollectProps = {
+      canRespawn: false
+    }
     
-    super(props, position, dimension, sprite, events);
+    super(props, position, dimension, sprite, events, canCollectProps);
 
     this.type = 'door';
 
+  }
+
+  checkSavedItemState() {
+    let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
+    if( savedItemsState ) {
+      let itemSavedState = savedItemsState[this.getName()];
+      if( itemSavedState && itemSavedState.collected === true ){ // Check if this item is already grabbed
+        console.log('collected');
+        this.collect();
+        this.hide();
+        this.setStopOnCollision(false);
+      }
+    }  
   }
 
   // # Sprites
@@ -107,7 +124,8 @@ class Door extends _Collidable {
         this.spriteProps = this.sprite.getSpriteProps(1258);
         break;
     }
-
+    this.setNeedSaveState(true);
+    this.checkSavedItemState();
   }
 
   // Open door = hide all doors with same code 
@@ -116,6 +134,7 @@ class Door extends _Collidable {
     for (let i in objs) {
       if( objs[i].type == 'door' ) {
         if( objs[i].getCode() == this.getCode() ) {
+          objs[i].collect();
           objs[i].hide();
           objs[i].setStopOnCollision(false);
         }

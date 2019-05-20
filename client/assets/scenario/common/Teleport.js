@@ -1,6 +1,6 @@
-const _Collidable = require('./_Collidable');
+const _Collidable = require('../../../engine/assets/_Collidable');
 const gameProperties = require('../../../gameProperties'); 
-const Sprite = require('../../../engine/Sprite');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Teleport extends _Collidable {
 
@@ -66,8 +66,8 @@ class Teleport extends _Collidable {
         player.hidePlayer();
       });
 
-      // Wait some time
-      setTimeout( () => {
+      // Wait some time - dont't need it anymore (i think)
+      //setTimeout( () => {
         
         // Now teleport all players to same location and direction
         let targetX = playerWhoActivatedTeleport.getX();
@@ -78,7 +78,7 @@ class Teleport extends _Collidable {
           player.setX(targetX, true); // true = also set collision x too
           player.setY(targetY, true);
           player.triggerLookDirection(lookDirection);
-          player.setNotGrabbing();
+          player.checkGrabbingObjects();
           player.showPlayer();
         });
 
@@ -89,7 +89,8 @@ class Teleport extends _Collidable {
         );
 
         window.game.loading(false);
-      }, 300);
+
+      //}, 300);
       
     }
 

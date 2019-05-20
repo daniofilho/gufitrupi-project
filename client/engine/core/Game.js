@@ -1,10 +1,11 @@
-const gameProperties = require('../gameProperties');
-const scenarioPrototype = require('../assets/scenario/Prototype/scenarioPrototype');
-const scenarioSandbox = require('../assets/scenario/Sandbox/scenarioSandbox');
-const Player = require('../assets/Player');
+const gameProperties = require('../../gameProperties');
+const scenarioPrototype = require('../../assets/scenario/Prototype/scenarioPrototype');
+const scenarioSandbox = require('../../assets/scenario/Sandbox/scenarioSandbox');
+const Player = require('../../assets/Player');
 const Collision = require('./Collision');
 const Render = require('./Render');
-const UI = require('./UI');
+const UI = require('../ui/UI');
+const GlobalAssets = require('../assets/GlobalAssets');
 
 class Game {
 
@@ -44,6 +45,8 @@ class Game {
       this.renderLayers = null;
       this.renderUI     = null;
 
+      this.globalAssets = new GlobalAssets( this.gameProps.chunkSize );
+
   }
 
   // Gets
@@ -53,7 +56,6 @@ class Game {
   getCanvasWidth()  { return this.gameProps.canvasWidth;  }
   getCanvasHeight() { return this.gameProps.canvasHeight; }
 
-  
   // Sets
   setGameReady(bool) { this.gameReady = bool; }
   
@@ -159,6 +161,7 @@ class Game {
           this.scenario.addPlayer(_player);
 
         });  
+
       }
     // # UI
       
@@ -176,7 +179,7 @@ class Game {
 
       // Add items to be rendered
       this.renderStatic.setScenario(this.scenario); // set the scenario
-  
+    
     // Hide Elements
       document.getElementById("mainMenu").classList.remove('show');
       this.loading(false);
@@ -398,6 +401,11 @@ class Game {
 
       // Replace items state on local storage with saved states
       localStorage.setItem( 'gufitrupi__itemsState', JSON.stringify( saveData.scenario.items ) );
+
+      // Load Items itens
+      for( let i in saveData.scenario.items ) {
+        this.addItemState( saveData.scenario.items[i] );
+      };
 
       // # Loads a new game with save data
       this.newGame(saveData); 

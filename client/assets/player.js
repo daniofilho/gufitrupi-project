@@ -1,4 +1,4 @@
-const Sprite = require('../engine/Sprite');
+const Sprite = require('../engine/core/Sprite');
 
 class Player {
 
@@ -93,13 +93,39 @@ class Player {
       Grab/Pick Items Collision Box
   */
 
+    checkGrabbingObjects() {
+      let hasGrabObject = false;
+      // Check if player has grabbed items
+      let renderedItems = window.game.scenario.getLayerItems__bottom();
+      for( let i in renderedItems ) {
+        let item = renderedItems[i];
+        if( item.isGrabbedByPlayer() ) {
+          let obj = item;
+          
+          obj.grabHandler();
+          this.grabObject( obj );
+
+          this.grabing = true;
+          this.resetStep();
+          hasGrabObject = true;
+
+          return obj;
+        }
+      }
+      
+      
+      if( ! hasGrabObject ) {
+        this.setNotGrabbing();
+      }
+      return false;
+    }
     checkItemOnGrabCollisionBox() {
       return window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
     }
     
     isGrabing() { return this.grabing; }
     setNotGrabbing(){
-      this.grabing = !this.grabing;
+      this.grabing = false;
       this.resetStep();
     }
     removeGrabedObject() { 
@@ -116,7 +142,8 @@ class Player {
           object.grabHandler();
           this.grabObject( object );
         }
-        this.setNotGrabbing();
+        this.grabing = !this.grabing;
+        this.resetStep();
       } else {
         if( this.objectGrabbed ) {
           // Drop if has nothing o player grab collision box
@@ -124,10 +151,12 @@ class Player {
           if( !object ) {
             this.objectGrabbed.drop( this.spriteProps.direction, this.getHeight() ); // Throw away object
             this.objectGrabbed = false; // remove grabbed
-            this.setNotGrabbing();
+            this.grabing = !this.grabing;
+            this.resetStep();
           }
         } else {
-          this.setNotGrabbing();
+          this.grabing = !this.grabing;
+          this.resetStep();
         }
       }
 
@@ -607,6 +636,7 @@ class Player {
 
 
     run() {
+      this.checkGrabbingObjects();
       this.lookDirection = this.lookDown();
       this.updateGrabCollisionXY();
     }

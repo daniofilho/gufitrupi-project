@@ -1,7 +1,7 @@
 /*
     Prototype Scenario
 */
-const _Scenario = require('../common/_Scenario');
+const _Scenario = require('../../../engine/assets/_Scenario');
 
 const _S_center = require('./stages/stage_center');
 const _S_up = require('./stages/stage_up');

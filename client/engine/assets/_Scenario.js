@@ -78,33 +78,45 @@ class _Scenario {
 
   // # Save the State of items
   saveItemsState() {
-
+    
     // Bottom Layer
-    this.stage.getLayerItems__bottom().map( (item) => { 
-      if( item.willNeedSaveState() ) {
-        window.game.addItemState(
-          {
-            'name_id': item.getName(),
-            'collected': item.isCollected()
-          }
-        );
-      }
-    });
-
-    // Top Layer
-    this.stage.getLayerItems__top().map( (item) => { 
-      if( item.willNeedSaveState() ) {
-        window.game.addItemState(
-          {
-            'name_id': item.getName(),
-            'collected': item.isCollected()
-          }
-        );
-      }
-    });
+    let items = window.game.collision.getColItens();
+    for (let i in items) {
+      this.handleItemIfNeedSave(items[i]);
+    }
 
     window.game.saveItemsState();
 
+  }
+
+  handleItemIfNeedSave(item) {
+    if( item.willNeedSaveState() ) {
+      console.log(item);
+      let grabbed = false;
+      let grabProps = {};
+      if( item.canGrab ) {
+        grabbed = item.isGrabbed();
+        if( grabbed ) {
+          grabProps = {
+            'class': item.class,
+            'code': item.code,
+            'x0': item.x0,
+            'y0': item.y0,
+            'name' : item.originalName
+          }
+        }
+      }
+
+      window.game.addItemState(
+        {
+          'name_id': item.getName(),
+          'collected': item.isCollected(),
+          'grabbed': grabbed,
+          'grabProps': grabProps
+        }
+      );
+
+    }
   }
 
   // Functions to load selected stage
@@ -133,15 +145,33 @@ class _Scenario {
       this.addRenderLayerItem__top(item);
     });
 
+    // Check if player has something grabbed and include in render
+    let savedItemsState = localStorage.getItem('gufitrupi__itemsState');  
+    if( savedItemsState != "{}" ) {
+      savedItemsState = JSON.parse(savedItemsState);
+      for( let i in savedItemsState ) {
+        let item = savedItemsState[i];
+        if( item.grabbed ) {
+          let obj = window.game.globalAssets.getAsset( item.grabProps.class, item.grabProps );
+          obj.setPlayerWhoGrabbed( '' );
+          this.addRenderLayerItem__bottom(obj);
+        }
+      };
+    }
+
     // Set Actual Stage ID
     this.setActualStageId( this.stage.getStageId() );
-
+    
     // Only set player start at first load
     if(firstStage) {
       this.setPlayer1StartX( this.stage.getPlayer1StartX() );
       this.setPlayer1StartY( this.stage.getPlayer1StartY() );
       this.setPlayer2StartX( this.stage.getPlayer2StartX() );
       this.setPlayer2StartY( this.stage.getPlayer2StartY() );
+    } else {
+      window.game.players.map( (player) => {
+        player.checkGrabbingObjects();
+      });
     }
     
   }

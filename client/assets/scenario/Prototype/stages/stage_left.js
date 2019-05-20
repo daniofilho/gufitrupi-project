@@ -1,5 +1,5 @@
 // Stage 02
-const _Stage = require('../../common/_Stage');
+const _Stage = require('../../../../engine/assets/_Stage');
 
 const Beach_Wall = require('../../common/Beach_Wall');
 const Beach_Floor = require('../../common/Beach_Floor');

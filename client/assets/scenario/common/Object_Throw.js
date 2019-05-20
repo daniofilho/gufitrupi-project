@@ -1,5 +1,5 @@
-const _CanThrow = require('./_CanThrow');
-const Sprite = require('../../../engine/Sprite');
+const _CanThrow = require('../../../engine/assets/_CanThrow');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Object_Throw extends _CanThrow {
 
@@ -7,7 +7,8 @@ class Object_Throw extends _CanThrow {
     
     let props = {
       name: "object",
-      type: type
+      type: type,
+      class: 'object_throw'
     }
 
     let position = {
@@ -45,6 +46,8 @@ class Object_Throw extends _CanThrow {
         this.spriteProps = this.sprite.getSpriteProps(22);
         break;
     }
+    this.setCode(type);
+    this.setNeedSaveState(true);//set to save just to check if user is grabbing it when leaving stage
   }
 
 }//class

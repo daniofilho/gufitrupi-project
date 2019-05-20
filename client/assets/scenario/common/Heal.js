@@ -1,5 +1,5 @@
-const _CanCollect = require('./_CanCollect');
-const Sprite = require('../../../engine/Sprite');
+const _CanCollect = require('../../../engine/assets/_CanCollect');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Heal extends _CanCollect {
 
