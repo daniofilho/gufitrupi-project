@@ -92,10 +92,6 @@ class _Scenario {
   handleItemIfNeedSave(item) {
     if( item.willNeedSaveState() ) {
       
-      if( item.originalName == 'key' ) {
-        console.log(item, item.isCollected());
-      }
-      
       let grabbed = false;
       let grabProps = {};
       if( item.canGrab ) {

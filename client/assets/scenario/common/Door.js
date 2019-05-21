@@ -43,7 +43,6 @@ class Door extends _CanCollect {
     if( savedItemsState ) {
       let itemSavedState = savedItemsState[this.getName()];
       if( itemSavedState && itemSavedState.collected === true ){ // Check if this item is already grabbed
-        console.log('collected');
         this.collect();
         this.hide();
         this.setStopOnCollision(false);
