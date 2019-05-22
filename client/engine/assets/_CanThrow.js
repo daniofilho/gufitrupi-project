@@ -3,15 +3,16 @@ const Sprite = require('../core/Sprite');
 
 class _CanThrow extends _Collidable {
 
-  constructor(props, position, dimension, sprite, events, canThrowProps) {
-    super(props, position, dimension, sprite, events);
+  constructor(props, position, dimension, sprite, events, canThrowProps, fromSaveState) {
+    super(props, position, dimension, sprite, events, fromSaveState);
     
     this.canGrab = true;
     this.grabbed = false;
+    this.collected = false;
+    this.playerWhoGrabbed = false;
+
     this._canRespawn = canThrowProps.canRespawn;
     this.hurtAmount = canThrowProps.hurtAmount;
-
-    this.collected = false;
 
     this.useEvent = canThrowProps.useEvent;
     
@@ -40,7 +41,7 @@ class _CanThrow extends _Collidable {
 
   isCollected() { return this.collected; }
   collect(){ this.collected = true; }
-  setCollect(bool) { this.collect = bool; }
+  setCollect(bool) { this.collected = bool; }
 
   // # Controls the Fire FPS Movement independent of game FPS
   canRenderNextFrame() {
@@ -62,6 +63,7 @@ class _CanThrow extends _Collidable {
   isGrabbed() { return this.grabbed; }
   grab(){ this.grabbed = true; }
   setGrab(bool) { this.grabbed = bool; }
+  setPlayerWhoGrabbed(playerNumber) { this.playerWhoGrabbed = playerNumber; }
 
   isThrowing() { return this.throwingMovement; }
   setThrowing(bool) { this.throwingMovement = bool; }
@@ -114,10 +116,11 @@ class _CanThrow extends _Collidable {
   
   setName(name) { this.name = name; }
 
-  grabHandler( ) {
+  grabHandler( playerNumber ) {
+    this.playerWhoGrabbed = playerNumber;
     this.setGrab(true);
     this.setStopOnCollision(false); // avoid players pushing other players with items
-    this.show();
+    //this.show();
   }
 
   breakObject() {
@@ -138,7 +141,8 @@ class _CanThrow extends _Collidable {
     this.calculateDropDirection( direction, playerHeight );
     this.setDestroyOnAnimationEnd(false);
     this.setThrowing(true);
-    this.notGrabbedAnymore();
+    this.setGrab(false);
+    this.playerWhoGrabbed = false;
   }
 
   throw(direction, playerHeight, player) {

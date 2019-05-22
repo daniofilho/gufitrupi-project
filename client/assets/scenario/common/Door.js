@@ -3,11 +3,12 @@ const Sprite = require('../../../engine/core/Sprite');
 
 class Door extends _CanCollect {
 
-	constructor(type, x0, y0) {
+	constructor(type, x0, y0, stage) {
     
     let props = {
       name: "door",
-      type: type
+      type: type,
+      stage: stage
     }
 
     let position = {

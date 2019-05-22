@@ -13,14 +13,14 @@ class GlobalAssets {
 		this.chunkSize = chunkSize;
 	}
 
-  getAsset( _class, props ) {
+  getAsset( _class, props, fromSaveState ) {
     let r;
     switch( _class ) {
       case 'key':
-      	r = new Key( props.code, props.x0, props.y0, ( props.x0 / this.chunkSize), ( props.y0 / this.chunkSize), props );
+        r = new Key( props.code, props.x0, props.y0, props.stage, fromSaveState );
         break;
       case 'object_throw':
-      	//r = new Object_Throw( item.type, x, y, props.stageId );
+        r = new Object_Throw( props.code, props.x0, props.y0, props.stage, fromSaveState );
         break;
     }
     return r;

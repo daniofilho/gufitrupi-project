@@ -3,12 +3,13 @@ const Sprite = require('../../../engine/core/Sprite');
 
 class Object_Throw extends _CanThrow {
 
-	constructor(type, x0, y0) {
+	constructor(type, x0, y0, stage, fromSaveState) {
     
     let props = {
       name: "object",
       type: type,
-      class: 'object_throw'
+      class: 'object_throw',
+      stage: stage
     }
 
     let position = {
@@ -35,8 +36,10 @@ class Object_Throw extends _CanThrow {
       useEvent: 'throw'
     }
 
-    super(props, position, dimension, sprite, events, canThrow);
-    
+    super(props, position, dimension, sprite, events, canThrow, fromSaveState);
+
+    this.setNeedSaveState(true);//set to save just to check if user is grabbing it when leaving stage
+    this.handleProps();
   }
 
   // # Sprites  
@@ -47,7 +50,29 @@ class Object_Throw extends _CanThrow {
         break;
     }
     this.setCode(type);
-    this.setNeedSaveState(true);//set to save just to check if user is grabbing it when leaving stage
+  }
+
+  // Check if this item has some save state
+  checkSavedItemState() {
+    let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
+    if( savedItemsState ) {
+      let itemSavedState = savedItemsState[this.getName()];
+      if( itemSavedState && itemSavedState.grabbed === true ){ // Check if this item is already grabbed
+        if( this.fromSavedState ) {
+          // Grab the item saved
+          this.grabHandler( itemSavedState.grabProps.playerWhoGrabbed ); 
+        } else {
+          // Ignore the item from stage
+          this.hide();
+        }
+      }
+    }  
+  }
+
+  // Handle props when load
+  handleProps() {
+    // Check if this item was saved before and change it props
+    this.checkSavedItemState();
   }
 
 }//class

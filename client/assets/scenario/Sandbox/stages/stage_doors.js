@@ -13,11 +13,11 @@ class Prototype_Stage_Doors extends _Stage{
   constructor() {
     super("doors");
 
-    let player1StartX = window.game.getChunkSize() * 7;
-    let player1StartY = window.game.getChunkSize() * 6;
+    let player1StartX = 0;
+    let player1StartY = 0;
     
-    let player2StartX = window.game.getChunkSize() * 8;
-    let player2StartY = window.game.getChunkSize() * 6;
+    let player2StartX = 0;
+    let player2StartY = 0;
 
     this.run(player1StartX, player1StartY, player2StartX, player2StartY);
   }
@@ -29,7 +29,7 @@ class Prototype_Stage_Doors extends _Stage{
         return new Beach_Wall(item.type, x, y);
         break;
       case "door":
-        return new Door(item.type, x, y);
+        return new Door(item.type, x, y, this.getStageId());
         break;
       case "floor":
         return new Beach_Floor(item.type, x, y);
@@ -38,7 +38,7 @@ class Prototype_Stage_Doors extends _Stage{
         return new Teleport(item.type, x, y, xIndex, yIndex, item );
         break;
       case "key":
-        return new Key(item.type, x, y, xIndex, yIndex, item );
+        return new Key(item.type, x, y, this.getStageId() ); 
         break;
       case "object_throw":
         return new Object_Throw(item.type, x, y, this.getStageId());

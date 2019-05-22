@@ -7,7 +7,8 @@ class Heal extends _CanCollect {
     
     let props = {
       name: stage_id + "_potion",
-      type: type
+      type: type,
+      stage: stage_id
     }
 
     let position = {

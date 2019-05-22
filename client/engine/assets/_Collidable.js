@@ -1,6 +1,6 @@
 class _Collidable {
 
-  constructor(props, position, dimension, sprite, events) {
+  constructor(props, position, dimension, sprite, events, fromSaveState) {
       
     // # Position
     this.x = position.x;
@@ -31,11 +31,9 @@ class _Collidable {
     //this.stageSprite = sprite.stageSprite;
     this.hideSprite = false;
 
-    //this.spriteWidth = sprite.width;   
-    //this.spriteHeight = sprite.height; 
     this.spriteProps = new Array();
     
-    this.name = props.name.replace(/\s/g,'') + "_" + this.x + "x" + this.y;
+    this.name = props.stage + "_" + props.name.replace(/\s/g,'') + "_" + this.x + "x" + this.y;
     this.name = this.name.toLowerCase();
     this.originalName = props.name;
     
@@ -43,27 +41,14 @@ class _Collidable {
 
     this.needSaveState = false;
 
+    this.fromSavedState = ( fromSaveState) ? true : false;
+
     this.type = props.type;
     this.code = '';
     this.class = props.class;
-
-    this.grabbedByPlayer = false;
-    this.playerWhoGrabbed = null;
+    this.originalStage = props.stage;
 
     this.run( props.type );
-  }
-
-  // # Grab
-  isGrabbedByPlayer() {
-    return this.grabbedByPlayer;
-  }
-  setPlayerWhoGrabbed(player) {
-    this.playerWhoGrabbed = player;
-    this.grabbedByPlayer = true;
-  }
-  notGrabbedAnymore() {
-    this.playerWhoGrabbed = null;
-    this.grabbedByPlayer = false;
   }
 
   // # Code
@@ -102,7 +87,11 @@ class _Collidable {
   }
 
   // # Visibility
-  hide() { this.hideSprite = true; }
+  hide() { 
+    this.hideSprite = true; 
+    this.hasCollisionEvent = false;
+    this.stopOnCollision = false;
+  }
   show() { this.hideSprite = false; }
 
   // #  State

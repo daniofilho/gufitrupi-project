@@ -3,12 +3,13 @@ const Sprite = require('../../../engine/core/Sprite');
 
 class Key extends _CanThrow {
 
-	constructor(type, x0, y0) {
+	constructor(type, x0, y0, stage, fromSaveState) {
     
     let props = {
       name: "key",
       type: type,
-      class: 'key'
+      class: 'key',
+      stage: stage
     }
 
     let position = {
@@ -35,11 +36,8 @@ class Key extends _CanThrow {
       useEvent: 'use'
     }
 
-    let customVars = {
-      keyCode: ''
-    }
+    super(props, position, dimension, sprite, events, canThrow, fromSaveState);
 
-    super(props, position, dimension, sprite, events, canThrow, customVars);
     this.setNeedSaveState(true);
     this.handleProps();
   }
@@ -50,15 +48,16 @@ class Key extends _CanThrow {
     if( savedItemsState ) {
       let itemSavedState = savedItemsState[this.getName()];
       if( itemSavedState && itemSavedState.grabbed === true ){ // Check if this item is already grabbed
-        this.hide();
-        this.setStopOnCollision(false);
-        this.canGrab = false;
-
-        // Fake Grab it, so the state will be saved when going to other stage
-        this.setGrab(true);
-        this.setStopOnCollision(false);
+        if( this.fromSavedState ) {
+          // Grab the item saved
+          this.grabHandler( itemSavedState.grabProps.playerWhoGrabbed ); 
+        } else {
+          // Ignore the item from stage
+          this.hide();
+        }
       }
-      if( itemSavedState && itemSavedState.collected === true ) {
+      if( itemSavedState && itemSavedState.collected === true ) { // Check if this item was used before
+        this.collect();
         this.hide();
         this.setStopOnCollision(false);
         this.canGrab = false;

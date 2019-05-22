@@ -99,10 +99,10 @@ class Player {
       let renderedItems = window.game.scenario.getLayerItems__bottom();
       for( let i in renderedItems ) {
         let item = renderedItems[i];
-        if( item.isGrabbedByPlayer() ) {
+        if( item.grabbed && item.playerWhoGrabbed == this.playerNumber ) {
           let obj = item;
           
-          obj.grabHandler();
+          obj.grabHandler(this.playerNumber);
           this.grabObject( obj );
 
           this.grabing = true;
@@ -112,7 +112,6 @@ class Player {
           return obj;
         }
       }
-      
       
       if( ! hasGrabObject ) {
         this.setNotGrabbing();
@@ -139,7 +138,7 @@ class Player {
         let object = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
         if( object && object.canGrab ) {
           if( object.isGrabbed() ) return; // avoid players grabbing the same object
-          object.grabHandler();
+          object.grabHandler(this.playerNumber);
           this.grabObject( object );
         }
         this.grabing = !this.grabing;

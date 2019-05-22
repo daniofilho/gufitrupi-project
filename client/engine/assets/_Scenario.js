@@ -92,6 +92,10 @@ class _Scenario {
   handleItemIfNeedSave(item) {
     if( item.willNeedSaveState() ) {
       
+      if( item.class == "key" ) {
+        //console.log(item);
+      }
+
       let grabbed = false;
       let grabProps = {};
       if( item.canGrab ) {
@@ -102,7 +106,9 @@ class _Scenario {
             'code': item.code,
             'x0': item.x0,
             'y0': item.y0,
-            'name' : item.originalName
+            'name': item.originalName,
+            'stage': item.originalStage,
+            'playerWhoGrabbed': item.playerWhoGrabbed
           }
         }
       }
@@ -152,8 +158,8 @@ class _Scenario {
       for( let i in savedItemsState ) {
         let item = savedItemsState[i];
         if( item.grabbed ) {
-          let obj = window.game.globalAssets.getAsset( item.grabProps.class, item.grabProps );
-          obj.setPlayerWhoGrabbed( '' );
+          let obj = window.game.globalAssets.getAsset( item.grabProps.class, item.grabProps, true ); // true = came from save state
+          obj.grabHandler( item.grabProps.playerWhoGrabbed ); // start a setup on the object, so the player will check the saved state of item
           this.addRenderLayerItem__bottom(obj);
         }
       };
