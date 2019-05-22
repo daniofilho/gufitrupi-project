@@ -92,10 +92,7 @@ class _Scenario {
   handleItemIfNeedSave(item) {
     if( item.willNeedSaveState() ) {
       
-      if( item.class == "key" ) {
-        //console.log(item);
-      }
-
+      // Check Grabbed
       let grabbed = false;
       let grabProps = {};
       if( item.canGrab ) {
@@ -113,12 +110,34 @@ class _Scenario {
         }
       }
 
+      // Check Dropped
+      let dropped = false;
+      let dropProps = {};
+      if( item.canGrab ) {
+        dropped = item.isDropped();
+        if( dropped ) {
+          dropProps = {
+            'class': item.class,
+            'code': item.code,
+            'x0': item.x0,
+            'y0': item.y0,
+            'x': item.x,
+            'y': item.y,
+            'name': item.originalName,
+            'stage': item.originalStage,
+            'droppedStage': this.getActualStageId()
+          }
+        }
+      }
+
       window.game.addItemState(
         {
           'name_id': item.getName(),
           'collected': item.isCollected(),
           'grabbed': grabbed,
-          'grabProps': grabProps
+          'grabProps': grabProps,
+          'dropped': dropped,
+          'dropProps': dropProps
         }
       );
 
@@ -157,9 +176,15 @@ class _Scenario {
       savedItemsState = JSON.parse(savedItemsState);
       for( let i in savedItemsState ) {
         let item = savedItemsState[i];
+        // Include grabbed item
         if( item.grabbed ) {
           let obj = window.game.globalAssets.getAsset( item.grabProps.class, item.grabProps, true ); // true = came from save state
           obj.grabHandler( item.grabProps.playerWhoGrabbed ); // start a setup on the object, so the player will check the saved state of item
+          this.addRenderLayerItem__bottom(obj);
+        }
+        // Include dropped item
+        if( item.dropped ) {
+          let obj = window.game.globalAssets.getAsset( item.dropProps.class, { code: item.dropProps.code, x0: item.dropProps.x, y0: item.dropProps.y }, true );
           this.addRenderLayerItem__bottom(obj);
         }
       };

@@ -10,6 +10,7 @@ class _CanThrow extends _Collidable {
     this.grabbed = false;
     this.collected = false;
     this.playerWhoGrabbed = false;
+    this.dropped = false;
 
     this._canRespawn = canThrowProps.canRespawn;
     this.hurtAmount = canThrowProps.hurtAmount;
@@ -61,8 +62,14 @@ class _CanThrow extends _Collidable {
   setDestroyOnAnimationEnd(bool) { this.destroyOnAnimationEnd = bool; }
 
   isGrabbed() { return this.grabbed; }
-  grab(){ this.grabbed = true; }
-  setGrab(bool) { this.grabbed = bool; }
+  grab(){ 
+    this.grabbed = true;
+    this.dropped = false; 
+  }
+  setGrab(bool) { 
+    this.grabbed = bool; 
+    this.dropped = !bool;
+  }
   setPlayerWhoGrabbed(playerNumber) { this.playerWhoGrabbed = playerNumber; }
 
   isThrowing() { return this.throwingMovement; }
@@ -120,7 +127,6 @@ class _CanThrow extends _Collidable {
     this.playerWhoGrabbed = playerNumber;
     this.setGrab(true);
     this.setStopOnCollision(false); // avoid players pushing other players with items
-    //this.show();
   }
 
   breakObject() {
@@ -137,6 +143,7 @@ class _CanThrow extends _Collidable {
 
   }
 
+  isDropped() { return this.dropped; }
   drop(direction, playerHeight) {
     this.calculateDropDirection( direction, playerHeight );
     this.setDestroyOnAnimationEnd(false);
@@ -153,13 +160,11 @@ class _CanThrow extends _Collidable {
   }
 
   use(direction, playerHeight, player) {
-
     switch( this.useEvent ) {
       case 'throw':
         this.throw(direction, playerHeight, player);
         break;
     }
-
   }
 
   moveToThrowDirection() {
@@ -217,7 +222,6 @@ class _CanThrow extends _Collidable {
     }
   }
  
-
   beforeRender(ctx) {
     
     // Movement while throwing

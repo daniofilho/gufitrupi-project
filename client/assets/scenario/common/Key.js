@@ -46,8 +46,11 @@ class Key extends _CanThrow {
   checkSavedItemState() {
     let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
     if( savedItemsState ) {
+      
       let itemSavedState = savedItemsState[this.getName()];
-      if( itemSavedState && itemSavedState.grabbed === true ){ // Check if this item is already grabbed
+      
+      // Check if this item is already grabbed
+      if( itemSavedState && itemSavedState.grabbed == true ){ 
         if( this.fromSavedState ) {
           // Grab the item saved
           this.grabHandler( itemSavedState.grabProps.playerWhoGrabbed ); 
@@ -56,12 +59,44 @@ class Key extends _CanThrow {
           this.hide();
         }
       }
-      if( itemSavedState && itemSavedState.collected === true ) { // Check if this item was used before
+      
+      // Check if this item was used before
+      if( itemSavedState && itemSavedState.collected == true ) { 
         this.collect();
         this.hide();
         this.setStopOnCollision(false);
         this.canGrab = false;
       }
+
+      //Check if it was dropped
+      if( itemSavedState && itemSavedState.dropped == true ) { 
+
+        // Check if it's dropped on this stage
+        console.log(this.originalStage);
+        if( itemSavedState.dropProps.droppedStage == this.originalStage ) {
+          
+          if( this.fromSavedState ) {
+            // Drop the item saved
+            this.dropped = true;
+            this.updateX( itemSavedState.dropProps.x );
+            this.updateY( itemSavedState.dropProps.y );
+          } else {
+            // Ignore the item from stage
+            this.hide();
+            this.setStopOnCollision(false);
+            this.canGrab = false;
+            this.setNeedSaveState(false); // Ignore save this item to avoid replace the saved item
+          }
+          
+        } else {
+          this.hide();
+          this.setStopOnCollision(false);
+          this.canGrab = false;
+          this.setNeedSaveState(false); // Ignore save this item to avoid replace the saved item
+        }
+        
+      }
+
     }  
   }
 
