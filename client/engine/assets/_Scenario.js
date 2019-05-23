@@ -74,7 +74,11 @@ class _Scenario {
   setPlayer2StartX(x) { this.player2StartX = x; }
   setPlayer2StartY(y) { this.player2StartY = y; }
 
-  setActualStageId(id){ this.stageId = id; }
+  setActualStageId(id){ 
+    this.stageId = id; 
+    window.game.setCurrentStage( id );
+    console.log('setting stage', id);
+  }
 
   // # Save the State of items
   saveItemsState() {
@@ -121,12 +125,13 @@ class _Scenario {
             'code': item.code,
             'x0': item.x0,
             'y0': item.y0,
-            'x': item.x,
-            'y': item.y,
+            'dropX': item.dropX,
+            'dropY': item.dropY,
             'name': item.originalName,
             'stage': item.originalStage,
-            'droppedStage': this.getActualStageId()
+            'droppedStage': (item.droppedStage) ? item.droppedStage : this.getActualStageId() // If don't have dropped stage, means we want the actual stage.  If has, keep it
           }
+          console.log('saving:', dropProps);
         }
       }
 
@@ -148,6 +153,9 @@ class _Scenario {
   loadStage(stage, firstStage) {
     
     this.stage = stage;
+
+    // Set Actual Stage ID
+    this.setActualStageId( this.stage.getStageId() );
 
     // Clear previous render items
     this.renderItems = new Array();
@@ -184,15 +192,26 @@ class _Scenario {
         }
         // Include dropped item
         if( item.dropped ) {
-          let obj = window.game.globalAssets.getAsset( item.dropProps.class, { code: item.dropProps.code, x0: item.dropProps.x, y0: item.dropProps.y }, true );
+          let obj = window.game.globalAssets.getAsset( item.dropProps.class, { code: item.dropProps.code, x0: item.dropProps.x0, y0: item.dropProps.y0, stage: item.dropProps.stage }, true );
+          
+          if( this.stage.getStageId() != item.dropProps.droppedStage ) {
+            obj.hide();
+          }
+
+          obj.droppedStage = item.dropProps.droppedStage;
+          obj.dropped = true;
+          obj.updateX( item.dropProps.dropX );
+          obj.updateY( item.dropProps.dropY );
+          obj.dropX = item.dropProps.dropX;
+          obj.dropY = item.dropProps.dropY;
+          obj.x0 = item.dropProps.x0;
+          obj.y0 = item.dropProps.y0;
+
           this.addRenderLayerItem__bottom(obj);
         }
       };
     }
 
-    // Set Actual Stage ID
-    this.setActualStageId( this.stage.getStageId() );
-    
     // Only set player start at first load
     if(firstStage) {
       this.setPlayer1StartX( this.stage.getPlayer1StartX() );

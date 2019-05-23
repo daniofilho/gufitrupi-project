@@ -32,9 +32,10 @@ class Game {
       this.gameProps = new gameProperties();
       this.players = new Array();
       this.collision = null;
-      this.defaultScenario = "sandbox";
+      this.defaultScenario = 'sandbox';
       this.scenario = null;
       this.UI = null;
+      this.currentStageName = '';
 
       this.gameReady = false;
 
@@ -58,6 +59,9 @@ class Game {
 
   // Sets
   setGameReady(bool) { this.gameReady = bool; }
+
+  setCurrentStage(stage){ this.currentStageName = stage; }
+  getCurrentStage() { return this.currentStageName; }
   
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

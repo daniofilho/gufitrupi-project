@@ -11,6 +11,9 @@ class _CanThrow extends _Collidable {
     this.collected = false;
     this.playerWhoGrabbed = false;
     this.dropped = false;
+    this.droppedStage = false;
+    this.dropX = false;
+    this.dropY = false;
 
     this._canRespawn = canThrowProps.canRespawn;
     this.hurtAmount = canThrowProps.hurtAmount;
@@ -150,6 +153,9 @@ class _CanThrow extends _Collidable {
     this.setThrowing(true);
     this.setGrab(false);
     this.playerWhoGrabbed = false;
+    this.dropX = this.getX();
+    this.dropY = this.getY();
+    console.log('dropping', this.getX(), this.getY() );
   }
 
   throw(direction, playerHeight, player) {

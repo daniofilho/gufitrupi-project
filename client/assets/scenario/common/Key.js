@@ -11,7 +11,7 @@ class Key extends _CanThrow {
       class: 'key',
       stage: stage
     }
-
+    
     let position = {
       x: x0,
       y: y0
@@ -46,7 +46,7 @@ class Key extends _CanThrow {
   checkSavedItemState() {
     let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
     if( savedItemsState ) {
-      
+
       let itemSavedState = savedItemsState[this.getName()];
       
       // Check if this item is already grabbed
@@ -69,35 +69,41 @@ class Key extends _CanThrow {
       }
 
       //Check if it was dropped
+      
       if( itemSavedState && itemSavedState.dropped == true ) { 
-
+        console.log( 'dropped:', itemSavedState.dropProps.droppedStage, 'current:', window.game.getCurrentStage() );
         // Check if it's dropped on this stage
-        console.log(this.originalStage);
-        if( itemSavedState.dropProps.droppedStage == this.originalStage ) {
+        if( itemSavedState.dropProps.droppedStage == window.game.getCurrentStage() ) {
           
           if( this.fromSavedState ) {
-            // Drop the item saved
-            this.dropped = true;
-            this.updateX( itemSavedState.dropProps.x );
-            this.updateY( itemSavedState.dropProps.y );
           } else {
             // Ignore the item from stage
-            this.hide();
+            //this.hide();
             this.setStopOnCollision(false);
-            this.canGrab = false;
-            this.setNeedSaveState(false); // Ignore save this item to avoid replace the saved item
           }
           
         } else {
-          this.hide();
+          //this.hide();
           this.setStopOnCollision(false);
-          this.canGrab = false;
-          this.setNeedSaveState(false); // Ignore save this item to avoid replace the saved item
+          
         }
+
+        this.updateX( itemSavedState.dropProps.dropX );
+        this.updateY( itemSavedState.dropProps.dropY );
+        
+        this.x0 = itemSavedState.dropProps.x0;
+        this.y0 = itemSavedState.dropProps.y0;
+        
+        this.dropX = itemSavedState.dropProps.dropX;
+        this.dropY = itemSavedState.dropProps.dropY;
+
+        this.dropped = true;
+        this.originalStage = itemSavedState.dropProps.stage;
+        this.droppedStage = itemSavedState.dropProps.droppedStage;
         
       }
 
-    }  
+    }
   }
 
   // Handle props when load
