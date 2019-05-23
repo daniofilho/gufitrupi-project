@@ -1,8 +1,9 @@
-const _Collidable = require('./_Collidable');
+const _Collidable = require('../../../engine/assets/_Collidable');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Beach_Floor extends _Collidable {
 
-	constructor(type, x0, y0, chunkSize) {
+	constructor(type, x0, y0) {
     
     let props = {
       name: "Beach Floor",
@@ -15,26 +16,18 @@ class Beach_Floor extends _Collidable {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
-    let game = {
-      chunkSize: chunkSize
-    }
-
-    let sprite = {
-      width: 16,
-      height: 16,
-      stageSprite: document.getElementById('sprite_beach')
-    }
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: false,
       hasCollisionEvent: false
     }
     
-    super(props, position, dimension, game, sprite, events);
+    super(props, position, dimension, sprite, events);
     
   }
 
@@ -44,17 +37,11 @@ class Beach_Floor extends _Collidable {
     switch(type) {
       
       case "01":
-        this.spriteProps = { 
-          clip_x: 214, clip_y: 9, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(249);
         break;
       
       case "02":
-        this.spriteProps = { 
-          clip_x: 214, clip_y: 94, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(930);
         break;
 
     }

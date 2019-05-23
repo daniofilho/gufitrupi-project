@@ -1,8 +1,9 @@
-const _Collidable = require('./_Collidable');
+const _Collidable = require('../../../engine/assets/_Collidable');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Beach_wall extends _Collidable {
 
-	constructor(type, x0, y0, chunkSize) {
+	constructor(type, x0, y0) {
     
     let props = {
       name: "Beach Wall",
@@ -15,26 +16,18 @@ class Beach_wall extends _Collidable {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
-    let game = {
-      chunkSize: chunkSize
-    }
-
-    let sprite = {
-      width: 16,
-      height: 16,
-      stageSprite: document.getElementById('sprite_beach')
-    }
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: true,
       hasCollisionEvent: false
     }
     
-    super(props, position, dimension, game, sprite, events);
+    super(props, position, dimension, sprite, events);
 
   }
 
@@ -45,146 +38,89 @@ class Beach_wall extends _Collidable {
     switch(type) {
       
       case "top":
-        this.spriteProps = { 
-          clip_x: 375, clip_y: 197, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(73);
         break;
         
       case "left":
-        this.spriteProps = { 
-          clip_x: 409, clip_y: 214, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(137);
         break;
         
       case "right":
-        this.spriteProps = { 
-          clip_x: 392, clip_y: 214, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(136);
         break;
         
       case "bottom":
-        this.spriteProps = { 
-          clip_x: 375, clip_y: 180, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(11);
         break;
         
       case "corner_top_left":
-        this.spriteProps = { 
-          clip_x: 460, clip_y: 10, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(16);
         break;
         
       case "corner_top_right":
-        this.spriteProps = { 
-          clip_x: 477, clip_y: 10, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(17);
         break;
         
       case "corner_bottom_left":
-        this.spriteProps = { 
-          clip_x: 460, clip_y: 27, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(78);
         break;
         
       case "corner_bottom_right":
-        this.spriteProps = { 
-          clip_x: 545, clip_y: 27, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(79);
         break;
       
       case "inner_corner_top_left":
-        this.spriteProps = { 
-          clip_x: 426, clip_y: 10, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(138);
         break;
         
       case "inner_corner_top_right":
-        this.spriteProps = { 
-          clip_x: 443, clip_y: 10, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(139);
         break;
         
       case "inner_corner_bottom_left":
-        this.spriteProps = { 
-          clip_x: 426, clip_y: 27, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(200);
         break;
         
       case "inner_corner_bottom_right":
-        this.spriteProps = { 
-          clip_x: 443, clip_y: 27, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(201);
         break;
         
       case "water":
-        this.spriteProps = { 
-          clip_x: 375, clip_y: 299, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(633);
         break;
         
       case "obstacle":
-        this.spriteProps = { 
-          clip_x: 40, clip_y: 75, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(250); 
+        break;
+      case "fence":
+        this.spriteProps = this.sprite.getSpriteProps(1312); 
         break;
       case "tree_top_left":
-        this.spriteProps = { 
-          clip_x: 693, clip_y:96, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(24);
         this.setStopOnCollision(false);
         break;
       case "tree_top_right":
-        this.spriteProps = { 
-          clip_x: 710, clip_y: 96, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(25);
         this.setStopOnCollision(false);
         break;
       case "tree_middle_left":
-        this.spriteProps = { 
-          clip_x: 692, clip_y: 11, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(210);
         this.setStopOnCollision(false);
         break;
       case "tree_middle_right":
-        this.spriteProps = { 
-          clip_x: 710, clip_y: 11, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(87);
         this.setStopOnCollision(false);
         break;
       case "tree_bottom_left":
         // Sprite
-        this.spriteProps = { 
-          clip_x: 625, clip_y: 11, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(148);
         // Collision Size
         this.setCollisionWidth( this.chunkSize * 0.3 );
         this.setCollisionX(this.x + this.chunkSize * 0.7);
         break;
       case "tree_bottom_right":
         // Sprite
-        this.spriteProps = { 
-          clip_x: 744, clip_y: 11, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(149);
         // Collision Size
         this.setCollisionWidth( this.chunkSize * 0.3 );
         break;

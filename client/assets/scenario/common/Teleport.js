@@ -1,9 +1,10 @@
-const _Collidable = require('./_Collidable');
+const _Collidable = require('../../../engine/assets/_Collidable');
 const gameProperties = require('../../../gameProperties'); 
+const Sprite = require('../../../engine/core/Sprite');
 
 class Teleport extends _Collidable {
 
-	constructor(type, x0, y0, xIndex, yIndex, chunkSize, teleportProps) {
+	constructor(type, x0, y0, xIndex, yIndex, teleportProps) {
     
     let props = {
       name: "Teleport",
@@ -16,26 +17,18 @@ class Teleport extends _Collidable {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
-    let game = {
-      chunkSize: chunkSize
-    }
-
-    let sprite = {
-      width: 16,
-      height: 16,
-      stageSprite: false
-    }
+    let sprite = new Sprite(false, 0, 0, 0, 0);
 
     let events = {
       stopOnCollision: false,
       hasCollisionEvent: true
     }
     
-    super(props, position, dimension, game, sprite, events);
+    super(props, position, dimension, sprite, events);
     
     this.teleportProps = teleportProps;
 
@@ -63,7 +56,7 @@ class Teleport extends _Collidable {
 
     // If the player teleports, then change stage
     if( this.teleport( playerWhoActivatedTeleport ) ) {
-
+      
       // Make everything dark
       collidable.scenario.clearArrayItems();
       window.game.loading(true);
@@ -73,8 +66,8 @@ class Teleport extends _Collidable {
         player.hidePlayer();
       });
 
-      // Wait some time
-      setTimeout( () => {
+      // Wait some time - dont't need it anymore (i think)
+      //setTimeout( () => {
         
         // Now teleport all players to same location and direction
         let targetX = playerWhoActivatedTeleport.getX();
@@ -85,6 +78,7 @@ class Teleport extends _Collidable {
           player.setX(targetX, true); // true = also set collision x too
           player.setY(targetY, true);
           player.triggerLookDirection(lookDirection);
+          player.checkGrabbingObjects();
           player.showPlayer();
         });
 
@@ -95,7 +89,8 @@ class Teleport extends _Collidable {
         );
 
         window.game.loading(false);
-      }, 300);
+
+      //}, 300);
       
     }
 
