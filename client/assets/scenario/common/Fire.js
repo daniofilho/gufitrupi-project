@@ -1,8 +1,9 @@
-const _CanHurt = require('./_CanHurt');
+const _CanHurt = require('../../../engine/assets/_CanHurt');
+const Sprite = require('../../../engine/core/Sprite');
 
 class Fire extends _CanHurt {
 
-  constructor(type, x0, y0, chunkSize) {
+  constructor(type, x0, y0) {
     
     let props = {
       name: "Fire",
@@ -15,19 +16,11 @@ class Fire extends _CanHurt {
     }
 
     let dimension = {
-      width: chunkSize,
-      height: chunkSize
+      width: window.game.getChunkSize(),
+      height: window.game.getChunkSize()
     }
 
-    let game = {
-      chunkSize: chunkSize
-    }
-
-    let sprite = {
-      width: 50,
-      height: 50,
-      stageSprite: document.getElementById('sprite_common')
-    }
+    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 49);
 
     let events = {
       stopOnCollision: false,
@@ -38,16 +31,17 @@ class Fire extends _CanHurt {
       amount: 1
     }
 
-    super(props, position, dimension, game, sprite, events, canHurtProps);
+    super(props, position, dimension, sprite, events, canHurtProps);
 
-    this.spriteAnimationCount = 1;
     this.spriteAnimationMaxCount = 3;
-
-    this.collisionHeight = chunkSize * 0.4; // 80% of Chunk Size
-    this.collisionY = y0 + ( chunkSize * 0.6); // 80% of Chunk Size
+    this.spriteAnimationCount = Math.floor(Math.random() * this.spriteAnimationMaxCount) + 1; // Generate a rand initial number to randomize animation in case of multiple Fires
+    
+    this.collisionHeight = window.game.getChunkSize() * 0.4; // 80% of Chunk Size
+    this.collisionY = y0 + ( window.game.getChunkSize() * 0.6); // 80% of Chunk Size
 
     // Controls the sprite FPS Animation
-    this.fpsInterval = 1000 / 10; // 1000 / FPS
+    let randFPS = Math.floor(Math.random() * 7) + 5; // Generate a random FPS, so multiple Fires on page don't animate the same way 
+    this.fpsInterval = 1000 / randFPS; // 1000 / FPS
     this.deltaTime = Date.now();
   }
 
@@ -66,22 +60,13 @@ class Fire extends _CanHurt {
   setSpritePropsFrame(spriteAnimationCount){
     switch(spriteAnimationCount) { 
       case 1:
-        this.spriteProps = { 
-          clip_x: 0, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(0);
         break;
       case 2:
-        this.spriteProps = { 
-          clip_x: 50, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(1);
         break;
       case 3:
-        this.spriteProps = { 
-          clip_x: 100, clip_y: 0, 
-          sprite_width: this.spriteWidth, sprite_height: this.spriteHeight 
-        }
+        this.spriteProps = this.sprite.getSpriteProps(2);
         break;
     }
   }

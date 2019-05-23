@@ -1,7 +1,7 @@
 /*
     Prototype Scenario
 */
-const _Scenario = require('../common/_Scenario');
+const _Scenario = require('../../../engine/assets/_Scenario');
 
 const _S_center = require('./stages/stage_center');
 const _S_up = require('./stages/stage_up');
@@ -11,8 +11,8 @@ const _S_left = require('./stages/stage_left');
 
 class scenarioPrototype extends _Scenario {
 
-  constructor(ctx, canvas, gameProps, saveData){
-    super(ctx, canvas, gameProps, "prototype");
+  constructor(ctx, canvas, saveData){
+    super(ctx, canvas, "prototype");
     this.defaultStageId = "center";
     
     // Define which stage will load on first run
@@ -26,30 +26,29 @@ class scenarioPrototype extends _Scenario {
     
     this.clearArrayItems();
     
-    let s_center = new _S_center( this.chunkSize );
-    let s_up = new _S_up( this.chunkSize );
-    let s_right = new _S_right( this.chunkSize );
-    let s_bottom = new _S_bottom( this.chunkSize );
-    let s_left = new _S_left( this.chunkSize );
-    
     let _stage = null;
 
     // Check which stage will load
     switch(stage_id) {
       default:
       case 'center':
+        let s_center = new _S_center();
         _stage = s_center;
         break;
       case 'up':
+        let s_up = new _S_up();
         _stage = s_up;
         break;
       case 'left':
+        let s_left = new _S_left();
         _stage = s_left;
         break;
       case 'right':
+        let s_right = new _S_right();
         _stage = s_right;
         break;
       case 'bottom':
+        let s_bottom = new _S_bottom();
         _stage = s_bottom;
         break;
       }

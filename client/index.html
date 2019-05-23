@@ -12,42 +12,48 @@
       <canvas id="canvas_ui"></canvas>
     </div><!-- #gameCanvas -->
     
-    <div id="mainMenu">
-      
-      <div class="game-title">
-        <img src="./img/logo.png" width="200">
-      </div>
-      
-      <ul>
-        <li class="menu-continue">
-          <a href="#!" class="menu-item" data-action="continue">Continuar</a>
-        </li>
-        <li class="menu-new">
-          <a href="#!" class="menu-item" data-action="new"><small><small>Novo Jogo</small></small><br/>1 Jogador</a>
-        </li>
-        <li class="menu-new">
-          <a href="#!" class="menu-item" data-action="new-2-players"><small><small>Novo Jogo</small></small><br/>2 Jogadores</a>
-        </li>
-        <li class="menu-save">
-          <a href="#!" class="menu-item" data-action="save">Salvar Jogo</a>
-        </li>
-        <li class="menu-load">
-          <a href="#!" class="menu-item" data-action="load">Carregar Jogo</a>
-        </li>
-        <li>
-          <a href="#!" class="menu-item" data-action="instrucoes">Instruções</a>
-        </li>
-        <li>
-          <a href="https://github.com/daniofilho/gufitrupi-project" target="_blank">Créditos</a>
-        </li>
-      </ul>
+    <div id="screen">
 
-    </div><!-- #mainMenu -->
+      <div id="mainMenu">
+        
+        <div class="game-title">
+          <img src="./img/logo.png" width="200">
+        </div>
+        
+        <ul>
+          <li class="menu-continue">
+            <a href="#!" class="menu-item" data-action="continue">Continuar</a>
+          </li>
+          <li class="menu-new">
+            <a href="#!" class="menu-item" data-action="new"><small><small>Novo Jogo</small></small><br/>1 Jogador</a>
+          </li>
+          <li class="menu-new">
+            <a href="#!" class="menu-item" data-action="new-2-players"><small><small>Novo Jogo</small></small><br/>2 Jogadores</a>
+          </li>
+          <li class="menu-save">
+            <a href="#!" class="menu-item" data-action="save">Salvar Jogo</a>
+          </li>
+          <li class="menu-load">
+            <a href="#!" class="menu-item" data-action="load">Carregar Jogo</a>
+          </li>
+          <li>
+            <a href="#!" class="menu-item" data-action="instrucoes">Instruções</a>
+          </li>
+          <li>
+            <a href="https://github.com/daniofilho/gufitrupi-project" target="_blank">Créditos</a>
+          </li>
+        </ul>
 
-    <div id="loading">
-      <p>Carregando</p>
-    </div><!-- #loading -->
-           
+      </div><!-- #mainMenu -->
+
+      <div id="loading">
+        <p>Carregando</p>
+      </div><!-- #loading -->
+    
+    </div><!-- #screen -->
+    
+    <pre id="html-console" style="display:none;"></pre>
+
     <!-- Bundle -->
     <script type="text/javascript" src="bundle.js"></script>
 
@@ -55,6 +61,7 @@
     <div class="hide">
       <!-- UI -->
       <img src="./assets/sprites/UI.png" id="sprite_ui" />
+      <img src="./assets/sprites/Enemy.png" id="sprite_enemy" />
       <!-- Players -->
       <img src="./assets/sprites/player_one.png" id="sprite_player_one" />
       <img src="./assets/sprites/player_two.png" id="sprite_player_two" />
@@ -62,7 +69,6 @@
       <img src="./assets/scenario/common/sprites/beach.png" id="sprite_beach" />
       <img src="./assets/sprites/common.png" id="sprite_common" />
     </div>
-    
                
   </body>
 </html>
