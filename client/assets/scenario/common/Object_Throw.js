@@ -57,7 +57,8 @@ class Object_Throw extends _CanThrow {
     let savedItemsState = JSON.parse( localStorage.getItem('gufitrupi__itemsState') );  
     if( savedItemsState ) {
       let itemSavedState = savedItemsState[this.getName()];
-      if( itemSavedState && itemSavedState.grabbed === true ){ // Check if this item is already grabbed
+      // Check if this item is already grabbed
+      if( itemSavedState && itemSavedState.grabbed === true ){
         if( this.fromSavedState ) {
           // Grab the item saved
           this.grabHandler( itemSavedState.grabProps.playerWhoGrabbed ); 
@@ -65,6 +66,36 @@ class Object_Throw extends _CanThrow {
           // Ignore the item from stage
           this.hide();
         }
+      }
+      //Check if it was dropped
+      if( itemSavedState && itemSavedState.dropped == true ) { 
+        // Check if it's dropped on this stage
+        if( itemSavedState.dropProps.droppedStage == window.game.getCurrentStage() ) {
+          
+          if( ! this.fromSavedState ) {
+            // Ignore the item from stage
+            this.hide();
+            this.setStopOnCollision(false);
+          }
+          
+        } else {
+          this.hide();
+          this.setStopOnCollision(false);
+        }
+
+        this.updateX( itemSavedState.dropProps.dropX );
+        this.updateY( itemSavedState.dropProps.dropY );
+        
+        this.x0 = itemSavedState.dropProps.x0;
+        this.y0 = itemSavedState.dropProps.y0;
+        
+        this.dropX = itemSavedState.dropProps.dropX;
+        this.dropY = itemSavedState.dropProps.dropY;
+
+        this.dropped = true;
+        this.originalStage = itemSavedState.dropProps.stage;
+        this.droppedStage = itemSavedState.dropProps.droppedStage;
+        
       }
     }  
   }

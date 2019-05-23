@@ -77,20 +77,16 @@ class _Scenario {
   setActualStageId(id){ 
     this.stageId = id; 
     window.game.setCurrentStage( id );
-    console.log('setting stage', id);
   }
 
   // # Save the State of items
   saveItemsState() {
-    
     // Bottom Layer
     let items = window.game.collision.getColItens();
     for (let i in items) {
       this.handleItemIfNeedSave(items[i]);
     }
-
     window.game.saveItemsState();
-
   }
 
   handleItemIfNeedSave(item) {
@@ -131,7 +127,6 @@ class _Scenario {
             'stage': item.originalStage,
             'droppedStage': (item.droppedStage) ? item.droppedStage : this.getActualStageId() // If don't have dropped stage, means we want the actual stage.  If has, keep it
           }
-          console.log('saving:', dropProps);
         }
       }
 
@@ -145,7 +140,7 @@ class _Scenario {
           'dropProps': dropProps
         }
       );
-
+        
     }
   }
 
@@ -153,9 +148,6 @@ class _Scenario {
   loadStage(stage, firstStage) {
     
     this.stage = stage;
-
-    // Set Actual Stage ID
-    this.setActualStageId( this.stage.getStageId() );
 
     // Clear previous render items
     this.renderItems = new Array();

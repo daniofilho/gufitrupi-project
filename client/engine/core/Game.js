@@ -115,8 +115,20 @@ class Game {
 
   // # Start/Restart a Game
 
+  refreshVariables() {
+
+    // Clear save state
+    localStorage.removeItem('gufitrupi__itemsState');
+
+    // Renders
+    this.itemsState = new Object();
+
+  }
+
   startNewGame( saveData ) {
 
+    this.refreshVariables();
+    
     // # Init
       
       let canvasStatic = document.getElementById('canvas_static');
@@ -467,15 +479,6 @@ class Game {
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-  /*
-    Fit Screen div on window size 
-  */
-  adjustScreenDiv() {
-    // TODO
-  }
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
   // # Run
   run() {
 
@@ -494,9 +497,6 @@ class Game {
     if( window.autoload ) {
       this.loadGame();
     }
-
-    // Fit menu on screen
-    this.adjustScreenDiv();
 
   }
 

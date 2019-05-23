@@ -153,9 +153,8 @@ class _CanThrow extends _Collidable {
     this.setThrowing(true);
     this.setGrab(false);
     this.playerWhoGrabbed = false;
-    this.dropX = this.getX();
-    this.dropY = this.getY();
-    console.log('dropping', this.getX(), this.getY() );
+    this.dropX = this.targetX;
+    this.dropY = this.targetY;
   }
 
   throw(direction, playerHeight, player) {
@@ -249,6 +248,7 @@ class _CanThrow extends _Collidable {
         }
       } else {
         this.hideSprite = true;
+        this.dropped = false;
       }
     }
 

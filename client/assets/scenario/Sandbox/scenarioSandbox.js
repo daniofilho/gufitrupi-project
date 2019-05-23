@@ -29,6 +29,9 @@ class scenarioSandbox extends _Scenario {
     }
 
     this.clearArrayItems();
+
+    // Set Actual Stage ID
+    this.setActualStageId( stage_id );
     
     let _stage = null;
 

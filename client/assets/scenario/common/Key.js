@@ -69,23 +69,19 @@ class Key extends _CanThrow {
       }
 
       //Check if it was dropped
-      
       if( itemSavedState && itemSavedState.dropped == true ) { 
-        console.log( 'dropped:', itemSavedState.dropProps.droppedStage, 'current:', window.game.getCurrentStage() );
         // Check if it's dropped on this stage
         if( itemSavedState.dropProps.droppedStage == window.game.getCurrentStage() ) {
           
-          if( this.fromSavedState ) {
-          } else {
+          if( ! this.fromSavedState ) {
             // Ignore the item from stage
-            //this.hide();
+            this.hide();
             this.setStopOnCollision(false);
           }
           
         } else {
-          //this.hide();
+          this.hide();
           this.setStopOnCollision(false);
-          
         }
 
         this.updateX( itemSavedState.dropProps.dropX );

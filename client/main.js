@@ -13,6 +13,5 @@ window.onload = function() {
  * 
  * TODO:
  * 
- *  - Drops items on stages and make it save when teleporting
- * 
+ *  - Clear SaveState on New Game
  */
