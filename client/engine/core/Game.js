@@ -48,6 +48,12 @@ class Game {
 
       this.globalAssets = new GlobalAssets( this.gameProps.chunkSize );
 
+      // Dialog Props
+      this.dialog = {
+        hideSprite: false,
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam purus purus, vehicula sit amet orci quis, ultricies pulvinar odio. Nam tempus diam vel augue convallis tristique."
+      }
+
   }
 
   // Gets
