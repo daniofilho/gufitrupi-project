@@ -124,7 +124,7 @@ class Player {
     
     isGrabing() { return this.grabing; }
     setNotGrabbing(){
-      this.grabing = false;
+      this.removeGrabedObject();
       this.resetStep();
     }
     removeGrabedObject() { 
