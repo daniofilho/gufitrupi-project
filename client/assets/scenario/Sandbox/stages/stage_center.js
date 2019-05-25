@@ -5,6 +5,7 @@ const Beach_Wall = require('../../common/Beach_Wall');
 const Beach_Floor = require('../../common/Beach_Floor');
 const Teleport = require('../../common/Teleport');
 const Fire = require('../../common/Fire');
+const Dialog = require('../../common/Dialog');
 
 class Prototype_Stage_Center extends _Stage{
 
@@ -32,8 +33,8 @@ class Prototype_Stage_Center extends _Stage{
       case "teleport":
         return new Teleport(item.type, x, y, xIndex, yIndex, item );
         break;
-      case "fire":
-        return new Fire(item.type, x, y);
+      case "dialog":
+        return new Dialog(item.type, x, y);
         break;
     }
   }
@@ -63,23 +64,24 @@ class Prototype_Stage_Center extends _Stage{
     // Floor
     let f1 = { name: "floor", type: "01"};
     let f2 = { name: "floor", type: "02"};  
+      
 
     // Make shure to design basead on gameProperties !
     let scenarioDesign = [
       [ wc_tl,    wt,    wt,    wt,    wt,    wt,     iwc_br,    f1,    iwc_bl,    wt,     wt,     wt,     wt,     wt,     wt,     wc_tr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
+      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f2,     f1,     f1,     f1,     wr ],
+      [ wl,       f1,    f2,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ iwc_br,   f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     iwc_bl ],
       [ f1,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     f1 ],
-      [ iwc_tr,   f1,    f1,    ob,    ob,    ob,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     iwc_tl ],
-      [ wl,       f1,    f1,    ob,    f2,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wl,       f1,    f1,    ob,    ob,    ob,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
+      [ iwc_tr,   f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f2,     f1,     f1,     f1,     iwc_tl ],
+      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f2,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
+      [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f2,     f1,     wr ],
       [ wl,       f1,    f1,    f1,    f1,    f1,     f1,        f1,    f1,        f1,     f1,     f1,     f1,     f1,     f1,     wr ],
-      [ wc_bl,    wb,    wb,    wb,    wb,    wb,     iwc_tr,    ob,   iwc_tl,     wb,     wb,     wb,     wb,     wb,     wb,     wc_br ]
+      [ wc_bl,    wb,    wb,    wb,    wb,    wb,     wb,        wb,    wb,        wb,     wb,     wb,     wb,     wb,     wb,     wc_br ]
     ]
 
     // # Proccess scenario design
@@ -104,17 +106,25 @@ class Prototype_Stage_Center extends _Stage{
     let tbl = { name: "wall", type: "tree_bottom_left" };  
     let tbr = { name: "wall", type: "tree_bottom_right" }; 
 
+    
+    let brd2 = { name: "dialog", type: "center_left_notice"};
+    let brd3 = { name: "dialog", type: "center_top_notice"};
+    let brd4 = { name: "dialog", type: "center_right_notice"};
+    let brdw = { name: "dialog", type: "center_welcome"};
+    
+    let fc = { name: "wall", type: "fence"};
+
     let scenarioDesign = [
       [ false,   false,  false,   false,   false,   false,   false,   tp_lf,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   false,   false,   brd3,    false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ tp_doors,false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_enemy ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   brd2,   false,    false,   fc,      fc,      fc,     fc,      fc,      fc,      false,   false,   false,   false,    brd4,   false ],
+      [ false,   false,  false,   false,   fc,      brdw,    false,   false,   false,   fc,      false,   false,   false,   false,   false,   false ],
+      [ tp_doors,false,  false,   false,   fc,      false,   false,   false,   false,   fc,      false,   false,   false,   false,   false,   tp_enemy ],
+      [ false,   false,  false,   false,   fc,      false,   false,   false,   false,   fc,      false,   false,   false,   false,   false,   false ],
+      [ false,   false,  false,   false,   fc,      false,      fc,      fc,   fc,      fc,      false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   tbl,     tbr,     false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],

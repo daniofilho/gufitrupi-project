@@ -459,6 +459,9 @@ class Player {
     };
 
     handleMovement( keysDown ) {
+
+      // If dialog active, don't walk
+      if( window.game.isDialogActive() ) return;
       
       // Player 1 Controls
       if( this.playerNumber == 1 ) {
@@ -479,6 +482,9 @@ class Player {
     }
 
     handleKeyUp(keyUp) {
+      
+      // If dialog active, don't walk
+      if( window.game.isDialogActive() ) return;
       
       // Player 1
       if( this.playerNumber == 1 ) {
@@ -565,7 +571,11 @@ class Player {
 
     checkPlayerDeath() {
       if( this.lifes < 1 && !window.god_mode ) {
-       window.game.newGame();
+        window.game.gameOver(true);
+        setTimeout( () => {
+          window.game.loading(true);
+          window.game.newGame();
+        }, 3000);
       }
     }
   

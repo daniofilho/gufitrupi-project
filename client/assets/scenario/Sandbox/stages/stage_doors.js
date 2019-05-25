@@ -7,6 +7,7 @@ const Door = require('../../common/Door');
 const Key = require('../../common/Key');
 const Object_Throw = require('../../common/Object_Throw');
 const Object_Push = require('../../common/Object_Push');
+const Dialog = require('../../common/Dialog');
 
 class Prototype_Stage_Doors extends _Stage{
 
@@ -46,6 +47,9 @@ class Prototype_Stage_Doors extends _Stage{
       case "object_push":
         return new Object_Push(item.type, x, y, this.getStageId());
         break;
+      case "dialog":
+          return new Dialog(item.type, x, y);
+          break;
     }
   }
         
@@ -143,24 +147,23 @@ class Prototype_Stage_Doors extends _Stage{
     let k_g = { name: 'key', type: 'gray'}; 
     let k_p = { name: 'key', type: 'purple'}; 
     let k_r = { name: 'key', type: 'red'}; 
-    let k_gr = { name: 'key', type: 'green'}; 
-
-
+    
+    let gntc = { name: "dialog", type: "doors_gratz_notice"};
 
     let itemsBottom = [
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-        [ false,   false,  false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,    fnce,   false,   false ],
-        [ false,   false,  false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,    fnce,   false,   false ],
-        [ false,   false,  false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,    fnce,   false,   false ],
-        [ false,   false,  dgtl,    dgtr,    fnce,    dptl,    dptr,    fnce,    drtl,    drtr,    fnce,    dgrtl,   dgrtr,    fnce,   false,   false ],
-        [ false,   fnce,   dgbl,    dgbr,    fnce,    dpbl,    dpbr,    fnce,    drbl,    drbr,    fnce,    dgrbl,   dgrbr,    fnce,   false,   false ],
+        [ false,   false,  false,   false,   fnce,    k_r,     false,   fnce,    k_g,     false,   fnce,    k_p,    false,    fnce,    false,   false ],
+        [ false,   false,  gntc,    false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false ],
+        [ false,   false,  false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false ],
+        [ false,   false,  dgtl,    dgtr,    fnce,    dptl,    dptr,    fnce,    drtl,    drtr,    fnce,    dgrtl,   dgrtr,   fnce,    false,   false ],
+        [ false,   fnce,   dgbl,    dgbr,    fnce,    dpbl,    dpbr,    fnce,    drbl,    drbr,    fnce,    dgrbl,   dgrbr,   fnce,    false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   tp_c ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-        [ false,   false,  k_g,     false,   false,   k_p,     false,   false,   k_r,     false,   false,   k_gr,    false,   false,   false,   false ],
+        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,    false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-        [ false,   false,  false,   stne,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   brrl,   false ],
+        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   brrl,    false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
     ];
     // # Proccess scenario design

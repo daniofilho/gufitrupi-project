@@ -8,10 +8,3 @@ window.onload = function() {
     game.run();
  
 }
-
-/**
- * 
- * TODO:
- * 
- *  - Clear SaveState on New Game
- */
