@@ -123,14 +123,12 @@ class UI {
         y: window.game.gameProps.canvasHeight - (this.chunkSize * 1),
         w: window.game.gameProps.canvasWidth - (this.chunkSize * 2),
         h: this.chunkSize * 4,
-        contentProps: {
-          text: window.game.dialog.text
-        }
+        dialog: window.game.dialog[window.game.dialogIndex]
       }
       dProps.y = dProps.y - dProps.h;
       
       this.addItem( 
-        new Dialog( dProps.x, dProps.y, dProps.w, dProps.h, dProps.contentProps ) 
+        new Dialog( dProps.x, dProps.y, dProps.w, dProps.h, dProps.dialog ) 
       );
   }
 }//class

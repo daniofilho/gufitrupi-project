@@ -1,11 +1,11 @@
 class _Dialog {
 
-  constructor( x, y, w, h, contentProps ) {
-      
-    this.hideSprite = contentProps.hideSprite;
-      
-    this.text = contentProps.text;
-  
+  constructor( x, y, w, h, dialog ) {
+    
+    this.dialog = dialog;
+    
+    this.text = {};
+
     // # Position
     this.x = x;
     this.y = y;
@@ -18,8 +18,12 @@ class _Dialog {
 		this.fillColor = "rgba(255,255,255,0.8)";
 		this.strokeColor = "rgba(0,0,0,0.8)";
 		
-		this.font = "35px 'Press Start 2P'";
-		this.fontColor = "rgba(0,0,0,0.8)";
+		this.font = "28px 'Press Start 2P'";
+    this.fontColor = "rgba(0,0,0,0.8)";
+
+    this.textY = this.y + 90;
+    this.adjustText( this.dialog.text, 48 );
+
   }
     
   // # Sets      
@@ -29,11 +33,30 @@ class _Dialog {
     // # Gets            
     getX() { return this.x; }
     getY() { return this.y; }
-          
+
+    adjustText( str, lenght ) {
+      this.text = this.splitText(str, lenght);
+    }
+
+    splitText(str, l) { //ref: https://stackoverflow.com/questions/7624713/js-splitting-a-long-string-into-strings-with-char-limit-while-avoiding-splittin
+      var strs = [];
+      while(str.length > l){
+          var pos = str.substring(0, l).lastIndexOf(' ');
+          pos = pos <= 0 ? l : pos;
+          strs.push(str.substring(0, pos));
+          var i = str.indexOf(' ', pos)+1;
+          if(i < pos || i > pos+l)
+              i = pos;
+          str = str.substring(i);
+      }
+      strs.push(str);
+      return strs;
+  }
+
     // # Item Render
     render(ctx) {
           
-      if ( this.hideSprite ) return;
+      if ( this.dialog.hideSprite ) return;
 			
 			// Rounded Rectangle - reference: http://jsfiddle.net/robhawkes/gHCJt/
     
@@ -53,8 +76,11 @@ class _Dialog {
 			
 			// Font
 			ctx.font = this.font;
-			ctx.fillStyle = this.fontColor
-			ctx.fillText( this.text, this.x + 50, this.y + 90); 
+      ctx.fillStyle = this.fontColor
+      this.text.map( (text) => {
+        ctx.fillText( text, this.x + 50, this.textY);
+        this.textY = this.textY + 50;
+      } );
 			
     }
          

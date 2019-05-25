@@ -29,31 +29,31 @@ class Game {
     this.itemsState = new Object();
 
     // Game
-      this.gameProps = new gameProperties();
-      this.players = new Array();
-      this.collision = null;
-      this.defaultScenario = 'sandbox';
-      this.scenario = null;
-      this.UI = null;
-      this.currentStageName = '';
+    this.gameProps = new gameProperties();
+    this.players = new Array();
+    this.collision = null;
+    this.defaultScenario = 'sandbox';
+    this.scenario = null;
+    this.UI = null;
+    this.currentStageName = '';
 
-      this.gameReady = false;
+    this.gameReady = false;
 
-      this.multiplayer = false;
+    this.multiplayer = false;
 
-      // Renders
-      this.renderStatic = null;
-      this.renderLayers = null;
-      this.renderUI     = null;
+    // Renders
+    this.renderStatic = null;
+    this.renderLayers = null;
+    this.renderUI     = null;
 
-      this.globalAssets = new GlobalAssets( this.gameProps.chunkSize );
+    this.globalAssets = new GlobalAssets( this.gameProps.chunkSize );
 
-      // Dialog Props
-      this.dialog = {
-        hideSprite: false,
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam purus purus, vehicula sit amet orci quis, ultricies pulvinar odio. Nam tempus diam vel augue convallis tristique."
-      }
-
+    // Dialog Props
+    this.defaultDialog = [ { hideSprite: true, text: "" } ];
+    this.dialog = this.defaultDialog;
+    this.dialogActive = false;
+    this.dialogIndex = 0;
+    this.firstKeyUpTrigger = true;
   }
 
   // Gets
@@ -68,6 +68,48 @@ class Game {
 
   setCurrentStage(stage){ this.currentStageName = stage; }
   getCurrentStage() { return this.currentStageName; }
+
+  // Dialog
+  isDialogActive(){ return this.dialogActive; }
+  setDialogActive(bool) { this.dialogActive = bool; }
+  setDialog( dialog) {
+    this.dialog = dialog;
+    this.setDialogActive(true);
+  }
+  resetDialog() {
+    this.dialog = this.defaultDialog;
+    this.dialogIndex = 0;
+    this.setDialogActive(false);
+    this.firstKeyUpTrigger = true;
+  }
+    
+  // # Go to next dialog
+	nextDialog() {
+    if( this.isDialogActive() ) {
+      if( this.firstKeyUpTrigger ) { // Ignore the first keyUp because it's triggering to next index right after the player activate the dialog
+        this.firstKeyUpTrigger = false;
+      } else {
+        this.dialogIndex++;
+        if( this.dialog[this.dialogIndex].hideSprite ) {
+          this.resetDialog();
+        }
+      }
+    }
+	}
+
+  // # Key up handle
+	handleKeyUp(keyCode) {
+    
+    // Pause
+    if( keyCode == 27 && this.gameIsLoaded ) { // ESQ
+      this.togglePause();
+    }
+
+    // Dialog
+		if (keyCode == 32 || keyCode == 69) { // Space or E
+			this.nextDialog();
+		} 
+  }
   
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -101,11 +143,6 @@ class Game {
         });
       }
       
-      // Pause Event Listener
-      if( e.keyCode == 27 && this.gameIsLoaded ) { // ESQ
-        this.togglePause();
-      }
-
       // Player handle keyup
       if( this.players) {
         this.players.map( (player) => {
@@ -113,6 +150,9 @@ class Game {
         });
       }
 
+      // Game Handle keyp
+      this.handleKeyUp(e.keyCode);
+      
     }.bind(this), false);
 
   }

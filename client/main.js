@@ -13,5 +13,8 @@ window.onload = function() {
  * 
  * TODO:
  * 
- *  - Clear SaveState on New Game
+ *  - fix and adjust all players sprite
+ *  - what happens when player dies? handle it
+ *  - keys and doors bugged. Keys are on low layer than doors
+ *  - Open github repo
  */
