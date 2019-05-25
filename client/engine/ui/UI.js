@@ -1,5 +1,5 @@
 const UIitem = require('./_UIitem');
-const UIitem_text = require('./_UIitem_text');
+const Dialog = require('./_Dialog');
 
 class UI {
 
@@ -113,6 +113,23 @@ class UI {
         }
 
     // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
+
+    /*
+        Dialog Box
+    */
+      
+      let dProps = {
+        x: this.chunkSize * 1,
+        y: window.game.gameProps.canvasHeight - (this.chunkSize * 1),
+        w: window.game.gameProps.canvasWidth - (this.chunkSize * 2),
+        h: this.chunkSize * 4,
+        dialog: window.game.dialog[window.game.dialogIndex]
+      }
+      dProps.y = dProps.y - dProps.h;
+      
+      this.addItem( 
+        new Dialog( dProps.x, dProps.y, dProps.w, dProps.h, dProps.dialog ) 
+      );
   }
 }//class
 module.exports = UI
