@@ -77,7 +77,7 @@ class Dialog extends _DialogTrigger {
 					[
 						{
 							hideSprite: false,
-							text: "Sandbox: Keys and Doors"
+							text: "Keys and Doors"
 						},
 						{
 							hideSprite: true,
@@ -92,7 +92,7 @@ class Dialog extends _DialogTrigger {
 					[
 						{
 							hideSprite: false,
-							text: "Sandbox: Fire and Health items"
+							text: "Fire and Health items"
 						},
 						{
 							hideSprite: true,
@@ -111,7 +111,7 @@ class Dialog extends _DialogTrigger {
 							},
 							{
 								hideSprite: false,
-								text: "Sandbox: Enemys and Barrels"
+								text: "Enemys and Barrels"
 							},
 							{
 								hideSprite: true,

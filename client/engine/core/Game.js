@@ -109,6 +109,7 @@ class Game {
 		if (keyCode == 32 || keyCode == 69) { // Space or E
 			this.nextDialog();
 		} 
+  
   }
   
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -169,6 +170,19 @@ class Game {
     // Renders
     this.itemsState = new Object();
 
+    this.players = new Array();
+    this.collision = null;
+    this.defaultScenario = 'sandbox';
+    this.scenario = null;
+    this.UI = null;
+    this.currentStageName = '';
+
+    // Renders
+    this.renderStatic = null;
+    this.renderLayers = null;
+    this.renderUI     = null;
+
+    this.gameOver(false);
   }
 
   startNewGame( saveData ) {
@@ -363,7 +377,8 @@ class Game {
     let divMenu = document.getElementById('mainMenu');
 
     // Set mainMenu class
-    ( paused ) ? divMenu.classList.add('paused') : divMenu.classList.add('new-game');
+    ( paused ) ? document.body.classList.add('paused') : '';
+    ( paused ) ? '' : divMenu.classList.add('new-game');
     
     // Toggle Menu
     divMenu.classList.toggle('show');
@@ -388,6 +403,11 @@ class Game {
         case 'new-2-players':
           this.multiplayer = true;
           this.newGame(false);// false = won't load saveData
+          break;
+        case 'controls':
+        case 'back-controls':
+          document.getElementById('mainMenu').classList.toggle('show');
+          document.getElementById('controls').classList.toggle('show');
           break;
       }
     }
@@ -497,6 +517,13 @@ class Game {
     let display = ( bool ) ? 'flex' : 'none';
     document.getElementById('loading').style.display = display;
   }
+  
+  // # Loading
+  gameOver(bool) {
+    if( bool ) this._pause = true; 
+    let display = ( bool ) ? 'flex' : 'none';
+    document.getElementById('game-over').style.display = display;
+  }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -532,6 +559,7 @@ class Game {
     document.getElementById('mainMenu').classList.remove('show');
     document.getElementById('gameCanvas').classList.remove('show');
     this.loading(false);
+    this.gameOver(false);
 
     // Start the event listeners
     this.defaultEventListeners();

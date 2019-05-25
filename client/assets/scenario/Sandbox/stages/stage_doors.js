@@ -152,8 +152,8 @@ class Prototype_Stage_Doors extends _Stage{
 
     let itemsBottom = [
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-        [ false,   gntc,   false,   false,   fnce,    false,   k_r,     fnce,    k_g,     false,   fnce,    k_p,    false,    fnce,    false,   false ],
-        [ false,   false,  false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false ],
+        [ false,   false,  false,   false,   fnce,    k_r,     false,   fnce,    k_g,     false,   fnce,    k_p,    false,    fnce,    false,   false ],
+        [ false,   false,  gntc,    false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false ],
         [ false,   false,  false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false,   fnce,    false,   false ],
         [ false,   false,  dgtl,    dgtr,    fnce,    dptl,    dptr,    fnce,    drtl,    drtr,    fnce,    dgrtl,   dgrtr,   fnce,    false,   false ],
         [ false,   fnce,   dgbl,    dgbr,    fnce,    dpbl,    dpbr,    fnce,    drbl,    drbr,    fnce,    dgrbl,   dgrbr,   fnce,    false,   false ],

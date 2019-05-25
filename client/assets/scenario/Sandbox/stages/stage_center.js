@@ -116,11 +116,11 @@ class Prototype_Stage_Center extends _Stage{
 
     let scenarioDesign = [
       [ false,   false,  false,   false,   false,   false,   false,   tp_lf,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   brd3,    false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
       [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
-      [ false,   false,  brd2,    false,   fc,      fc,      fc,      fc,      fc,      fc,      false,   false,   false,   brd4,    false,   false ],
+      [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+      [ false,   brd2,   false,    false,   fc,      fc,      fc,     fc,      fc,      fc,      false,   false,   false,   false,    brd4,   false ],
       [ false,   false,  false,   false,   fc,      brdw,    false,   false,   false,   fc,      false,   false,   false,   false,   false,   false ],
       [ tp_doors,false,  false,   false,   fc,      false,   false,   false,   false,   fc,      false,   false,   false,   false,   false,   tp_enemy ],
       [ false,   false,  false,   false,   fc,      false,   false,   false,   false,   fc,      false,   false,   false,   false,   false,   false ],

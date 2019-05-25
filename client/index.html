@@ -20,35 +20,90 @@
           <img src="./img/logo.png" width="200">
         </div>
         
-        <ul>
+        <ul class="menu">
           <li class="menu-continue">
-            <a href="#!" class="menu-item" data-action="continue">Continuar</a>
+            <a href="#!" class="menu-item" data-action="continue">Continue</a>
           </li>
           <li class="menu-new">
-            <a href="#!" class="menu-item" data-action="new"><small><small>Novo Jogo</small></small><br/>1 Jogador</a>
+            <a href="#!" class="menu-item" data-action="new"><small><small>New Game</small></small><br/>1 Player</a>
           </li>
           <li class="menu-new">
-            <a href="#!" class="menu-item" data-action="new-2-players"><small><small>Novo Jogo</small></small><br/>2 Jogadores</a>
+            <a href="#!" class="menu-item" data-action="new-2-players"><small><small>New Game</small></small><br/>2 Players</a>
           </li>
           <li class="menu-save">
-            <a href="#!" class="menu-item" data-action="save">Salvar Jogo</a>
+            <a href="#!" class="menu-item" data-action="save">Save Game</a>
           </li>
           <li class="menu-load">
-            <a href="#!" class="menu-item" data-action="load">Carregar Jogo</a>
+            <a href="#!" class="menu-item" data-action="load">Load Game</a>
           </li>
           <li>
-            <a href="#!" class="menu-item" data-action="instrucoes">Instruções</a>
+            <a href="#!" class="menu-item" data-action="controls">Controls</a>
           </li>
           <li>
-            <a href="https://github.com/daniofilho/gufitrupi-project" target="_blank">Créditos</a>
+            <a href="https://github.com/daniofilho/gufitrupi-project" target="_blank">Credits</a>
           </li>
         </ul>
 
       </div><!-- #mainMenu -->
 
       <div id="loading">
-        <p>Carregando</p>
+        <p>Loading</p>
       </div><!-- #loading -->
+      
+      <div id="game-over">
+        <p>Game Over</p>
+      </div><!-- #loading -->
+
+      <div id="controls">
+        
+        <table class="defaultTable">
+          <thead>
+            <tr>
+              <td></td>
+              <td><img src="./img/player_one.png" width="50"></td>
+              <td><img src="./img/player_two.png" width="50"></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Up</td>
+              <td>&uarr;</td>
+              <td>W</td>
+            </tr>
+            <tr>
+              <td>Down</td>
+              <td>&darr;</td>
+              <td>S</td>
+            </tr>
+            <tr>
+              <td>Left</td>
+              <td><span class="rotate-90">&uarr;</span></td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <td>Right</td>
+              <td><span class="rotate90">&uarr;</span></td>
+              <td>D</td>
+            </tr>
+            <tr>
+              <td>Grab/Drop</td>
+              <td>CTRL</td>
+              <td>E</td>
+            </tr>
+            <tr>
+              <td>Use/Throw</td>
+              <td>Space</td>
+              <td>F</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <ul class="menu">
+          <li>
+            <a href="#!" class="menu-item" data-action="back-controls">Back</a>
+          </li>
+        </ul>
+      </div>
     
     </div><!-- #screen -->
     

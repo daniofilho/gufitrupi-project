@@ -66,31 +66,26 @@ class Teleport extends _Collidable {
         player.hidePlayer();
       });
 
-      // Wait some time - dont't need it anymore (i think)
-      //setTimeout( () => {
-        
-        // Now teleport all players to same location and direction
-        let targetX = playerWhoActivatedTeleport.getX();
-        let targetY = playerWhoActivatedTeleport.getY();
-        let lookDirection = playerWhoActivatedTeleport.getSpriteProps().direction;
-        
-        players.map( (player) => {
-          player.setX(targetX, true); // true = also set collision x too
-          player.setY(targetY, true);
-          player.triggerLookDirection(lookDirection);
-          player.checkGrabbingObjects();
-          player.showPlayer();
-        });
+      // Now teleport all players to same location and direction
+      let targetX = playerWhoActivatedTeleport.getX();
+      let targetY = playerWhoActivatedTeleport.getY();
+      let lookDirection = playerWhoActivatedTeleport.getSpriteProps().direction;
+      
+      players.map( (player) => {
+        player.setX(targetX, true); // true = also set collision x too
+        player.setY(targetY, true);
+        player.triggerLookDirection(lookDirection);
+        player.checkGrabbingObjects();
+        player.showPlayer();
+      });
 
-        // Change stage
-        collidable.scenario.setStage( 
-          this.teleportProps.targetStage,
-          false // firstStage ?
-        );
+      // Change stage
+      collidable.scenario.setStage( 
+        this.teleportProps.targetStage,
+        false // firstStage ?
+      );
 
-        window.game.loading(false);
-
-      //}, 300);
+      window.game.loading(false);
       
     }
 

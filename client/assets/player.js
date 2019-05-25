@@ -571,7 +571,11 @@ class Player {
 
     checkPlayerDeath() {
       if( this.lifes < 1 && !window.god_mode ) {
-       window.game.newGame();
+        window.game.gameOver(true);
+        setTimeout( () => {
+          window.game.loading(true);
+          window.game.newGame();
+        }, 3000);
       }
     }
   
