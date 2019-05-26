@@ -46,6 +46,7 @@ class Player {
       this.type = "player";
 
       this.grabing = false;
+      this.walking = false;
       
     // # Events  
       
@@ -86,8 +87,32 @@ class Player {
         this.lifes = playerProps.lifes;
       }
 
+      this.walkSound = false;
+      this.useSound = false;
+      this.hurtSound = false;
+      this.grabSound = false;
+      
       this.run();
   }
+
+  /*
+    # Sounds
+  */
+    initSounds() {
+
+      // Walk
+      this.walkSound = new Howl({ src: ['./sounds/player/walk.mp3'], loop: true, volume: 0.6 });
+      
+      // Use
+      this.useSound = new Howl({ src: ['./sounds/player/use.mp3'] });
+
+      // Hurt
+      this.hurtSound = new Howl({ src: ['./sounds/player/hurt.mp3'] });
+
+      // Grab
+      this.grabSound = new Howl({ src: ['./sounds/player/grab.mp3'] });
+
+    }
 
   /* 
       Grab/Pick Items Collision Box
@@ -140,6 +165,8 @@ class Player {
           if( object.isGrabbed() ) return; // avoid players grabbing the same object
           object.grabHandler(this.playerNumber);
           this.grabObject( object );
+        } else {
+          this.grabSound.play();
         }
         this.grabing = !this.grabing;
         this.resetStep();
@@ -154,6 +181,7 @@ class Player {
             this.resetStep();
           }
         } else {
+          this.grabSound.play();
           this.grabing = !this.grabing;
           this.resetStep();
         }
@@ -163,6 +191,7 @@ class Player {
 
     // Use items
     triggerUse() {
+
       // If has object in hand, use it
       if( this.objectGrabbed ) {
         this.objectGrabbed.use( this.spriteProps.direction, this.getHeight(), this );
@@ -171,6 +200,8 @@ class Player {
         let object = window.game.collision.justCheck(this, this.getGrabCollisionX(), this.getGrabCollisionY(), this.getGrabCollisionWidth(), this.getGrabCollisionHeight());
         if( object && object.canUse ) {
           object.useHandler( this.spriteProps.direction );
+        } else {
+          this.useSound.play();
         }
       }
     }
@@ -432,6 +463,7 @@ class Player {
       this.setX( this.getX() - this.getSpeed()); 
       this.setCollisionX( this.getCollisionX() - this.getSpeed()); 
       this.updateGrabCollisionXY();
+      this.walking = true;
     };
 			
 		movRight() { 
@@ -440,6 +472,7 @@ class Player {
       this.setX( this.getX() + this.getSpeed() ); 
       this.setCollisionX( this.getCollisionX() + this.getSpeed()); 
       this.updateGrabCollisionXY();
+      this.walking = true;
     };
 			
 		movUp() { 
@@ -448,6 +481,7 @@ class Player {
       this.setY( this.getY() - this.getSpeed() ); 
       this.setCollisionY( this.getCollisionY() - this.getSpeed() );
       this.updateGrabCollisionXY();
+      this.walking = true;
     };
 			
 		movDown() {  
@@ -456,6 +490,7 @@ class Player {
       this.setY( this.getY() + this.getSpeed() ); 
       this.setCollisionY( this.getCollisionY() + this.getSpeed() );
       this.updateGrabCollisionXY();
+      this.walking = true;
     };
 
     handleMovement( keysDown ) {
@@ -498,6 +533,8 @@ class Player {
         if (keyUp == 69) this.triggerUse();  // Use => E
       }
 
+      this.walking = false;
+      this.walkSound.stop();
     }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
@@ -548,6 +585,8 @@ class Player {
     hurtPlayer( amount ) {
       if( this.canBeHurt ) {
         
+        this.hurtSound.play();
+
         // Hurt player
         this.lifes -= amount;
         if( this.lifes < 0 ) this.lifes = 0;
@@ -572,10 +611,11 @@ class Player {
     checkPlayerDeath() {
       if( this.lifes < 1 && !window.god_mode ) {
         window.game.gameOver(true);
+        /*
         setTimeout( () => {
           window.game.loading(true);
           window.game.newGame();
-        }, 3000);
+        }, 3000);*/
       }
     }
   
@@ -609,6 +649,10 @@ class Player {
       }
       
       if ( this.hideSprite ) return;
+
+      if( this.walking && !this.walkSound.playing() ) {
+        this.walkSound.play();
+      }
 
       // What to do every frame in terms of render? Draw the player
       let props = {
@@ -645,6 +689,7 @@ class Player {
 
 
     run() {
+      this.initSounds();
       this.checkGrabbingObjects();
       this.lookDirection = this.lookDown();
       this.updateGrabCollisionXY();

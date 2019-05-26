@@ -31,10 +31,12 @@ class _Scenario {
 
   initSound() {
     this.sound = new Howl({
-      src: [this.soundSrc]
+      src: [this.soundSrc],
+      loop: true,
+      volume: 0.5
     });
-    this.sound.play();
   }
+  getScenarioSound() { return this.sound; }
 
   // # Add Items to the render
   addStaticItem(item){

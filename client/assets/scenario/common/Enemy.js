@@ -84,7 +84,21 @@ class Enemy extends _CanHurt {
     this.xFromPlayerDistance = 0;
     this.YFromPlayerDistance = 0;
 
+    this.deathSound = false;
+
+    this.initSounds();
+
     this.runEnemy();
+  }
+
+  /*
+    # Sounds
+  */
+  initSounds() {
+    
+    // Use
+    this.deathSound = new Howl({ src: ['./sounds/enemy/death.mp3'] });
+
   }
 
   isDead() { return this.dead; }
@@ -290,7 +304,7 @@ class Enemy extends _CanHurt {
   checkMyDeath() {
     if( this.lifes < 1 ) {
       this.setDead(true);
-
+      this.deathSound.play();
       if( this.spriteProps.direction != "dying") this.stepCount = 1; // If it's not dying, reset animation step
       this.setSpeed(1.3); // Increase speed
       this.hasCollisionEvent = false; // Prevent enemy hurting player when in death animation
