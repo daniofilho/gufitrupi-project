@@ -1,6 +1,6 @@
 class _Stage {
 
-  constructor(stageId) {
+  constructor(stageId, soundSrc) {
     
     this.renderItems = new Array();
     
@@ -17,8 +17,12 @@ class _Stage {
     this.player2StartY = 0;
 
     this.stageId = stageId;
+
+    this.sound = false;
+    this.soundSrc = soundSrc;
+
   }
-  
+
   // # Gets
   getStaticItems() { return this.renderItems; }
   getLayerItems() { return this.renderLayerItems; }
@@ -59,7 +63,7 @@ class _Stage {
     this.renderLayerItems__top = new Array();
   }
   
-  run () { }
+  run () {  }
 
 } // class
 module.exports = _Stage;

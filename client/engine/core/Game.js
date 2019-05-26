@@ -54,6 +54,17 @@ class Game {
     this.dialogActive = false;
     this.dialogIndex = 0;
     this.firstKeyUpTrigger = true;
+
+    // Sounds
+    this.menuSoundSrc = "./sounds/main-menu.mp3";
+    this.menuSound = null;
+  }
+
+  initSound() {
+    this.menuSound = new Howl({
+      src: [this.menuSoundSrc]
+    });
+    this.menuSound.play();
   }
 
   // Gets
@@ -188,6 +199,7 @@ class Game {
   startNewGame( saveData ) {
 
     this.refreshVariables();
+    this.menuSound.stop();
     
     // # Init
       
@@ -503,10 +515,17 @@ class Game {
   pause() { 
     this._pause = true; 
     this.mainMenu(true);
+
+    this.menuSound.play();
+    if( this.scenario ) this.scenario.sound.pause();
+    
   }
   unpause() { 
     document.getElementById('mainMenu').classList.remove('show');
-    this._pause = false;  
+    this._pause = false; 
+    
+    this.menuSound.stop();
+    if( this.scenario ) this.scenario.sound.play();
   }
   togglePause() { ( this.isPaused() ) ? this.unpause() : this.pause() }
   
@@ -564,6 +583,8 @@ class Game {
     // Start the event listeners
     this.defaultEventListeners();
     
+    this.initSound(); 
+
     // Shows Menu
     this.mainMenu(false);
 

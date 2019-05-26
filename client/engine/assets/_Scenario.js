@@ -1,6 +1,6 @@
 class _Scenario {
 
-  constructor(ctx, canvas, scenario_id){
+  constructor(ctx, canvas, scenario_id, soundSrc){
     this.ctx = ctx;
     this.canvas = canvas;
         
@@ -22,6 +22,18 @@ class _Scenario {
     this.players = new Array();
 
     this.scenario_id = scenario_id;
+    
+    this.sound = null;
+    this.soundSrc = soundSrc;
+
+    this.initSound();
+  }
+
+  initSound() {
+    this.sound = new Howl({
+      src: [this.soundSrc]
+    });
+    this.sound.play();
   }
 
   // # Add Items to the render
