@@ -10,6 +10,7 @@ const Dialog = require('../../common/Dialog');
 class Prototype_Stage_Center extends _Stage{
 
   constructor() {
+    
     super("center");
 
     let player1StartX = window.game.getChunkSize() * 7;
@@ -187,7 +188,6 @@ class Prototype_Stage_Center extends _Stage{
     this.scenarioDesign();
     this.scenarioDesignLayer__bottom();
     this.scenarioDesignLayer__top();
-    
   }
 
 } // class

@@ -54,6 +54,42 @@ class Game {
     this.dialogActive = false;
     this.dialogIndex = 0;
     this.firstKeyUpTrigger = true;
+
+    // Sounds
+    this.menuSoundSrc = "./sounds/main-menu.mp3";
+    this.menuSound = false;
+
+    this.successSoundSrc = "./sounds/scenarios/success.mp3";
+    this.successSound = false;
+    
+    this.gameOverSoundSrc = "./sounds/scenarios/game-over.mp3";
+    this.gameOverSound = false;
+
+    this.scenarioSound = false;
+
+    this.initSound();
+  }
+
+  initSound() {
+    this.menuSound = new Howl({
+      src: [this.menuSoundSrc],
+      loop: true,
+      volume: 0.6
+    });
+    this.menuSound.play();
+    this.successSound = new Howl({
+      src: [this.successSoundSrc],
+      volume: 0.6
+    });
+    this.gameOverSound = new Howl({
+      src: [this.gameOverSoundSrc]
+    });
+  }
+
+  playSuccessSound() {
+    this.scenarioSound.volume(0.2);
+    this.successSound.play();
+    this.successSound.on('end', () => { this.scenarioSound.volume(0.6); });
   }
 
   // Gets
@@ -182,7 +218,6 @@ class Game {
     this.renderLayers = null;
     this.renderUI     = null;
 
-    this.gameOver(false);
   }
 
   startNewGame( saveData ) {
@@ -209,6 +244,8 @@ class Game {
       } else {
         this.scenario = this.getScenario( saveData.scenario.scenarioId, contextStatic, canvasStatic, saveData );
       }
+
+      this.scenarioSound = this.scenario.getScenarioSound();
 
     // # Players
       this.players = new Array();
@@ -266,6 +303,9 @@ class Game {
     // Make sure the game is not paused
       this.unpause();
     
+    // Scenario sound
+      this.scenarioSound.play();
+
     // Flag 
       this.gameIsLoaded = true;
     
@@ -416,11 +456,16 @@ class Game {
   
   // # New Game
   newGame(saveData) {
+    
+    if( this.menuSound ) {
+      if( this.menuSound.playing() ) this.menuSound.stop();
+    }
+
     this.pause();
     this.loading(true);
     setTimeout( () => {
       this.startNewGame(saveData); 
-    }, 1000 );
+    }, 500 );
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -503,10 +548,16 @@ class Game {
   pause() { 
     this._pause = true; 
     this.mainMenu(true);
+    
+    if( this.scenario ) this.scenario.sound.pause();
+    
   }
   unpause() { 
     document.getElementById('mainMenu').classList.remove('show');
-    this._pause = false;  
+    this._pause = false; 
+    
+    this.menuSound.stop();
+    if( this.scenario ) this.scenario.sound.play();
   }
   togglePause() { ( this.isPaused() ) ? this.unpause() : this.pause() }
   
@@ -523,6 +574,10 @@ class Game {
     if( bool ) this._pause = true; 
     let display = ( bool ) ? 'flex' : 'none';
     document.getElementById('game-over').style.display = display;
+    if( bool && this.gameOverSound ) {
+      if( this.scenario ) this.scenario.sound.stop();
+      this.gameOverSound.play();
+    }
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -563,7 +618,7 @@ class Game {
 
     // Start the event listeners
     this.defaultEventListeners();
-    
+
     // Shows Menu
     this.mainMenu(false);
 

@@ -147,6 +147,7 @@ class Prototype_Stage_Doors extends _Stage{
     let k_g = { name: 'key', type: 'gray'}; 
     let k_p = { name: 'key', type: 'purple'}; 
     let k_r = { name: 'key', type: 'red'}; 
+    let k_gr = { name: 'key', type: 'green'}; 
     
     let gntc = { name: "dialog", type: "doors_gratz_notice"};
 
@@ -162,7 +163,7 @@ class Prototype_Stage_Doors extends _Stage{
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,    false,   false,   false,   false ],
-        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
+        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   k_gr,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   brrl,    false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
     ];

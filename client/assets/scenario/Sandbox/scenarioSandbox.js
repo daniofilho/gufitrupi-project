@@ -11,7 +11,8 @@ const Stage_Doors = require('./stages/stage_doors');
 class scenarioSandbox extends _Scenario {
 
   constructor(ctx, canvas, saveData){
-    super(ctx, canvas, "sandbox");
+    let soundSrc = "./sounds/sandbox-background.mp3";
+    super(ctx, canvas, "sandbox", soundSrc);
     this.defaultStageId = "center";
     
     // Define which stage will load on first run
