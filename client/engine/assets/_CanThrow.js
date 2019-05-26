@@ -41,6 +41,20 @@ class _CanThrow extends _Collidable {
     this.destroyFrameCount = 1;
     this.destroyMaxFrameCount = 8;
     this.destroyInitFrame = 3;
+
+    this.dropSound = false;
+    this.breakSound = false;
+
+    this.throwAction = "";
+
+    this.initSounds();
+  }
+
+  initSounds() {
+    // Drop
+    this.dropSound = new Howl({ src: ['./sounds/scenarios/drop.mp3'] });
+    // Break
+    this.breakSound = new Howl({ src: ['./sounds/scenarios/item-break.mp3'] });
   }
 
   isCollected() { return this.collected; }
@@ -136,6 +150,8 @@ class _CanThrow extends _Collidable {
 
     this.setThrowing(false);
     this.setGrab(false);
+
+    if( this.throwAction == "throw" ) this.breakSound.play();
     
     if( this.destroyOnAnimationEnd ) {
       this.setStopOnCollision(false);
@@ -148,6 +164,9 @@ class _CanThrow extends _Collidable {
 
   isDropped() { return this.dropped; }
   drop(direction, playerHeight) {
+
+    setTimeout( () => { this.dropSound.play(); }, 300); // Delay drop sound to sync with animation
+    this.throwAction = "drop";
     this.calculateDropDirection( direction, playerHeight );
     this.setDestroyOnAnimationEnd(false);
     this.setThrowing(true);
@@ -158,6 +177,7 @@ class _CanThrow extends _Collidable {
   }
 
   throw(direction, playerHeight, player) {
+    this.throwAction = "throw";
     player.setNotGrabbing();
     this.calculateThrowDirection( direction, playerHeight );
     this.setDestroyOnAnimationEnd(true);

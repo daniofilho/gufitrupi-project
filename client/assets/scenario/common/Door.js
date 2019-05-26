@@ -36,7 +36,18 @@ class Door extends _CanCollect {
 
     this.type = 'door';
 
+    this.openSound = false;
+
     this.handleProps();
+    this.initSounds();
+  }
+
+  /*
+    # Sounds
+  */
+  initSounds() {
+    // Open
+    this.openSound = new Howl({ src: ['./sounds/scenarios/door-open.mp3'], volume: 0.4 });
   }
 
   checkSavedItemState() {
@@ -141,6 +152,8 @@ class Door extends _CanCollect {
     for (let i in objs) {
       if( objs[i].type == 'door' ) {
         if( objs[i].getCode() == this.getCode() ) {
+          this.openSound.play();
+          window.game.playSuccessSound();
           objs[i].collect();
           objs[i].hide();
           objs[i].setStopOnCollision(false);
