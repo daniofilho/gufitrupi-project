@@ -397,6 +397,14 @@ class Game {
     }
 
     getScenario( scenario_id, contextStatic, canvasStatic, saveData ) {
+
+      // ItemsState
+      if( saveData ) {
+        localStorage.setItem( 'gufitrupi__itemsState', JSON.stringify(saveData.scenario.items) );
+      } else {
+        localStorage.setItem( 'gufitrupi__itemsState', JSON.stringify({}) ); // Clear previous savestate
+      }
+
       switch(scenario_id) {
         case "prototype":
           return new scenarioPrototype(contextStatic, canvasStatic, saveData );
@@ -405,6 +413,7 @@ class Game {
           return new scenarioSandbox(contextStatic, canvasStatic, saveData );
           break;
       }
+
     }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -476,11 +485,14 @@ class Game {
   }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
+ 
   // # Save
   saveGame() {
     if( confirm('Salvar o jogo atual irá sobreescrever qualquer jogo salvo anteriormente. Deseja continuar?') ) {
       
+      // Save items state first
+      this.scenario.saveItemsState();
+
       let saveData = new Object();
 
       // Multiplayer
@@ -503,7 +515,7 @@ class Game {
           lifes: player.getLifes()
         });
       });
-
+      
       // Convert to JSON
       saveData = JSON.stringify(saveData);
       
@@ -550,6 +562,9 @@ class Game {
     this.mainMenu(true);
     
     if( this.scenario ) this.scenario.sound.pause();
+
+    //Hide Control screen
+    document.getElementById('controls').classList.remove('show');
     
   }
   unpause() { 

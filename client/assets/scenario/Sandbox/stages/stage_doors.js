@@ -163,7 +163,7 @@ class Prototype_Stage_Doors extends _Stage{
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,    false,   false,   false,   false ],
-        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   k_gr,   false,   false,   false,   false ],
+        [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   brrl,    false ],
         [ false,   false,  false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false ],
     ];
