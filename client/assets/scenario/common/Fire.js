@@ -20,7 +20,7 @@ class Fire extends _CanHurt {
       height: window.game.getChunkSize()
     }
 
-    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 49);
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: false,
@@ -60,13 +60,13 @@ class Fire extends _CanHurt {
   setSpritePropsFrame(spriteAnimationCount){
     switch(spriteAnimationCount) { 
       case 1:
-        this.spriteProps = this.sprite.getSpriteProps(0);
+        this.spriteProps = this.sprite.getSpriteProps(1736);
         break;
       case 2:
-        this.spriteProps = this.sprite.getSpriteProps(1);
+        this.spriteProps = this.sprite.getSpriteProps(1737);
         break;
       case 3:
-        this.spriteProps = this.sprite.getSpriteProps(2);
+        this.spriteProps = this.sprite.getSpriteProps(1738);
         break;
     }
   }

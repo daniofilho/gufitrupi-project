@@ -2,11 +2,11 @@
   Sandbox Scenario
 */
 const _Scenario = require('../../../engine/assets/_Scenario');
+const _Stage = require('../../../engine/assets/_Stage');
 
-const Stage_Center = require('./stages/stage_center');
-const Stage_Life = require('./stages/stage_life');
-const Stage_Enemy = require('./stages/stage_enemy');
-const Stage_Doors = require('./stages/stage_doors');
+const jsonScenarioTileSet = require('./sandbox-tileset.json');
+
+const jsonStageCenter = require('./stages/center.json');
 
 class scenarioSandbox extends _Scenario {
 
@@ -38,18 +38,9 @@ class scenarioSandbox extends _Scenario {
 
     // Check which stage will load
     switch(stage_id) {
-      default:
+      default: 
       case 'center':
-        _stage = new Stage_Center();
-        break;
-      case 'life':
-        _stage = new Stage_Life();
-        break;
-      case 'enemy':
-        _stage = new Stage_Enemy();
-        break;
-      case 'doors':
-        _stage = new Stage_Doors();
+        _stage = new _Stage( stage_id, jsonStageCenter, jsonScenarioTileSet );
         break;
     }
 
