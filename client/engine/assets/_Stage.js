@@ -5,8 +5,6 @@ class _Stage {
     this.renderItems = new Array();
     
     this.renderLayerItems = new Array();
-    this.renderLayerItems__top = new Array();
-    this.renderLayerItems__bottom = new Array();
 
     this.chunkSize = window.game.getChunkSize();
 
@@ -34,8 +32,6 @@ class _Stage {
   // # Gets
   getStaticItems() { return this.renderItems; }
   getLayerItems() { return this.renderLayerItems; }
-  getLayerItems__bottom() { return this.renderLayerItems__bottom; }
-  getLayerItems__top() { return this.renderLayerItems__top; }
   
   getPlayer1StartX() { return this.player1StartX; }
   getPlayer1StartY() { return this.player1StartY; }
@@ -56,19 +52,8 @@ class _Stage {
 	addStaticItem(item){
     this.renderItems.push(item);
   }
-  addRenderLayerItem(item){
-    this.renderLayerItems.push(item);
-  }
-  addRenderLayerItem__bottom(item){
-    this.renderLayerItems__bottom.push(item);
-  }
-  addRenderLayerItem__top(item){
-    this.renderLayerItems__top.push(item);
-  }
   clearArrayItems(){
     this.renderItems = new Array();
-    this.renderLayerItems__bottom = new Array();
-    this.renderLayerItems__top = new Array();
   }
 
   calculateStageCoordinates() {
@@ -89,16 +74,18 @@ class _Stage {
     
     // Map each layer
     this.jsonStageMap.layers.map( (layer) => {
+
+      // Check if it's a player layer
+      if( layer.name == "player") {
+        this.stageMap.push({'code': 'player'});
+      }
+
       let index = 0;
       // Map each item inside layer
       layer.data.map( (obj) => {
-        
         if( obj != 0 ) { // avoid empty objects
-
           obj = parseInt(obj - 1); // Adjust Tiled ID: they add +1 to IDs to allow 0 as a empty tile // #https://discourse.mapeditor.org/t/wrong-ids-in-tileset/1425
-
           let tileset = this.jsonTileSet.tiles.find( x => x.id === obj ); // Get the index of corresponding id
-
           this.stageMap.push( 
             {
               'x': this.coordinates[index].x,
@@ -109,8 +96,7 @@ class _Stage {
               'stageID': this.stageId
             }
           );
-        }
-        
+        }      
         index++;
       });
     });
@@ -119,9 +105,15 @@ class _Stage {
 
   loadStageItems() {
     this.stageMap.map( (obj) => {
-      this.addStaticItem(
-        window.game.globalAssets.getAsset( obj.class, { code: obj.type, x0: obj.x, y0: obj.y }, false ) // false = not from save state
-      );
+      if( obj.code == "player" ) {
+        window.game.players.map( (player) => {
+          this.addStaticItem( player ); // Adds the player to the render
+        });
+      } else {
+        this.addStaticItem(
+          window.game.globalAssets.getAsset( obj.class, { code: obj.type, x0: obj.x, y0: obj.y }, false ) // false = not from save state
+        );
+      }
     });
   }
 
@@ -129,6 +121,7 @@ class _Stage {
     this.calculateStageCoordinates();
     this.loadJSON();
     this.loadStageItems();
+    //console.log( this.getStaticItems() );
   }
 
 } // class
