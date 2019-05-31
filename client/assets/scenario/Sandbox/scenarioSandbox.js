@@ -7,6 +7,10 @@ const _Stage = require('../../../engine/assets/_Stage');
 const jsonScenarioTileSet = require('./sandbox-tileset.json');
 
 const jsonStageCenter = require('./stages/center.json');
+const jsonStageCenterAssets = require('./stages/center-assets.json');
+
+const jsonStageLife = require('./stages/life.json');
+const jsonStageLifeAssets = require('./stages/life-assets.json');
 
 class scenarioSandbox extends _Scenario {
 
@@ -40,7 +44,10 @@ class scenarioSandbox extends _Scenario {
     switch(stage_id) {
       default: 
       case 'center':
-        _stage = new _Stage( stage_id, jsonStageCenter, jsonScenarioTileSet );
+        _stage = new _Stage( stage_id, jsonStageCenter, jsonStageCenterAssets, jsonScenarioTileSet );
+        break;
+      case 'life':
+        _stage = new _Stage( stage_id, jsonStageLife, jsonStageLifeAssets, jsonScenarioTileSet );
         break;
     }
 

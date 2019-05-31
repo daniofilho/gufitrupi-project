@@ -1,0 +1,111 @@
+{
+	"teleports": [
+		{
+			"xIndex": 7,
+			"yIndex": 0,
+			"props": {  
+				"target": {
+					"stage": "life",
+					"x": 7,
+					"y": 11
+				}
+			}
+		},
+		{
+			"xIndex": 0,
+			"yIndex": 6,
+			"props": {  
+				"target": {
+					"stage": "enemy",
+					"x": 14,
+					"y": 5
+				}
+			}
+		},
+		{
+			"xIndex": 15,
+			"yIndex": 6,
+			"props": {  
+				"target": {
+					"stage": "doors",
+					"x": 1,
+					"y": 5
+				}
+			}
+		}
+	],
+	"dialogs":[ 
+		{
+			"x": 12,
+			"y": 9,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Welcome to Gufitrup my friend!"
+				},
+				{
+					"hideSprite": false,
+					"text": "Walk around and feel free to test this game."
+				},
+				{
+					"hideSprite": false,
+					"text": "If you find any bugs..."
+				},
+				{
+					"hideSprite": false,
+					"text": "...sorry >.< "
+				},
+				{
+					"hideSprite": false,
+					"text": "But let me know what you've found, please!"
+				},
+				{
+					"hideSprite": false,
+					"text": "Have fun :D"
+				},
+				{
+					"hideSprite": true,
+					"text": ""
+				}
+			]
+		},
+		{
+			"x": 1,
+			"y": 5,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Keys and Doors"
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		},
+		{
+			"x": 6,
+			"y": 1,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Fire and Health items"
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		},
+		{
+			"x": 13,
+			"y": 5,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "!! DANGER !!"
+				},
+				{
+					"hideSprite": false,
+					"text": "Enemys and Barrels"
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		}
+	],
+	"enemies":[ ]
+}

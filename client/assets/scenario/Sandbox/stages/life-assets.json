@@ -1,0 +1,17 @@
+{
+	"teleports": [
+		{
+			"xIndex": 7,
+			"yIndex": 13,
+			"props": {  
+				"target": {
+					"stage": "center",
+					"x": 7,
+					"y": 0
+				}
+			}
+		}
+	],
+	"dialogs":[ ],
+	"enemies":[ ]
+}

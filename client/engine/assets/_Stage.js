@@ -1,6 +1,6 @@
 class _Stage {
 
-  constructor(stageId, stageMap, scenarioTileSet) {
+  constructor(stageId, stageMap, stageAssets, scenarioTileSet) {
     
     this.renderItems = new Array();
     
@@ -17,6 +17,7 @@ class _Stage {
     this.stageId = stageId;
 
     this.jsonStageMap = stageMap;
+    this.jsonStageAssets = stageAssets;
     this.jsonTileSet = scenarioTileSet;
 
     this.stageMap = new Array();
@@ -77,7 +78,19 @@ class _Stage {
 
       // Check if it's a player layer
       if( layer.name == "player") {
-        this.stageMap.push({'code': 'player'});
+        this.stageMap.push( {code: 'player'} );
+
+        this.setPlayer1StartX( layer.properties.find( x => x.name === 'player_1_x' ).value * this.chunkSize );
+        this.setPlayer1StartY( layer.properties.find( x => x.name === 'player_1_y' ).value * this.chunkSize );
+      
+        this.setPlayer2StartX( layer.properties.find( x => x.name === 'player_2_x' ).value * this.chunkSize );
+        this.setPlayer2StartY( layer.properties.find( x => x.name === 'player_2_y' ).value * this.chunkSize );
+
+      }
+
+      // Check if it's the assets layer
+      if( layer.name == "assets") {
+        this.stageMap.push({'code': 'assets'});
       }
 
       let index = 0;
@@ -85,7 +98,7 @@ class _Stage {
       layer.data.map( (obj) => {
         if( obj != 0 ) { // avoid empty objects
           obj = parseInt(obj - 1); // Adjust Tiled ID: they add +1 to IDs to allow 0 as a empty tile // #https://discourse.mapeditor.org/t/wrong-ids-in-tileset/1425
-          let tileset = this.jsonTileSet.tiles.find( x => x.id === obj ); // Get the index of corresponding id
+          let tileset = this.jsonTileSet.tiles.find( x => x.id === obj ); // Get the index of corresponding id          
           this.stageMap.push( 
             {
               'x': this.coordinates[index].x,
@@ -103,17 +116,63 @@ class _Stage {
     
   }
 
+  loadAssets() {
+    // Teleports
+    this.jsonStageAssets.teleports.map( (asset) => {
+      let props = {
+        xIndex: ( asset.xIndex * this.chunkSize ),
+        yIndex: ( asset.yIndex * this.chunkSize ),
+        target: {
+					stage: asset.props.target.stage,
+					x: ( asset.props.target.x * this.chunkSize ),
+					y: ( asset.props.target.y * this.chunkSize ),
+					look: asset.props.target.look
+				}
+      }
+      this.addStaticItem(
+        window.game.globalAssets.getAsset('teleport', { xIndex: props.xIndex, yIndex: props.yIndex, props: props }, false ) 
+      );
+    });
+
+    // Enemies
+    this.jsonStageAssets.enemies.map( (enemy) => {
+    });
+
+    // Dialogs
+    this.jsonStageAssets.dialogs.map( (dialog) => {
+      let props = {
+        x: ( dialog.x * this.chunkSize ),
+        y: ( dialog.y * this.chunkSize ),
+        dialog: dialog.dialog
+      }
+      this.addStaticItem(
+        window.game.globalAssets.getAsset('dialog', { x: props.x, y: props.y, dialog: props.dialog }, false ) 
+      )
+    });
+  }
+
   loadStageItems() {
     this.stageMap.map( (obj) => {
-      if( obj.code == "player" ) {
-        window.game.players.map( (player) => {
-          this.addStaticItem( player ); // Adds the player to the render
-        });
-      } else {
-        this.addStaticItem(
-          window.game.globalAssets.getAsset( obj.class, { code: obj.type, x0: obj.x, y0: obj.y }, false ) // false = not from save state
-        );
+
+      switch( obj.code ) {
+
+        case 'player':
+          window.game.players.map( (player) => {
+            this.addStaticItem( player ); // Adds the player to the render
+          });
+          break;
+
+        case 'assets':
+          this.loadAssets();
+          break;
+
+        default:
+          this.addStaticItem(
+            window.game.globalAssets.getAsset( obj.class, { code: obj.type, x0: obj.x, y0: obj.y, stage: obj.stageID }, false ) // false = not from save state
+          );
+          break;
       }
+
     });
   }
 
@@ -121,7 +180,6 @@ class _Stage {
     this.calculateStageCoordinates();
     this.loadJSON();
     this.loadStageItems();
-    //console.log( this.getStaticItems() );
   }
 
 } // class

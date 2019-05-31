@@ -81,6 +81,9 @@ class _Scenario {
   }
 
   handleItemIfNeedSave(item) {
+    
+    if(item.type == "player") { return false; }
+
     if( item.willNeedSaveState() ) {
       
       // Check Grabbed

@@ -52,6 +52,34 @@
                 }]
         }, 
         {
+         "id":24,
+         "properties":[
+                {
+                 "name":"class",
+                 "type":"string",
+                 "value":"beach_wall"
+                }, 
+                {
+                 "name":"type",
+                 "type":"string",
+                 "value":"tree_top_left"
+                }]
+        }, 
+        {
+         "id":25,
+         "properties":[
+                {
+                 "name":"class",
+                 "type":"string",
+                 "value":"beach_wall"
+                }, 
+                {
+                 "name":"type",
+                 "type":"string",
+                 "value":"tree_top_right"
+                }]
+        }, 
+        {
          "id":72,
          "properties":[
                 {
@@ -91,6 +119,34 @@
                  "name":"type",
                  "type":"string",
                  "value":"corner_bottom_right"
+                }]
+        }, 
+        {
+         "id":85,
+         "properties":[
+                {
+                 "name":"class",
+                 "type":"string",
+                 "value":"beach_wall"
+                }, 
+                {
+                 "name":"type",
+                 "type":"string",
+                 "value":"tree_middle_left"
+                }]
+        }, 
+        {
+         "id":86,
+         "properties":[
+                {
+                 "name":"class",
+                 "type":"string",
+                 "value":"beach_wall"
+                }, 
+                {
+                 "name":"type",
+                 "type":"string",
+                 "value":"tree_middle_right"
                 }]
         }, 
         {
@@ -147,6 +203,34 @@
                  "name":"type",
                  "type":"string",
                  "value":"inner_corner_top_right"
+                }]
+        }, 
+        {
+         "id":146,
+         "properties":[
+                {
+                 "name":"class",
+                 "type":"string",
+                 "value":"beach_wall"
+                }, 
+                {
+                 "name":"type",
+                 "type":"string",
+                 "value":"tree_bottom_left"
+                }]
+        }, 
+        {
+         "id":147,
+         "properties":[
+                {
+                 "name":"class",
+                 "type":"string",
+                 "value":"beach_wall"
+                }, 
+                {
+                 "name":"type",
+                 "type":"string",
+                 "value":"tree_bottom_right"
                 }]
         }, 
         {
@@ -365,12 +449,12 @@
                 {
                  "name":"class",
                  "type":"string",
-                 "value":"dialog"
+                 "value":"beach_wall"
                 }, 
                 {
                  "name":"type",
                  "type":"string",
-                 "value":"default"
+                 "value":"dialog"
                 }]
         }],
  "tilewidth":32,
