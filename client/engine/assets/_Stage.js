@@ -92,13 +92,14 @@ class _Stage {
       if( layer.name == "assets") {
         this.stageMap.push({'code': 'assets'});
       }
-
+      //console.log(layer);
       let index = 0;
       // Map each item inside layer
       layer.data.map( (obj) => {
         if( obj != 0 ) { // avoid empty objects
           obj = parseInt(obj - 1); // Adjust Tiled ID: they add +1 to IDs to allow 0 as a empty tile // #https://discourse.mapeditor.org/t/wrong-ids-in-tileset/1425
-          let tileset = this.jsonTileSet.tiles.find( x => x.id === obj ); // Get the index of corresponding id          
+          let tileset = this.jsonTileSet.tiles.find( x => x.id === obj ); // Get the index of corresponding id  
+          //console.log(this.coordinates[index].x, this.coordinates[index].y, tileset.properties.find( x => x.name === 'type' ).value);        
           this.stageMap.push( 
             {
               'x': this.coordinates[index].x,
@@ -132,10 +133,6 @@ class _Stage {
       this.addStaticItem(
         window.game.globalAssets.getAsset('teleport', { xIndex: props.xIndex, yIndex: props.yIndex, props: props }, false ) 
       );
-    });
-
-    // Enemies
-    this.jsonStageAssets.enemies.map( (enemy) => {
     });
 
     // Dialogs

@@ -4,7 +4,7 @@ const Sprite = require('../../../engine/core/Sprite');
 class Enemy extends _CanHurt {
 
   constructor(type, x0, y0) {
-    
+    console.log('loading enemy');
     let props = {
       name: "enemy",
       type: type
@@ -114,6 +114,7 @@ class Enemy extends _CanHurt {
   setSpriteType(type) {
     switch(type) { 
       default:
+      case 'blue':
         // Sprite
         this.setSpritePropsFrame(this.spriteAnimationCount);
         // Collision
@@ -311,6 +312,7 @@ class Enemy extends _CanHurt {
       this.maxSteps = 6;
       this.setAwareOfPlayer(false);
       this.fpsInterval = 1000 / 8;
+      this.setStopOnCollision(false);
     }
   }
 
@@ -536,7 +538,6 @@ class Enemy extends _CanHurt {
       } // if dead
 
     }//if game ready
-
     
     requestAnimationFrame( this.enemyBrain.bind(this) );
   }

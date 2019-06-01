@@ -1,0 +1,43 @@
+{
+	"teleports": [
+		{
+			"xIndex": 15,
+			"yIndex": 6,
+			"props": {  
+				"target": {
+					"stage": "center",
+					"x": 1,
+					"y": 5
+				}
+			}
+		}
+	],
+	"dialogs":[ 
+		{
+			"x": 11,
+			"y": 11,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Stand in front of a star block and pres the USE/THROW button to push the block."
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		},
+		{
+			"x": 9,
+			"y": 1,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Congratulations, you did it!"
+				},
+				{
+					"hideSprite": false,
+					"text": "That's it for today, stay in touch for updates and thanks for playing this demo."
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		}
+	]
+}
