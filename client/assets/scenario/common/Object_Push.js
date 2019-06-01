@@ -20,7 +20,7 @@ class Object_Push extends _CanBePushed {
       height: window.game.getChunkSize()
     }
 
-    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: true,
@@ -41,7 +41,7 @@ class Object_Push extends _CanBePushed {
   setSpriteType(type) {
     switch(type) {
       case "stone":
-        this.spriteProps = this.sprite.getSpriteProps(24);
+        this.spriteProps = this.sprite.getSpriteProps(1802);
         break;
     }
   }

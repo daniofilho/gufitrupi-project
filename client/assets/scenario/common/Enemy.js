@@ -3,11 +3,12 @@ const Sprite = require('../../../engine/core/Sprite');
 
 class Enemy extends _CanHurt {
 
-  constructor(type, x0, y0) {
+  constructor(type, x0, y0, stage) {
     
     let props = {
       name: "enemy",
-      type: type
+      type: type,
+      stage: stage
     }
 
     let position = {
@@ -114,6 +115,7 @@ class Enemy extends _CanHurt {
   setSpriteType(type) {
     switch(type) { 
       default:
+      case 'blue':
         // Sprite
         this.setSpritePropsFrame(this.spriteAnimationCount);
         // Collision
@@ -311,6 +313,7 @@ class Enemy extends _CanHurt {
       this.maxSteps = 6;
       this.setAwareOfPlayer(false);
       this.fpsInterval = 1000 / 8;
+      this.setStopOnCollision(false);
     }
   }
 
@@ -387,7 +390,7 @@ class Enemy extends _CanHurt {
     
     if ( this.hideSprite && this.spriteProps.direction != "dying"  ) return;
 
-    // What to do every frame in terms of render? Draw the player
+    // What to do every frame in terms of render? Draw the enemy
     let props = {
       x: this.getX(),
       y: this.getY(),
@@ -432,6 +435,11 @@ class Enemy extends _CanHurt {
 
 // # Enemy Brain
   enemyBrain() {
+
+    // Check if enemy is in the same stage as original stage, if not, don't
+    if( this.originalStage != window.game.getCurrentStage() ) {
+      return false;
+    }
 
     if( window.game.isGameReady() && this.canRenderNextFrame() ) {
       
@@ -536,7 +544,6 @@ class Enemy extends _CanHurt {
       } // if dead
 
     }//if game ready
-
     
     requestAnimationFrame( this.enemyBrain.bind(this) );
   }
@@ -544,7 +551,9 @@ class Enemy extends _CanHurt {
 // # Collision
 
   collision(obj){ 
-    if( obj.type == "player" ) obj.hurtPlayer(this.hurtAmount); // hurt player
+    if( obj.type == "player" ) {
+      obj.hurtPlayer(this.hurtAmount); // hurt player
+    }
     this.collisionCount++;
     return true;
   } 

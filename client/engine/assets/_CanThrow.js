@@ -37,10 +37,10 @@ class _CanThrow extends _Collidable {
 
     // Destroy animation props
     this.destroying = false;
-    this.destroySprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    this.destroySprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
     this.destroyFrameCount = 1;
     this.destroyMaxFrameCount = 8;
-    this.destroyInitFrame = 3;
+    this.destroyInitFrame = 1739;
 
     this.dropSound = false;
     this.breakSound = false;
@@ -164,7 +164,7 @@ class _CanThrow extends _Collidable {
 
   isDropped() { return this.dropped; }
   drop(direction, playerHeight) {
-
+    
     setTimeout( () => { this.dropSound.play(); }, 300); // Delay drop sound to sync with animation
     this.throwAction = "drop";
     this.calculateDropDirection( direction, playerHeight );
@@ -236,7 +236,7 @@ class _CanThrow extends _Collidable {
   justCheckCollision() {
     let obj = window.game.collision.justCheck(this, this.getCollisionX(), this.getCollisionY(), this.getCollisionWidth(), this.getCollisionHeight()); 
     if ( obj  && this.isThrowing() ) {
-      if( obj.type == "player" ) {
+      if( obj.type == "player" && this.throwAction != "drop" ) {
         obj.hurtPlayer(this.hurtAmount); // hurt player
         this.breakObject();
       }

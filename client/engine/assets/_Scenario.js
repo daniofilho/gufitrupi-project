@@ -5,8 +5,6 @@ class _Scenario {
     this.canvas = canvas;
         
     this.renderItems = new Array();
-    this.renderLayerItems__top = new Array();
-    this.renderLayerItems__bottom = new Array();
         
     this.width = canvas.width;
     this.height = canvas.height;
@@ -18,8 +16,6 @@ class _Scenario {
     this.stageId = "";
     
     this.chunkSize = window.game.getChunkSize();
-
-    this.players = new Array();
 
     this.scenario_id = scenario_id;
     
@@ -42,26 +38,9 @@ class _Scenario {
   addStaticItem(item){
     this.renderItems.push(item);
   }
-  addRenderLayerItem(item){
-    this.renderLayerItems.push(item);
-  }
-  addRenderLayerItem__bottom(item){
-    this.renderLayerItems__bottom.push(item);
-  }
-  addRenderLayerItem__top(item){
-    this.renderLayerItems__top.push(item);
-  }
   clearArrayItems(){
     this.renderItems = new Array();
-    this.renderLayerItems__bottom = new Array();
-    this.renderLayerItems__top = new Array();
   }
-
-  // # Players
-  addPlayer(player) {
-    this.players.push(player);
-  }
-  getPlayers() { return this.players; }
 
   // # Gets
   getCtx() { return this.ctx; }
@@ -72,8 +51,6 @@ class _Scenario {
               
   getStaticItems() { return this.renderItems; }
   getLayerItems() { return this.renderLayerItems; }
-  getLayerItems__bottom() { return this.renderLayerItems__bottom; }
-  getLayerItems__top() { return this.renderLayerItems__top; }
   
   getPlayer1StartX() { return this.player1StartX; }
   getPlayer1StartY() { return this.player1StartY; }
@@ -104,6 +81,9 @@ class _Scenario {
   }
 
   handleItemIfNeedSave(item) {
+    
+    if(item.type == "player") { return false; }
+
     if( item.willNeedSaveState() ) {
       
       // Check Grabbed
@@ -172,51 +152,6 @@ class _Scenario {
       item.scenario = this; // Pass this scenario class as an argument, so other functions can refer to this
       this.addStaticItem(item);
     });
-
-    // Add the Animated Items - Bottom
-    this.stage.getLayerItems__bottom().map( (item) => { 
-      item.scenario = this;
-      this.addRenderLayerItem__bottom(item);
-    });
-    
-    this.stage.getLayerItems__top().map( (item) => { 
-      item.scenario = this;
-      this.addRenderLayerItem__top(item);
-    });
-
-    // Check if player has something grabbed and include in render
-    let savedItemsState = localStorage.getItem('gufitrupi__itemsState');  
-    if( savedItemsState != "{}" ) {
-      savedItemsState = JSON.parse(savedItemsState);
-      for( let i in savedItemsState ) {
-        let item = savedItemsState[i];
-        // Include grabbed item
-        if( item.grabbed ) {
-          let obj = window.game.globalAssets.getAsset( item.grabProps.class, item.grabProps, true ); // true = came from save state
-          obj.grabHandler( item.grabProps.playerWhoGrabbed ); // start a setup on the object, so the player will check the saved state of item
-          this.addRenderLayerItem__bottom(obj);
-        }
-        // Include dropped item
-        if( item.dropped ) {
-          let obj = window.game.globalAssets.getAsset( item.dropProps.class, { code: item.dropProps.code, x0: item.dropProps.x0, y0: item.dropProps.y0, stage: item.dropProps.stage }, true );
-          
-          if( this.stage.getStageId() != item.dropProps.droppedStage ) {
-            obj.hide();
-          }
-
-          obj.droppedStage = item.dropProps.droppedStage;
-          obj.dropped = true;
-          obj.updateX( item.dropProps.dropX );
-          obj.updateY( item.dropProps.dropY );
-          obj.dropX = item.dropProps.dropX;
-          obj.dropY = item.dropProps.dropY;
-          obj.x0 = item.dropProps.x0;
-          obj.y0 = item.dropProps.y0;
-
-          this.addRenderLayerItem__bottom(obj);
-        }
-      };
-    }
 
     // Only set player start at first load
     if(firstStage) {

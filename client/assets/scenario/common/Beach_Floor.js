@@ -37,10 +37,12 @@ class Beach_Floor extends _Collidable {
     switch(type) {
       
       case "01":
+      case "sand_01":
         this.spriteProps = this.sprite.getSpriteProps(249);
         break;
       
       case "02":
+      case "sand_02":
         this.spriteProps = this.sprite.getSpriteProps(930);
         break;
 

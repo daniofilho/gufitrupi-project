@@ -22,7 +22,7 @@ class Key extends _CanThrow {
       height: window.game.getChunkSize()
     }
 
-    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: true,
@@ -114,19 +114,19 @@ class Key extends _CanThrow {
     switch(type) {
       case "gray":
         this.setCode('gray');
-        this.spriteProps = this.sprite.getSpriteProps(26);
+        this.spriteProps = this.sprite.getSpriteProps(1804);
         break;
       case "purple":
         this.setCode('purple');
-        this.spriteProps = this.sprite.getSpriteProps(27);
+        this.spriteProps = this.sprite.getSpriteProps(1805);
         break;
       case "red":
         this.setCode('red');
-        this.spriteProps = this.sprite.getSpriteProps(28);
+        this.spriteProps = this.sprite.getSpriteProps(1806);
         break;
       case "green":
         this.setCode('green');
-        this.spriteProps = this.sprite.getSpriteProps(29);
+        this.spriteProps = this.sprite.getSpriteProps(1807);
         break;
     }
     
