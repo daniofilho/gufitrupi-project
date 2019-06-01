@@ -153,40 +153,6 @@ class _Scenario {
       this.addStaticItem(item);
     });
 
-    // Check if player has something grabbed and include in render
-    let savedItemsState = localStorage.getItem('gufitrupi__itemsState');  
-    if( savedItemsState != "{}" ) {
-      savedItemsState = JSON.parse(savedItemsState);
-      for( let i in savedItemsState ) {
-        let item = savedItemsState[i];
-        // Include grabbed item
-        if( item.grabbed ) {
-          let obj = window.game.globalAssets.getAsset( item.grabProps.class, item.grabProps, true ); // true = came from save state
-          obj.grabHandler( item.grabProps.playerWhoGrabbed ); // start a setup on the object, so the player will check the saved state of item
-          this.addStaticItem(obj);
-        }
-        // Include dropped item
-        if( item.dropped ) {
-          let obj = window.game.globalAssets.getAsset( item.dropProps.class, { code: item.dropProps.code, x0: item.dropProps.x0, y0: item.dropProps.y0, stage: item.dropProps.stage }, true );
-          
-          if( this.stage.getStageId() != item.dropProps.droppedStage ) {
-            obj.hide();
-          }
-
-          obj.droppedStage = item.dropProps.droppedStage;
-          obj.dropped = true;
-          obj.updateX( item.dropProps.dropX );
-          obj.updateY( item.dropProps.dropY );
-          obj.dropX = item.dropProps.dropX;
-          obj.dropY = item.dropProps.dropY;
-          obj.x0 = item.dropProps.x0;
-          obj.y0 = item.dropProps.y0;
-
-          this.addStaticItem(obj);
-        }
-      };
-    }
-
     // Only set player start at first load
     if(firstStage) {
       this.setPlayer1StartX( this.stage.getPlayer1StartX() );

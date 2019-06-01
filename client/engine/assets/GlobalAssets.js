@@ -59,7 +59,7 @@ class GlobalAssets {
         return new Dialog(props.x, props.y, props.dialog );
         break;
       case "enemy":
-        return new Enemy(props.code, props.x0, props.y0);
+        return new Enemy(props.code, props.x0, props.y0, props.stage);
         break;
     }
     return r;

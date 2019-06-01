@@ -3,11 +3,12 @@ const Sprite = require('../../../engine/core/Sprite');
 
 class Enemy extends _CanHurt {
 
-  constructor(type, x0, y0) {
-    console.log('loading enemy');
+  constructor(type, x0, y0, stage) {
+    
     let props = {
       name: "enemy",
-      type: type
+      type: type,
+      stage: stage
     }
 
     let position = {
@@ -389,7 +390,7 @@ class Enemy extends _CanHurt {
     
     if ( this.hideSprite && this.spriteProps.direction != "dying"  ) return;
 
-    // What to do every frame in terms of render? Draw the player
+    // What to do every frame in terms of render? Draw the enemy
     let props = {
       x: this.getX(),
       y: this.getY(),
@@ -434,6 +435,11 @@ class Enemy extends _CanHurt {
 
 // # Enemy Brain
   enemyBrain() {
+
+    // Check if enemy is in the same stage as original stage, if not, don't
+    if( this.originalStage != window.game.getCurrentStage() ) {
+      return false;
+    }
 
     if( window.game.isGameReady() && this.canRenderNextFrame() ) {
       
@@ -545,7 +551,9 @@ class Enemy extends _CanHurt {
 // # Collision
 
   collision(obj){ 
-    if( obj.type == "player" ) obj.hurtPlayer(this.hurtAmount); // hurt player
+    if( obj.type == "player" ) {
+      obj.hurtPlayer(this.hurtAmount); // hurt player
+    }
     this.collisionCount++;
     return true;
   } 
