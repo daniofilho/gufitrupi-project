@@ -1,0 +1,28 @@
+{
+	"teleports": [
+		{
+			"xIndex": 7,
+			"yIndex": 13,
+			"props": {  
+				"target": {
+					"stage": "center",
+					"x": 7,
+					"y": 0
+				}
+			}
+		}
+	],
+	"dialogs":[ 
+		{
+			"x": 8,
+			"y": 11,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Fruits cand recover your life. Some fruits you can only pick up once."
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		}
+	]
+}

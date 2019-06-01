@@ -2,7 +2,7 @@ const Sprite = require('../engine/core/Sprite');
 
 class Player {
 
-	constructor(x0, y0, gameProps, playerNumber, playerProps) {
+	constructor(gameProps, playerNumber, playerProps) {
     // # Sprite
       if( playerNumber == 1 ) {
         this.playerSprite = document.getElementById('sprite_player_one');
@@ -28,11 +28,11 @@ class Player {
       this.chunkSize = gameProps.getProp('chunkSize');
     
     // # Position
-      this.x = x0;
-      this.y = y0;
+      this.x = 0;
+      this.y = 0;
       
-      this.x0 = x0; // initial position
-      this.y0 = y0;
+      this.x0 = 0; // initial position
+      this.y0 = 0;
     
     // # Properties
       this.width = this.chunkSize; //px
@@ -61,8 +61,8 @@ class Player {
       this.collisionHeight = this.height * 0.3;
       this.CollisionXFormula = this.width * 0.1; // Used to set collision X when setting X 
       this.CollisionYFormula = this.height * 0.7; 
-      this.collisionX = x0 + this.CollisionXFormula;
-      this.collisionY = y0 + this.CollisionYFormula;
+      this.collisionX = 0;//this.x0 + this.CollisionXFormula;
+      this.collisionY = 0;//this.y0 + this.CollisionYFormula;
 
       this.collisionX0 = this.collisionX;
       this.collisionY0 = this.collisionY;
@@ -99,19 +99,14 @@ class Player {
     # Sounds
   */
     initSounds() {
-
       // Walk
       this.walkSound = new Howl({ src: ['./sounds/player/walk.mp3'], loop: true, volume: 0.6 });
-      
       // Use
       this.useSound = new Howl({ src: ['./sounds/player/use.mp3'] });
-
       // Hurt
-      this.hurtSound = new Howl({ src: ['./sounds/player/hurt.mp3'] });
-
+      this.hurtSound = new Howl({ src: ['./sounds/player/hurt.mp3'], volume: 0.5 });
       // Grab
       this.grabSound = new Howl({ src: ['./sounds/player/grab.mp3'] });
-
     }
 
   /* 
@@ -121,7 +116,7 @@ class Player {
     checkGrabbingObjects() {
       let hasGrabObject = false;
       // Check if player has grabbed items
-      let renderedItems = window.game.scenario.getLayerItems__bottom();
+      let renderedItems = window.game.scenario.getStaticItems();
       for( let i in renderedItems ) {
         let item = renderedItems[i];
         if( item.grabbed && item.playerWhoGrabbed == this.playerNumber ) {
@@ -191,7 +186,6 @@ class Player {
 
     // Use items
     triggerUse() {
-
       // If has object in hand, use it
       if( this.objectGrabbed ) {
         this.objectGrabbed.use( this.spriteProps.direction, this.getHeight(), this );
@@ -441,6 +435,16 @@ class Player {
     Movement
   */
     
+    setStartPosition(x, y) {
+      this.setX( x );
+      this.setY( y );
+      this.x0 = x;
+      this.y0 = y;
+      this.collisionX = x + this.CollisionXFormula;
+      this.collisionY = y + this.CollisionYFormula;
+      this.checkGrabbingObjects();
+    }
+
     getX() { return this.x; }
     getY() { return this.y; }
     
@@ -611,11 +615,6 @@ class Player {
     checkPlayerDeath() {
       if( this.lifes < 1 && !window.god_mode ) {
         window.game.gameOver(true);
-        /*
-        setTimeout( () => {
-          window.game.loading(true);
-          window.game.newGame();
-        }, 3000);*/
       }
     }
   
@@ -690,7 +689,7 @@ class Player {
 
     run() {
       this.initSounds();
-      this.checkGrabbingObjects();
+      //this.checkGrabbingObjects();
       this.lookDirection = this.lookDown();
       this.updateGrabCollisionXY();
     }

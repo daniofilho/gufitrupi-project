@@ -1,4 +1,4 @@
-const _DialogTrigger = require('../../../engine/assets/_DialogTrigger');
+const _DialogTrigger = require('../../../engine/assets/_Dialog');
 const Sprite = require('../../../engine/core/Sprite');
 
 class Dialog extends _DialogTrigger {
@@ -21,7 +21,7 @@ class Dialog extends _DialogTrigger {
 	  height: window.game.getChunkSize()
 	}
 
-	let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+	let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
 	let events = {
 	  stopOnCollision: true,
@@ -70,7 +70,6 @@ class Dialog extends _DialogTrigger {
 						}
 					]
 				);
-				this.spriteProps = this.sprite.getSpriteProps(30);
 				break;
 			case "center_left_notice":
 				this.setDialog(
@@ -85,7 +84,6 @@ class Dialog extends _DialogTrigger {
 						}
 					]
 				);
-				this.spriteProps = this.sprite.getSpriteProps(30);
 			break;
 			case "center_top_notice":
 				this.setDialog(
@@ -100,7 +98,6 @@ class Dialog extends _DialogTrigger {
 						}
 					]
 				);
-				this.spriteProps = this.sprite.getSpriteProps(30);
 			break;
 			case "center_right_notice":
 					this.setDialog(
@@ -119,7 +116,6 @@ class Dialog extends _DialogTrigger {
 							}
 						]
 					);
-					this.spriteProps = this.sprite.getSpriteProps(30);
 				break;
 			case "doors_gratz_notice":
 					this.setDialog(
@@ -134,7 +130,6 @@ class Dialog extends _DialogTrigger {
 							}
 						]
 					);
-					this.spriteProps = this.sprite.getSpriteProps(30);
 				break;
 			
 		}

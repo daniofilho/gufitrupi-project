@@ -21,7 +21,7 @@ class Heal extends _CanCollect {
       height: window.game.getChunkSize()
     }
 
-    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: false,
@@ -57,10 +57,10 @@ class Heal extends _CanCollect {
     switch(type) { 
       default:
       case 'banana':
-        this.spriteProps = this.sprite.getSpriteProps(20);
+        this.spriteProps = this.sprite.getSpriteProps(1798);
         break;
       case 'berry':
-        this.spriteProps = this.sprite.getSpriteProps(21);
+        this.spriteProps = this.sprite.getSpriteProps(1799);
         break;
     }
   }

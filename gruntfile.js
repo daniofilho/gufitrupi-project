@@ -51,6 +51,7 @@ module.exports = function(grunt) {
                     'client/**/*.html', 
                     'client/*.html', 
                     'client/assets/**/*.js', 
+                    'client/assets/**/*.json', 
                     'client/engine/**/*.js', 
                     'client/main.js', 
                     'client/gameProperties.js', 

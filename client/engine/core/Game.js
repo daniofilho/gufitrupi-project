@@ -229,16 +229,31 @@ class Game {
       let canvasStatic = document.getElementById('canvas_static');
       let contextStatic = canvasStatic.getContext('2d');
 
-      let canvasLayers = document.getElementById('canvas_layers');
-      let contextLayers = canvasLayers.getContext('2d');
-      
       let canvasUI = document.getElementById('canvas_ui');
       let contextUI = canvasUI.getContext('2d');
 
-      canvasLayers.width = canvasStatic.width = canvasUI.width = this.gameProps.getProp('canvasWidth');
-      canvasLayers.height = canvasStatic.height = canvasUI.height = this.gameProps.getProp('canvasHeight');
+      canvasStatic.width = canvasUI.width = this.gameProps.getProp('canvasWidth');
+      canvasStatic.height = canvasUI.height = this.gameProps.getProp('canvasHeight');
 
+    // # Players
+      this.players = new Array();
+
+      if( ! saveData ) {
+        let player = new Player( this.gameProps, 1 ); 
+        this.players.push(player);
+        if ( this.multiplayer ) {
+          let player2 = new Player( this.gameProps, 2 ); 
+          this.players.push(player2);
+        }
+      } else {
+        saveData.players.map( (player) => {
+          let _player = new Player( this.gameProps, player.playerNumber, player ); 
+          this.players.push( _player);
+        });  
+      }
+    
     // # Scenario
+    
       if( ! saveData ) {
         this.scenario = this.getScenario( this.defaultScenario, contextStatic, canvasStatic );
       } else {
@@ -247,47 +262,45 @@ class Game {
 
       this.scenarioSound = this.scenario.getScenarioSound();
 
-    // # Players
-      this.players = new Array();
-
+      // Set player X and Y
       if( ! saveData ) {
-        let player = new Player( this.scenario.getPlayer1StartX(), this.scenario.getPlayer1StartY(), this.gameProps, 1 ); 
-
-        this.players.push(player);
-
-        if ( this.multiplayer ) {
-          let player2 = new Player( this.scenario.getPlayer2StartX(), this.scenario.getPlayer2StartY(), this.gameProps, 2 ); 
-          this.players.push(player2);
-        }
-
+        let i = 1;
         this.players.map( (player) => {
-          this.scenario.addPlayer(player);
+          switch(i){
+            case 1:
+              player.setStartPosition( this.scenario.getPlayer1StartX(), this.scenario.getPlayer1StartY() );
+              break;
+            case 2:
+              player.setStartPosition( this.scenario.getPlayer2StartX(), this.scenario.getPlayer2StartY() );
+              break;
+          }
+          i++;
         });
-
       } else {
-        
         saveData.players.map( (player) => {
-
-          let _player = new Player( player.x, player.y, this.gameProps, player.playerNumber, player ); 
-
-          this.players.push( _player);
-          this.scenario.addPlayer(_player);
-
-        });  
-
+          switch(player.playerNumber){
+            case 1:
+              this.players[0].setStartPosition( player.x, player.y );
+              break;
+            case 2:
+              this.players[0].setStartPosition( player.x, player.y );
+              break;
+          }
+        }); 
       }
+      
+
     // # UI
       
       this.UI = new UI( this.players, this.gameProps);
 
     // # Collision detection class
 
-      this.collision = new Collision( canvasLayers.width, canvasLayers.height );
+      this.collision = new Collision( canvasStatic.width, canvasStatic.height );
 
     // # Render
 
       this.renderStatic = new Render(contextStatic, canvasStatic); // Render executed only once
-      this.renderLayers = new Render(contextLayers, canvasLayers); // Render with animated objects only
       this.renderUI     = new Render(contextUI, canvasUI); 
 
       // Add items to be rendered
@@ -322,13 +335,10 @@ class Game {
       
       this.renderStatic.start( deltaTime );  // Static can also change, because it is the scenario... maybe will change this names to layers
       this.renderUI.start( deltaTime );
-      this.renderLayers.start( deltaTime );
-
+     
       // # Add the objects to the collision vector
       this.collision.clearArrayItems();
       this.collision.addArrayItem( this.scenario.getStaticItems() );
-      this.collision.addArrayItem( this.scenario.getLayerItems__bottom() );
-      this.collision.addArrayItem( this.scenario.getLayerItems__top() );
       /*this.players.map( (player) => {
         this.collision.addArrayItem(player);
       });*/
@@ -337,20 +347,6 @@ class Game {
       this.renderStatic.clearArrayItems();
       this.renderStatic.addArrayItem(this.scenario.getStaticItems()); // Get all items from the scenario that needs to be rendered
 
-      // Layers Render
-        this.renderLayers.clearArrayItems();
-
-        // # Bottom 
-        this.renderLayers.addArrayItem( this.scenario.getLayerItems__bottom() );
-        
-        // # Middle
-        this.players.map( (player) => {
-          this.renderLayers.addItem( player ); // Adds the player to the animation render
-        });
-
-        // # Top
-        this.renderLayers.addArrayItem( this.scenario.getLayerItems__top() );
-        
       // UI Render
       this.renderUI.clearArrayItems();
       this.renderUI.addArrayItem( this.UI.getNewRenderItems());

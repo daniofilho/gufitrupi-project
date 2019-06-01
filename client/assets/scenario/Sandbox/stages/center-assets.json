@@ -1,0 +1,61 @@
+{
+	"teleports": [
+		{
+			"xIndex": 7,
+			"yIndex": 0,
+			"props": {  
+				"target": {
+					"stage": "life",
+					"x": 7,
+					"y": 11
+				}
+			}
+		},
+		{
+			"xIndex": 15,
+			"yIndex": 6,
+			"props": {  
+				"target": {
+					"stage": "enemy",
+					"x": 1,
+					"y": 5
+				}
+			}
+		},
+		{
+			"xIndex": 0,
+			"yIndex": 6,
+			"props": {  
+				"target": {
+					"stage": "doors",
+					"x": 14,
+					"y": 5
+				}
+			}
+		}
+	],
+	"dialogs":[ 
+		{
+			"x": 6,
+			"y": 9,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Try grabbing the key and then using it on the door to unlock it."
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		},
+		{
+			"x": 4,
+			"y": 4,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Go explore the scenario."
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		}
+	]
+}

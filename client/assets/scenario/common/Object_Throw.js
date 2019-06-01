@@ -22,7 +22,7 @@ class Object_Throw extends _CanThrow {
       height: window.game.getChunkSize()
     }
 
-    let sprite = new Sprite(document.getElementById('sprite_common'), 1000, 980, 50, 50);
+    let sprite = new Sprite(document.getElementById('sprite_beach'), 1980, 1055, 32, 32);
 
     let events = {
       stopOnCollision: true,
@@ -46,7 +46,7 @@ class Object_Throw extends _CanThrow {
   setSpriteType(type) {
     switch(type) {
       case "barrel":
-        this.spriteProps = this.sprite.getSpriteProps(22);
+        this.spriteProps = this.sprite.getSpriteProps(1800);
         break;
     }
     this.setCode(type);

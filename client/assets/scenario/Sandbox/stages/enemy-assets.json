@@ -1,0 +1,28 @@
+{
+	"teleports": [
+		{
+			"xIndex": 0,
+			"yIndex": 6,
+			"props": {  
+				"target": {
+					"stage": "center",
+					"x": 14,
+					"y": 5
+				}
+			}
+		}
+	],
+	"dialogs":[ 
+		{
+			"x": 2,
+			"y": 5,
+			"dialog": [
+				{
+					"hideSprite": false,
+					"text": "Try throwing barrels at the enemys to kill them."
+				},
+				{ "hideSprite": true, "text": "" }
+			]
+		}
+	]
+}
